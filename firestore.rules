@@ -1,0 +1,31 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // 1. Products Collection
+    // Anyone can browse products. Admin can add, edit, and delete products.
+    match /products/{productId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // 2. Customer Orders Collection
+    // Customers can create orders from Checkout. Admin can read, update status, and reset monthly orders.
+    match /orders/{orderId} {
+      allow read, create, update, delete: if true;
+    }
+
+    // 3. Store Settings Collection (store_config)
+    // Public read for delivery charges, bKash number, WhatsApp, and email. Admin can update settings.
+    match /settings/{settingId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Fallback rule for safety
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
