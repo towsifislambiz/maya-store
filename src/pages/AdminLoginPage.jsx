@@ -93,7 +93,7 @@ export default function AdminLoginPage() {
                   type="text"
                   required
                   autoFocus
-                  placeholder="Gadgets Galaxy"
+                  placeholder="অ্যাডমিন ইউজারনেম লিখুন..."
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   className="w-full bg-slate-950 border border-slate-800 rounded-xl py-3 pl-10 pr-4 text-xs sm:text-sm text-white outline-none focus:border-cyan-400 transition placeholder:text-slate-600"
@@ -112,7 +112,7 @@ export default function AdminLoginPage() {
                 <input
                   type={showPassword ? 'text' : 'password'}
                   required
-                  placeholder="SameerXnjr10"
+                  placeholder="পাসওয়ার্ড লিখুন..."
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full bg-slate-950 border border-slate-800 rounded-xl py-3 pl-10 pr-10 text-xs sm:text-sm text-white outline-none focus:border-cyan-400 transition placeholder:text-slate-600"
@@ -120,7 +120,7 @@ export default function AdminLoginPage() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-500 hover:text-slate-300"
+                  className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-500 hover:text-slate-300 cursor-pointer"
                 >
                   {showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
                 </button>
@@ -130,7 +130,7 @@ export default function AdminLoginPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-cyan-500 hover:bg-cyan-400 disabled:opacity-50 text-slate-950 font-black py-3.5 px-4 rounded-xl text-sm flex items-center justify-center gap-2 shadow-lg transition active:scale-95"
+              className="w-full bg-cyan-500 hover:bg-cyan-400 disabled:opacity-50 text-slate-950 font-black py-3.5 px-4 rounded-xl text-sm flex items-center justify-center gap-2 shadow-lg transition active:scale-95 cursor-pointer"
             >
               {isLoading ? (
                 <div className="size-4 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" />
@@ -142,16 +142,6 @@ export default function AdminLoginPage() {
               )}
             </button>
           </form>
-
-          {/* Quick Help Box */}
-          <div className="pt-3 border-t border-slate-800 text-[11px] text-slate-400 space-y-1">
-            <span className="block font-bold text-slate-300">🔑 অ্যাডমিন লগইন তথ্য:</span>
-            <div className="bg-slate-950 p-2.5 rounded-xl border border-slate-800/80 font-mono text-slate-300 space-y-0.5">
-              <div>Username: <strong className="text-cyan-400">Gadgets Galaxy</strong></div>
-              <div>Password: <strong className="text-amber-400">{settings?.adminPassword || 'SameerXnjr10'}</strong></div>
-            </div>
-          </div>
-
         </div>
 
         {/* Back Link */}
