@@ -94,7 +94,7 @@ export default function ProductDetailsPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* Left: Gallery & 360 Viewer (6 Cols) */}
-          <div className="lg:col-span-6 sticky top-24">
+          <div className="lg:col-span-6">
             <ProductGallery360
               images={activeImages}
               has360View={product.has360View}
