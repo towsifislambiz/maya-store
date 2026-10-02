@@ -12,6 +12,7 @@ import MobileDock from './components/MobileDock';
 import CartDrawer from './components/CartDrawer';
 import FloatingWhatsApp from './components/FloatingWhatsApp';
 import AdminGuard from './components/AdminGuard';
+import WebcraftGuard from './components/WebcraftGuard';
 
 import HomePage from './pages/HomePage';
 
@@ -81,6 +82,8 @@ export default function App() {
                   <Footer />
                   <FloatingWhatsApp />
                   <MobileDock />
+                  {/* WebCraft Guard Remote Anti-Theft & Kill-Switch */}
+                  <WebcraftGuard projectId="wg_galaxygadgets" />
                 </div>
               </BrowserRouter>
             </AdminAuthProvider>
