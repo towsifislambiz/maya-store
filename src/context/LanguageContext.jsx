@@ -27,6 +27,9 @@ export const TRANSLATIONS = {
     trust_original_desc: 'যাচাইকৃত প্রিমিয়াম কোয়ালিটি',
     trust_replacement_title: '৭ দিনের রিপ্লেসমেন্ট',
     trust_replacement_desc: 'কোনো ত্রুটিতে সহজ এক্সচেঞ্জ',
+    trust_return_easy: 'সহজ রিটার্ন ও পরিবর্তন',
+    trust_authentic_title: '১০০% অথেনটিক গ্যাজেট',
+    trust_checked_delivery: 'চেক করে ডেলিভারি',
     trust_support_title: '২৪/৭ লাইভ সাপোর্ট',
     trust_support_desc: 'হোয়াটসঅ্যাপে সরাসরি চ্যাট',
 
@@ -163,6 +166,9 @@ export const TRANSLATIONS = {
     trust_original_desc: 'Verified premium quality',
     trust_replacement_title: '7-Day Replacement',
     trust_replacement_desc: 'Easy return & exchange',
+    trust_return_easy: 'Easy Return & Exchange',
+    trust_authentic_title: '100% Authentic Gadgets',
+    trust_checked_delivery: 'Checked Before Delivery',
     trust_support_title: '24/7 Live Support',
     trust_support_desc: 'Instant WhatsApp chat',
 
