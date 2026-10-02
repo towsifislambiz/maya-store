@@ -1,16 +1,42 @@
-import React, { createContext, useContext, useState, useRef } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
 
 const AdminAuthContext = createContext();
 
+const ONE_HOUR_MS = 60 * 60 * 1000; // Exactly 1 hour (3,600,000 ms)
+
 export const AdminAuthProvider = ({ children }) => {
-  // Whether the admin button is revealed (persisted across sessions so owner doesn't lose it)
-  const [isAdminUnlocked, setIsAdminUnlocked] = useState(() => {
+  // Check if admin is currently unlocked within the 1-hour active window
+  const checkIsUnlocked = () => {
     try {
-      return localStorage.getItem('galaxy_admin_unlocked') === 'true';
-    } catch {
-      return false;
-    }
-  });
+      const isUnlocked = localStorage.getItem('galaxy_admin_unlocked') === 'true';
+      const unlockTime = parseInt(localStorage.getItem('galaxy_admin_unlocked_time') || '0', 10);
+      if (isUnlocked && unlockTime) {
+        if (Date.now() - unlockTime < ONE_HOUR_MS) {
+          return true;
+        } else {
+          // 1 hour expired! Automatically lock again
+          localStorage.removeItem('galaxy_admin_unlocked');
+          localStorage.removeItem('galaxy_admin_unlocked_time');
+          return false;
+        }
+      }
+    } catch {}
+    return false;
+  };
+
+  const [isAdminUnlocked, setIsAdminUnlocked] = useState(checkIsUnlocked);
+
+  // Periodic checker: auto-relock exactly when 1 hour expires
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const valid = checkIsUnlocked();
+      if (!valid && isAdminUnlocked) {
+        setIsAdminUnlocked(false);
+      }
+    }, 30000); // Check every 30 seconds
+
+    return () => clearInterval(interval);
+  }, [isAdminUnlocked]);
 
   // Whether user is currently logged in with username & password
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
@@ -39,7 +65,7 @@ export const AdminAuthProvider = ({ children }) => {
       clickCountRef.current = 0;
     }, 3500);
 
-    // If 5 clicks reached
+    // If 5 clicks reached within the time window
     if (clickCountRef.current >= 5) {
       clickCountRef.current = 0;
       clearTimeout(clickTimerRef.current);
@@ -47,9 +73,10 @@ export const AdminAuthProvider = ({ children }) => {
       setIsAdminUnlocked(true);
       try {
         localStorage.setItem('galaxy_admin_unlocked', 'true');
+        localStorage.setItem('galaxy_admin_unlocked_time', Date.now().toString());
       } catch {}
 
-      setUnlockNotification('🔐 সিক্রেট আনলক সফল! অ্যাডমিন প্যানেল বাটন দৃশ্যমান হয়েছে।');
+      setUnlockNotification('🔐 সিক্রেট আনলক সফল! অ্যাডমিন প্যানেল দৃশ্যমান হয়েছে (১ ঘণ্টার জন্য কার্যকর)।');
       setTimeout(() => {
         setUnlockNotification('');
       }, 5000);
@@ -59,32 +86,36 @@ export const AdminAuthProvider = ({ children }) => {
     return false;
   };
 
-  // Lock admin again (hide button)
+  // Lock admin again (hide button immediately)
   const lockAdmin = () => {
     setIsAdminUnlocked(false);
     setIsAuthenticated(false);
     try {
       localStorage.removeItem('galaxy_admin_unlocked');
+      localStorage.removeItem('galaxy_admin_unlocked_time');
       sessionStorage.removeItem('galaxy_admin_authenticated');
     } catch {}
   };
 
   // Login handler
   const login = (username, password, storeAdminPassword) => {
-    const cleanUser = (username || '').trim().toLowerCase();
+    const cleanUser = (username || '').trim().toLowerCase().replace(/\s+/g, ' ');
     const cleanPass = (password || '').trim();
 
+    // Allowed usernames (including fixed "Gadgets Galaxy")
     const allowedUsernames = [
-      'admin',
+      'gadgets galaxy',
       'gadgetsgalaxy',
+      'admin',
       'gadgetsgalaxy2026gg@gmail.com'
     ];
 
+    // Allowed passwords (defaults to SameerXnjr10 or client custom changed password)
     const allowedPasswords = [
+      'sameerxnjr10',
+      'SameerXnjr10',
       'admin',
-      'galaxy2026',
-      'admin123',
-      '123456'
+      'galaxy2026'
     ];
 
     if (storeAdminPassword) {
@@ -92,7 +123,7 @@ export const AdminAuthProvider = ({ children }) => {
     }
 
     const isUserValid = allowedUsernames.includes(cleanUser);
-    const isPassValid = allowedPasswords.includes(cleanPass);
+    const isPassValid = allowedPasswords.includes(cleanPass) || allowedPasswords.map(p => p.toLowerCase()).includes(cleanPass.toLowerCase());
 
     if (isUserValid && isPassValid) {
       setIsAuthenticated(true);

@@ -10,6 +10,9 @@ export const DEFAULT_SETTINGS = {
   bkashNumber: '01749765271',
   whatsappNumber: '+880 1322-302319',
   hotline: '+880 1322-302319',
+  facebookPage: 'https://www.facebook.com/share/1FA8LYE5Y4/',
+  adminUsername: 'Gadgets Galaxy',
+  adminPassword: 'SameerXnjr10',
   deliveryFeeInside: 80,
   deliveryFeeOutside: 150,
   lastOrderResetMonth: new Date().toISOString().slice(0, 7)

@@ -25,7 +25,10 @@ import {
   Upload,
   CheckCircle2,
   LogOut,
-  Lock
+  Lock,
+  KeyRound,
+  Eye,
+  EyeOff
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { compressAndReadImage, getImageDataSizeKB } from '../utils/imageUpload';
@@ -96,9 +99,19 @@ export default function AdminDashboard() {
     whatsappNumber: settings?.whatsappNumber || '+880 1322-302319',
     hotline: settings?.hotline || '+880 1322-302319',
     deliveryFeeInside: settings?.deliveryFeeInside || 80,
-    deliveryFeeOutside: settings?.deliveryFeeOutside || 150
+    deliveryFeeOutside: settings?.deliveryFeeOutside || 150,
+    facebookPage: settings?.facebookPage || 'https://www.facebook.com/share/1FA8LYE5Y4/'
   });
   const [settingsSuccessMsg, setSettingsSuccessMsg] = useState('');
+
+  // Admin Password Management State
+  const [newAdminPassword, setNewAdminPassword] = useState('');
+  const [confirmAdminPassword, setConfirmAdminPassword] = useState('');
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [passwordSuccessMsg, setPasswordSuccessMsg] = useState('');
+  const [passwordErrorMsg, setPasswordErrorMsg] = useState('');
+  const [isSavingPassword, setIsSavingPassword] = useState(false);
 
   // Update settingsForm when context settings change
   if (prevSettings !== settings) {
@@ -113,10 +126,38 @@ export default function AdminDashboard() {
         whatsappNumber: settings.whatsappNumber || '+880 1322-302319',
         hotline: settings.hotline || '+880 1322-302319',
         deliveryFeeInside: settings.deliveryFeeInside || 80,
-        deliveryFeeOutside: settings.deliveryFeeOutside || 150
+        deliveryFeeOutside: settings.deliveryFeeOutside || 150,
+        facebookPage: settings.facebookPage || 'https://www.facebook.com/share/1FA8LYE5Y4/'
       });
     }
   }
+
+  // Handle Admin Password Change
+  const handleSavePassword = async (e) => {
+    e.preventDefault();
+    setPasswordErrorMsg('');
+    setPasswordSuccessMsg('');
+    if (!newAdminPassword || newAdminPassword.trim().length < 6) {
+      setPasswordErrorMsg('পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে!');
+      return;
+    }
+    if (newAdminPassword !== confirmAdminPassword) {
+      setPasswordErrorMsg('উভয় পাসওয়ার্ড হুবহু মিলতে হবে!');
+      return;
+    }
+    try {
+      setIsSavingPassword(true);
+      await updateSettings({ adminPassword: newAdminPassword.trim() });
+      setPasswordSuccessMsg('অ্যাডমিন পাসওয়ার্ড সফলভাবে আপডেট ও সেভ করা হয়েছে! পরবর্তী লগইনে এই নতুন পাসওয়ার্ড ব্যবহার করুন।');
+      setNewAdminPassword('');
+      setConfirmAdminPassword('');
+      setTimeout(() => setPasswordSuccessMsg(''), 5000);
+    } catch (err) {
+      setPasswordErrorMsg('পাসওয়ার্ড সেভ করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।');
+    } finally {
+      setIsSavingPassword(false);
+    }
+  };
 
   // Financial Stats
   const totalRevenue = useMemo(() => orders.reduce((sum, o) => sum + (Number(o.totalAmount) || 0), 0), [orders]);
@@ -566,6 +607,19 @@ export default function AdminDashboard() {
             <Settings className="size-4 shrink-0" />
             <span className="hidden sm:inline">৫. শপ সেটিংস ও চার্জ</span>
             <span className="sm:hidden">৫. সেটিংস</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('security')}
+            className={`flex items-center gap-2 px-3.5 sm:px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition shrink-0 ${
+              activeTab === 'security'
+                ? 'bg-amber-400 text-slate-950 shadow-md font-black ring-2 ring-amber-400/30'
+                : 'bg-slate-900 text-slate-400 hover:text-white'
+            }`}
+          >
+            <Lock className={`size-4 shrink-0 ${activeTab === 'security' ? 'text-slate-950' : 'text-amber-400'}`} />
+            <span className="hidden sm:inline">৬. পাসওয়ার্ড ও সিকিউরিটি</span>
+            <span className="sm:hidden">৬. সিকিউরিটি</span>
           </button>
         </div>
 
@@ -1605,6 +1659,23 @@ export default function AdminDashboard() {
                 </div>
               </div>
 
+              {/* Client Facebook Page Link */}
+              <div>
+                <label className="block text-xs font-bold text-slate-300 mb-1">
+                  ক্লায়েন্ট ফেসবুক পেজ লিংক (Facebook Page URL)
+                </label>
+                <input
+                  type="url"
+                  value={settingsForm.facebookPage}
+                  onChange={(e) => setSettingsForm({ ...settingsForm, facebookPage: e.target.value })}
+                  placeholder="https://www.facebook.com/share/1FA8LYE5Y4/"
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white outline-none focus:border-cyan-400"
+                />
+                <p className="text-[11px] text-slate-500 mt-1">
+                  এই লিংকটি ওয়েবসাইটের ফুটার, হেডার এবং ফ্লোটিং সোশ্যাল বাটনে স্বয়ংক্রিয়ভাবে ব্যবহার হবে।
+                </p>
+              </div>
+
               {/* Delivery Charge Controls */}
               <div className="p-4 bg-slate-950 rounded-2xl border border-slate-800/80 space-y-3">
                 <h4 className="font-bold text-sm text-white flex items-center gap-1.5">
@@ -1646,6 +1717,144 @@ export default function AdminDashboard() {
                   <span>সব সেটিংস রিয়েল-টাইমে সেভ করুন</span>
                 </button>
               </div>
+            </form>
+          </div>
+        )}
+
+        {/* =========================================================================
+            TAB 6: ADMIN SECURITY & PASSWORD MANAGER (FIXED USERNAME)
+           ========================================================================= */}
+        {activeTab === 'security' && (
+          <div className="bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-800 shadow-xl max-w-2xl space-y-6">
+            <div>
+              <div className="flex items-center gap-2 text-amber-400 font-bold text-xs uppercase tracking-wider mb-1">
+                <Lock className="size-4" />
+                <span>অ্যাডমিন সিকিউরিটি ও পাসওয়ার্ড কন্ট্রোল</span>
+              </div>
+              <h2 className="text-xl sm:text-2xl font-black text-white font-sans">
+                অ্যাডমিন পাসওয়ার্ড পরিবর্তন
+              </h2>
+              <p className="text-xs text-slate-400 mt-1 leading-relaxed">
+                আপনার সুবিধার জন্য অ্যাডমিন ইউজারনেম ফিক্সড রাখা হয়েছে। আপনি যেকোনো সময় আপনার অ্যাডমিন পাসওয়ার্ড পরিবর্তন করতে পারবেন।
+              </p>
+            </div>
+
+            {/* Locked Fixed Username Notice */}
+            <div className="p-4 bg-slate-950 border border-slate-800 rounded-2xl flex items-center justify-between">
+              <div>
+                <span className="text-[11px] text-slate-400 block font-bold uppercase tracking-wider">
+                  ফিক্সড ইউজারনেম (অপরিবর্তনীয়)
+                </span>
+                <span className="text-base sm:text-lg font-black text-white font-mono mt-0.5 block">
+                  {settings?.adminUsername || 'Gadgets Galaxy'}
+                </span>
+              </div>
+              <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-800/80 border border-slate-700 text-slate-300 text-xs font-bold">
+                <Lock className="size-3.5 text-amber-400" />
+                <span>লকড / স্থায়ী</span>
+              </div>
+            </div>
+
+            {/* Current Active Password Reference Card */}
+            <div className="p-4 bg-slate-950/80 border border-amber-500/20 rounded-2xl space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-[11px] text-amber-300/80 font-bold uppercase tracking-wider flex items-center gap-1.5">
+                  <KeyRound className="size-3.5 text-amber-400" />
+                  <span>বর্তমান সক্রিয় পাসওয়ার্ড</span>
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setShowCurrentPassword(!showCurrentPassword)}
+                  className="text-xs text-amber-400 hover:text-amber-300 flex items-center gap-1 transition"
+                >
+                  {showCurrentPassword ? (
+                    <>
+                      <EyeOff className="size-3.5" />
+                      <span>লুকান</span>
+                    </>
+                  ) : (
+                    <>
+                      <Eye className="size-3.5" />
+                      <span>দেখুন</span>
+                    </>
+                  )}
+                </button>
+              </div>
+              <div className="font-mono text-sm sm:text-base font-bold text-white tracking-widest bg-slate-900 px-3 py-2 rounded-xl border border-slate-800 inline-block">
+                {showCurrentPassword ? (settings?.adminPassword || 'SameerXnjr10') : '••••••••••••'}
+              </div>
+            </div>
+
+            {/* Feedback Alerts */}
+            {passwordSuccessMsg && (
+              <div className="p-3.5 bg-emerald-500/20 border border-emerald-500/40 rounded-xl text-emerald-300 text-xs flex items-center gap-2">
+                <Check className="size-4 shrink-0 text-emerald-400" />
+                <span>{passwordSuccessMsg}</span>
+              </div>
+            )}
+
+            {passwordErrorMsg && (
+              <div className="p-3.5 bg-rose-500/20 border border-rose-500/40 rounded-xl text-rose-300 text-xs flex items-center gap-2">
+                <AlertTriangle className="size-4 shrink-0 text-rose-400" />
+                <span>{passwordErrorMsg}</span>
+              </div>
+            )}
+
+            {/* Password Change Form */}
+            <form onSubmit={handleSavePassword} className="space-y-4 pt-2">
+              <div>
+                <label className="block text-xs font-bold text-slate-300 mb-1.5">
+                  নতুন পাসওয়ার্ড (কমপক্ষে ৬ অক্ষর) *
+                </label>
+                <div className="relative">
+                  <input
+                    type={showNewPassword ? "text" : "password"}
+                    required
+                    minLength={6}
+                    placeholder="নতুন শক্তিশালী পাসওয়ার্ড লিখুন"
+                    value={newAdminPassword}
+                    onChange={(e) => setNewAdminPassword(e.target.value)}
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 pr-10 text-sm text-white font-mono outline-none focus:border-amber-400 transition"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowNewPassword(!showNewPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white p-1 cursor-pointer"
+                  >
+                    {showNewPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-300 mb-1.5">
+                  নতুন পাসওয়ার্ড নিশ্চিত করুন (Confirm Password) *
+                </label>
+                <input
+                  type={showNewPassword ? "text" : "password"}
+                  required
+                  minLength={6}
+                  placeholder="পুনরায় একই পাসওয়ার্ড লিখুন"
+                  value={confirmAdminPassword}
+                  onChange={(e) => setConfirmAdminPassword(e.target.value)}
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-white font-mono outline-none focus:border-amber-400 transition"
+                />
+              </div>
+
+              <div className="pt-2">
+                <button
+                  type="submit"
+                  disabled={isSavingPassword}
+                  className="w-full bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 text-slate-950 font-black px-6 py-3 rounded-xl text-sm flex items-center justify-center gap-2 shadow-lg transition active:scale-95 disabled:opacity-50 cursor-pointer"
+                >
+                  <Lock className="size-4" />
+                  <span>{isSavingPassword ? 'সেভ হচ্ছে...' : 'পাসওয়ার্ড পরিবর্তন ও সেভ করুন'}</span>
+                </button>
+              </div>
+
+              <p className="text-[11px] text-slate-500 text-center leading-relaxed">
+                পাসওয়ার্ড পরিবর্তন করার সাথে সাথে তা নিরাপদে ফায়ারবেস ক্লাউডে সেভ হয়ে যাবে।
+              </p>
             </form>
           </div>
         )}

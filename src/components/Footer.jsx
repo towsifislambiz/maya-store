@@ -38,10 +38,22 @@ export default function Footer() {
             <p className="text-xs text-slate-400 leading-relaxed">
               {t('footer_about')}
             </p>
-            <div className="pt-1 flex items-center gap-3 text-slate-300">
+            <div className="pt-1 flex items-center gap-2.5 text-slate-300 flex-wrap">
               <span className="bg-slate-900 border border-slate-700 px-2.5 py-1 rounded-md text-[11px] font-bold text-emerald-400">
                 {t('verified_shop')}
               </span>
+              <a
+                href={settings?.facebookPage || 'https://www.facebook.com/share/1FA8LYE5Y4/'}
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Galaxy Gadgets Official Facebook Page"
+                className="bg-[#1877F2]/20 hover:bg-[#1877F2]/30 border border-[#1877F2]/50 text-blue-300 px-2.5 py-1 rounded-md text-[11px] font-bold flex items-center gap-1.5 transition cursor-pointer"
+              >
+                <svg className="size-3.5 fill-[#1877F2]" viewBox="0 0 24 24">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+                <span>Facebook</span>
+              </a>
             </div>
           </div>
 
@@ -162,6 +174,21 @@ export default function Footer() {
                 className="p-2.5 bg-emerald-600/20 border border-emerald-500/40 rounded-xl text-emerald-300 flex items-center justify-center gap-2 hover:bg-emerald-600/30 transition font-bold"
               >
                 <span>{lang === 'en' ? 'Chat on WhatsApp' : 'হোয়াটসঅ্যাপে চ্যাট করুন'}</span>
+              </a>
+
+              {/* Facebook Page Button */}
+              <a
+                href={settings?.facebookPage || 'https://www.facebook.com/share/1FA8LYE5Y4/'}
+                target="_blank"
+                rel="noopener noreferrer"
+                title="আমাদের ফেসবুক পেইজ ভিজিট করুন"
+                className="p-2.5 bg-[#1877F2]/20 hover:bg-[#1877F2]/30 border border-[#1877F2]/50 hover:border-[#1877F2] rounded-xl text-blue-300 flex items-center justify-center gap-2 transition font-bold cursor-pointer group shadow-xs"
+              >
+                <svg className="size-4 fill-[#1877F2] group-hover:scale-110 transition-transform shrink-0" viewBox="0 0 24 24">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+                <span>{lang === 'en' ? 'Follow on Facebook' : 'আমাদের ফেসবুক পেইজ'}</span>
+                <span className="text-[10px] text-blue-400 group-hover:translate-x-0.5 transition-transform">↗</span>
               </a>
             </div>
           </div>

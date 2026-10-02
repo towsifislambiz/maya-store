@@ -93,7 +93,7 @@ export default function AdminLoginPage() {
                   type="text"
                   required
                   autoFocus
-                  placeholder="admin"
+                  placeholder="Gadgets Galaxy"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   className="w-full bg-slate-950 border border-slate-800 rounded-xl py-3 pl-10 pr-4 text-xs sm:text-sm text-white outline-none focus:border-cyan-400 transition placeholder:text-slate-600"
@@ -112,7 +112,7 @@ export default function AdminLoginPage() {
                 <input
                   type={showPassword ? 'text' : 'password'}
                   required
-                  placeholder="পাসওয়ার্ড লিখুন..."
+                  placeholder="SameerXnjr10"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full bg-slate-950 border border-slate-800 rounded-xl py-3 pl-10 pr-10 text-xs sm:text-sm text-white outline-none focus:border-cyan-400 transition placeholder:text-slate-600"
@@ -147,8 +147,8 @@ export default function AdminLoginPage() {
           <div className="pt-3 border-t border-slate-800 text-[11px] text-slate-400 space-y-1">
             <span className="block font-bold text-slate-300">🔑 অ্যাডমিন লগইন তথ্য:</span>
             <div className="bg-slate-950 p-2.5 rounded-xl border border-slate-800/80 font-mono text-slate-300 space-y-0.5">
-              <div>Username: <strong className="text-cyan-400">admin</strong></div>
-              <div>Password: <strong className="text-amber-400">admin</strong> (অথবা <strong>galaxy2026</strong>)</div>
+              <div>Username: <strong className="text-cyan-400">Gadgets Galaxy</strong></div>
+              <div>Password: <strong className="text-amber-400">{settings?.adminPassword || 'SameerXnjr10'}</strong></div>
             </div>
           </div>
 
