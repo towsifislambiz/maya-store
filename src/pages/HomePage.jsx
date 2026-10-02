@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import HeroSlider from '../components/HeroSlider';
 import CategoryNav from '../components/CategoryNav';
-import FlashDeals from '../components/FlashDeals';
+import FeaturedDeals from '../components/FeaturedDeals';
 import ProductCard from '../components/ProductCard';
 import { useProducts } from '../context/ProductContext';
-import { Sparkles, ShieldCheck, Truck, Headphones, RotateCcw, ArrowRight, ChevronDown, ChevronUp } from 'lucide-react';
+import { useStoreSettings } from '../context/StoreSettingsContext';
+import { Sparkles, ArrowRight, ChevronDown, ChevronUp, Headphones, MessageCircle, Phone } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function HomePage() {
   const { products } = useProducts();
+  const { settings } = useStoreSettings();
   const [activeCategory, setActiveCategory] = useState('all');
   
   const INITIAL_COUNT = 12;
@@ -28,6 +30,9 @@ export default function HomePage() {
     setVisibleCount(prev => Math.max(INITIAL_COUNT, prev - 4));
   };
 
+  const whatsappNumber = (settings?.whatsappNumber || '+8801322302319').replace(/[^0-9]/g, '');
+  const cleanWa = whatsappNumber.startsWith('880') ? whatsappNumber : `88${whatsappNumber}`;
+
   return (
     <div className="min-h-screen pb-16">
       {/* 1. Hero Promotional Slider */}
@@ -42,8 +47,8 @@ export default function HomePage() {
         }}
       />
 
-      {/* 3. Live Countdown Flash Deals */}
-      <FlashDeals />
+      {/* 3. High-Converting Featured Deals & Store Benefits (Replaced Countdown Bar) */}
+      <FeaturedDeals />
 
       {/* 4. Elevated Product Grid Section (Exactly 4 Cards Per Row on Desktop) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6">
@@ -102,51 +107,40 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 5. Trust & Quality Banner */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 mt-16">
-        <div className="bg-gradient-to-r from-slate-900 via-slate-950 to-slate-900 text-white rounded-3xl p-6 sm:p-8 border border-slate-800 shadow-xl">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-center sm:text-left">
-            
-            <div className="flex items-center gap-4">
-              <div className="size-12 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center shrink-0 border border-cyan-500/20">
-                <Truck className="size-6" />
-              </div>
-              <div>
-                <h4 className="font-bold text-white text-sm">সুপার ফাস্ট ডেলিভারি</h4>
-                <p className="text-xs text-slate-400">ঢাকা সিটিতে ২৪-৪৮ ঘণ্টা</p>
-              </div>
-            </div>
+      {/* 5. Direct Order Helpline & Assistance CTA */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 mt-12 sm:mt-16">
+        <div className="bg-gradient-to-r from-slate-900 via-slate-950 to-indigo-950 text-white rounded-3xl p-6 sm:p-8 border border-slate-800 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="space-y-1.5 text-center md:text-left">
+            <span className="text-xs font-bold text-cyan-400 uppercase tracking-wider flex items-center justify-center md:justify-start gap-1.5">
+              <Headphones className="size-4" />
+              <span>সহায়তা বা অর্ডার করতে সমস্যা হচ্ছে?</span>
+            </span>
+            <h3 className="text-xl sm:text-2xl font-black text-white font-sans">
+              আমাদের টিম আপনাকে সরাসরি সাহায্য করতে প্রস্তুত!
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-400 max-w-xl">
+              সরাসরি কল করুন অথবা হোয়াটসঅ্যাপে আপনার নাম, ঠিকানা ও পছন্দের পণ্যের নাম লিখে মেসেজ দিন।
+            </p>
+          </div>
 
-            <div className="flex items-center gap-4">
-              <div className="size-12 rounded-2xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center shrink-0 border border-emerald-500/20">
-                <ShieldCheck className="size-6" />
-              </div>
-              <div>
-                <h4 className="font-bold text-white text-sm">ক্যাশ অন ডেলিভারি</h4>
-                <p className="text-xs text-slate-400">পণ্য হাতে পেয়ে পেমেন্ট</p>
-              </div>
-            </div>
+          <div className="flex items-center gap-3 flex-wrap justify-center shrink-0">
+            <a
+              href={`https://wa.me/${cleanWa}?text=আসসালামু%20আলাইকুম!%20Galaxy%20Gadgets%20থেকে%20অর্ডার%20করতে%20সহায়তা%20চাচ্ছি।`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-emerald-600 hover:bg-emerald-500 text-white font-black py-3 px-6 rounded-2xl text-xs sm:text-sm flex items-center gap-2 shadow-lg hover:shadow-emerald-500/25 transition active:scale-95 cursor-pointer"
+            >
+              <MessageCircle className="size-4" />
+              <span>হোয়াটসঅ্যাপে মেসেজ</span>
+            </a>
 
-            <div className="flex items-center gap-4">
-              <div className="size-12 rounded-2xl bg-amber-500/10 text-amber-400 flex items-center justify-center shrink-0 border border-amber-500/20">
-                <RotateCcw className="size-6" />
-              </div>
-              <div>
-                <h4 className="font-bold text-white text-sm">৭ দিনের রিপ্লেসমেন্ট</h4>
-                <p className="text-xs text-slate-400">সহজ রিটার্ন ও এক্সচেঞ্জ</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-4">
-              <div className="size-12 rounded-2xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center shrink-0 border border-indigo-500/20">
-                <Headphones className="size-6" />
-              </div>
-              <div>
-                <h4 className="font-bold text-white text-sm">২৪/৭ কাস্টমার সাপোর্ট</h4>
-                <p className="text-xs text-slate-400">যেকোনো তথ্যে কল বা চ্যাট করুন</p>
-              </div>
-            </div>
-
+            <a
+              href={`tel:${settings?.hotline || '+8801322302319'}`}
+              className="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white font-bold py-3 px-5 rounded-2xl text-xs sm:text-sm flex items-center gap-2 transition active:scale-95 cursor-pointer"
+            >
+              <Phone className="size-4 text-cyan-400" />
+              <span>{settings?.hotline || '+880 1322-302319'}</span>
+            </a>
           </div>
         </div>
       </section>
