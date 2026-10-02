@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useProducts } from '../context/ProductContext';
 import { useCart } from '../context/CartContext';
+import { useLanguage } from '../context/LanguageContext';
 import ProductGallery360 from '../components/ProductGallery360';
 import ColorVariantSelector from '../components/ColorVariantSelector';
 import ProductCard from '../components/ProductCard';
@@ -24,6 +25,7 @@ export default function ProductDetailsPage() {
   const navigate = useNavigate();
   const { getProductById, products } = useProducts();
   const { addToCart, setIsCartOpen } = useCart();
+  const { lang, t } = useLanguage();
 
   const product = getProductById(id) || products[0];
 
@@ -50,8 +52,8 @@ export default function ProductDetailsPage() {
   if (!product) {
     return (
       <div className="max-w-7xl mx-auto px-4 py-16 text-center">
-        <h2 className="text-xl font-bold text-slate-800">প্রডাক্ট খুঁজে পাওয়া যায়নি</h2>
-        <Link to="/" className="text-sm text-cyan-600 underline mt-2 inline-block">হোমপেজে ফিরে যান</Link>
+        <h2 className="text-xl font-bold text-slate-800">{t('product_not_found')}</h2>
+        <Link to="/" className="text-sm text-cyan-600 underline mt-2 inline-block">{t('back_to_home')}</Link>
       </div>
     );
   }
@@ -81,13 +83,15 @@ export default function ProductDetailsPage() {
         
         {/* Breadcrumb Navigation */}
         <nav className="flex items-center gap-1.5 text-xs text-slate-500 mb-6 flex-wrap">
-          <Link to="/" className="hover:text-slate-900 transition">হোম</Link>
+          <Link to="/" className="hover:text-slate-900 transition">{t('dock_home')}</Link>
           <ChevronRight className="size-3.5" />
           <Link to={`/shop?category=${product.category}`} className="hover:text-slate-900 transition uppercase">
             {product.category}
           </Link>
           <ChevronRight className="size-3.5" />
-          <span className="text-slate-900 font-semibold truncate max-w-xs">{product.name}</span>
+          <span className="text-slate-900 font-semibold truncate max-w-xs">
+            {lang === 'en' ? product.name : (product.nameBn || product.name)}
+          </span>
         </nav>
 
         {/* Product Main Showcase Grid */}
@@ -98,7 +102,7 @@ export default function ProductDetailsPage() {
             <ProductGallery360
               images={activeImages}
               has360View={product.has360View}
-              productName={product.name}
+              productName={lang === 'en' ? product.name : (product.nameBn || product.name)}
             />
           </div>
 
@@ -108,11 +112,11 @@ export default function ProductDetailsPage() {
             {/* Badges & Category */}
             <div className="flex items-center gap-2 flex-wrap">
               <span className="bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 text-xs font-bold px-2.5 py-0.5 rounded-full">
-                ✓ ইন স্টক ({product.stockCount || 25}টি বাকি)
+                ✓ {t('in_stock')} ({product.stockCount || 25} {t('items_left')})
               </span>
               {product.discountPercent && (
                 <span className="bg-rose-500 text-white text-xs font-black px-2.5 py-0.5 rounded-full shadow-xs">
-                  {product.discountPercent}% স্পেশাল ছাড়
+                  {product.discountPercent}% {t('special_discount')}
                 </span>
               )}
               {product.badgeText && (
@@ -125,14 +129,14 @@ export default function ProductDetailsPage() {
             {/* Product Title & Short Description */}
             <div>
               <h1 className="text-2xl sm:text-3xl font-black text-slate-900 font-sans tracking-tight leading-snug">
-                {product.name}
+                {lang === 'en' ? product.name : (product.nameBn || product.name)}
               </h1>
               <p className="text-sm font-semibold text-slate-600 mt-1">
-                {product.nameBn}
+                {lang === 'en' ? (product.nameBn || '') : product.name}
               </p>
-              {product.shortDescBn && (
+              {(product.shortDescBn || product.shortDescEn) && (
                 <p className="text-xs sm:text-sm text-slate-600 mt-2.5 leading-relaxed bg-slate-50 border border-slate-200/80 p-3 rounded-2xl">
-                  {product.shortDescBn}
+                  {lang === 'en' ? (product.shortDescEn || product.shortDescBn) : (product.shortDescBn || product.shortDescEn)}
                 </p>
               )}
             </div>
@@ -146,16 +150,16 @@ export default function ProductDetailsPage() {
                   ))}
                 </div>
                 <span className="text-slate-900 font-extrabold ml-1">{product.rating}</span>
-                <span className="text-slate-500">({product.reviewsCount} টি ভেরিফাইড রিভিউ)</span>
+                <span className="text-slate-500">({product.reviewsCount} {t('verified_reviews')})</span>
               </div>
               <span className="text-slate-300">|</span>
-              <span className="text-slate-500">মডেল: <strong className="text-slate-800">{product.model}</strong></span>
+              <span className="text-slate-500">{t('model')}: <strong className="text-slate-800">{product.model}</strong></span>
             </div>
 
             {/* Pricing Section */}
             <div className="bg-slate-50 rounded-2xl p-4 border border-slate-200/90 flex items-center justify-between">
               <div>
-                <span className="text-xs text-slate-500 block">বর্তমান অফার মূল্য:</span>
+                <span className="text-xs text-slate-500 block">{t('offer_price')}:</span>
                 <div className="flex items-baseline gap-2.5 mt-0.5">
                   <span className="text-3xl sm:text-4xl font-black text-slate-900 font-sans">
                     ৳{product.price.toLocaleString()}
@@ -171,7 +175,7 @@ export default function ProductDetailsPage() {
               {product.regularPrice && (
                 <div className="text-right">
                   <span className="text-xs font-bold text-emerald-700 bg-emerald-100 border border-emerald-200 px-2.5 py-1 rounded-lg inline-block">
-                    আপনার সাশ্রয়: ৳{(product.regularPrice - product.price).toLocaleString()}
+                    {t('you_save')}: ৳{(product.regularPrice - product.price).toLocaleString()}
                   </span>
                 </div>
               )}
@@ -187,13 +191,13 @@ export default function ProductDetailsPage() {
             {/* Quantity Selector */}
             <div className="flex items-center gap-4 py-2">
               <span className="text-xs font-bold text-slate-800 uppercase tracking-wider">
-                পরিমাণ (Quantity):
+                {t('quantity')}:
               </span>
               <div className="flex items-center border border-slate-300 rounded-xl overflow-hidden bg-white shadow-xs">
                 <button
                   type="button"
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="px-3 py-2 hover:bg-slate-100 text-slate-700 transition"
+                  className="px-3 py-2 hover:bg-slate-100 text-slate-700 transition cursor-pointer"
                 >
                   <Minus className="size-3.5" />
                 </button>
@@ -203,7 +207,7 @@ export default function ProductDetailsPage() {
                 <button
                   type="button"
                   onClick={() => setQuantity(quantity + 1)}
-                  className="px-3 py-2 hover:bg-slate-100 text-slate-700 transition"
+                  className="px-3 py-2 hover:bg-slate-100 text-slate-700 transition cursor-pointer"
                 >
                   <Plus className="size-3.5" />
                 </button>
@@ -215,19 +219,19 @@ export default function ProductDetailsPage() {
               <button
                 type="button"
                 onClick={handleProceedToCheckout}
-                className="w-full bg-slate-950 hover:bg-slate-900 text-white font-black py-4 px-6 rounded-2xl text-base flex items-center justify-center gap-2 shadow-xl hover:shadow-2xl transition active:scale-98 group"
+                className="w-full bg-slate-950 hover:bg-slate-900 text-white font-black py-4 px-6 rounded-2xl text-base flex items-center justify-center gap-2 shadow-xl hover:shadow-2xl transition active:scale-98 group cursor-pointer"
               >
-                <span>Proceed to Checkout</span>
+                <span>{t('proceed_to_checkout')}</span>
                 <ArrowRight className="size-5 text-emerald-400 group-hover:translate-x-1 transition-transform" />
               </button>
 
               <button
                 type="button"
                 onClick={handleAddToCart}
-                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black py-4 px-6 rounded-2xl text-base flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transition active:scale-98"
+                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black py-4 px-6 rounded-2xl text-base flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transition active:scale-98 cursor-pointer"
               >
                 <ShoppingBag className="size-5" />
-                <span>কার্টে যোগ করুন</span>
+                <span>{t('add_to_cart')}</span>
               </button>
             </div>
 
@@ -235,7 +239,7 @@ export default function ProductDetailsPage() {
             <div className="bg-white rounded-2xl p-4 border border-slate-200 space-y-2 text-xs text-slate-700">
               <h4 className="font-bold text-slate-900 flex items-center gap-1.5 text-sm">
                 <Sparkles className="size-4 text-emerald-600" />
-                <span>প্রধান বৈশিষ্ট্যসমূহ:</span>
+                <span>{t('key_features')}</span>
               </h4>
               <ul className="space-y-1.5 pl-1">
                 {(product.bulletPointsBn && product.bulletPointsBn.length > 0) ? (
@@ -248,7 +252,7 @@ export default function ProductDetailsPage() {
                 ) : (
                   <li className="flex items-start gap-2 text-slate-600">
                     <CheckCircle2 className="size-3.5 text-emerald-500 shrink-0 mt-0.5" />
-                    <span>১০০% অরিজিনাল গ্যাজেট ও ফাস্ট ক্যাশ অন ডেলিভারি</span>
+                    <span>{t('trust_original_title')} & {t('trust_cod_title')}</span>
                   </li>
                 )}
               </ul>
@@ -258,18 +262,18 @@ export default function ProductDetailsPage() {
             <div className="grid grid-cols-3 gap-2 pt-2 text-center text-[11px] text-slate-600">
               <div className="p-2.5 bg-slate-50 border border-slate-200/80 rounded-xl">
                 <Truck className="size-4 text-emerald-600 mx-auto mb-1" />
-                <span className="font-bold block text-slate-800">ফাস্ট হোম ডেলিভারি</span>
-                <span className="text-[10px] text-slate-500">সারা বাংলাদেশে</span>
+                <span className="font-bold block text-slate-800">{t('fast_home_delivery')}</span>
+                <span className="text-[10px] text-slate-500">{t('nationwide_delivery')}</span>
               </div>
               <div className="p-2.5 bg-slate-50 border border-slate-200/80 rounded-xl">
                 <RotateCcw className="size-4 text-amber-600 mx-auto mb-1" />
-                <span className="font-bold block text-slate-800">৭ দিনের রিপ্লেসমেন্ট</span>
-                <span className="text-[10px] text-slate-500">কোনো সমস্যা হলে</span>
+                <span className="font-bold block text-slate-800">{t('trust_replacement_title')}</span>
+                <span className="text-[10px] text-slate-500">{t('if_any_issue')}</span>
               </div>
               <div className="p-2.5 bg-slate-50 border border-slate-200/80 rounded-xl">
                 <ShieldCheck className="size-4 text-cyan-600 mx-auto mb-1" />
-                <span className="font-bold block text-slate-800">ক্যাশ অন ডেলিভারি</span>
-                <span className="text-[10px] text-slate-500">পণ্য দেখে পেমেন্ট</span>
+                <span className="font-bold block text-slate-800">{t('trust_cod_title')}</span>
+                <span className="text-[10px] text-slate-500">{t('pay_after_checking')}</span>
               </div>
             </div>
 
@@ -281,23 +285,23 @@ export default function ProductDetailsPage() {
           <div className="flex items-center gap-3 border-b border-slate-200 pb-3 mb-6">
             <button
               onClick={() => setActiveTab('specs')}
-              className={`pb-3 font-bold text-sm sm:text-base border-b-2 transition ${
+              className={`pb-3 font-bold text-sm sm:text-base border-b-2 transition cursor-pointer ${
                 activeTab === 'specs'
                   ? 'border-slate-950 text-slate-950'
                   : 'border-transparent text-slate-400 hover:text-slate-700'
               }`}
             >
-              টেকনিক্যাল স্পেসিফিকেশন (Specifications)
+              {t('specifications')}
             </button>
             <button
               onClick={() => setActiveTab('reviews')}
-              className={`pb-3 font-bold text-sm sm:text-base border-b-2 transition ${
+              className={`pb-3 font-bold text-sm sm:text-base border-b-2 transition cursor-pointer ${
                 activeTab === 'reviews'
                   ? 'border-slate-950 text-slate-950'
                   : 'border-transparent text-slate-400 hover:text-slate-700'
               }`}
             >
-              কাস্টমার রিভিউ ({product.reviewsCount})
+              {t('customer_reviews')} ({product.reviewsCount})
             </button>
           </div>
 
@@ -305,7 +309,7 @@ export default function ProductDetailsPage() {
             <div className="overflow-x-auto">
               {(!product.specs || Object.keys(product.specs).length === 0) ? (
                 <div className="py-8 text-center text-slate-400 text-sm">
-                  <p>এই প্রোডাক্টের জন্য কোনো অতিরিক্ত স্পেসিফিকেশন যুক্ত করা হয়নি।</p>
+                  <p>{t('no_specs_available')}</p>
                 </div>
               ) : (
                 <table className="w-full text-xs sm:text-sm text-left border-collapse">
@@ -333,8 +337,8 @@ export default function ProductDetailsPage() {
             <div className="space-y-4">
               <div className="p-4 bg-emerald-50 rounded-2xl border border-emerald-100 flex items-center justify-between">
                 <div>
-                  <h4 className="font-bold text-emerald-950 text-sm">১০০% ভেরিফাইড কাস্টমার রিভিউ</h4>
-                  <p className="text-xs text-emerald-700">Galaxy Gadgets থেকে কেনা আসল কাস্টমারদের মতামত</p>
+                  <h4 className="font-bold text-emerald-950 text-sm">{t('verified_reviews_title')}</h4>
+                  <p className="text-xs text-emerald-700">{t('verified_reviews_subtitle')}</p>
                 </div>
                 <div className="flex items-center gap-1 text-emerald-600 font-bold">
                   <Star className="size-4 fill-emerald-500 text-emerald-500" />
@@ -346,8 +350,12 @@ export default function ProductDetailsPage() {
               <div className="space-y-3">
                 <div className="p-4 rounded-xl border border-slate-100 bg-slate-50/50">
                   <div className="flex items-center justify-between">
-                    <span className="font-bold text-slate-900 text-xs">রাকিবুল হাসান (মিরপুর, ঢাকা)</span>
-                    <span className="text-[10px] text-slate-400">২ দিন আগে</span>
+                    <span className="font-bold text-slate-900 text-xs">
+                      {lang === 'en' ? 'Rakibul Hasan (Mirpur, Dhaka)' : 'রাকিবুল হাসান (মিরপুর, ঢাকা)'}
+                    </span>
+                    <span className="text-[10px] text-slate-400">
+                      {lang === 'en' ? '2 days ago' : '২ দিন আগে'}
+                    </span>
                   </div>
                   <div className="flex text-amber-400 my-1">
                     {[...Array(5)].map((_, i) => (
@@ -355,14 +363,20 @@ export default function ProductDetailsPage() {
                     ))}
                   </div>
                   <p className="text-xs text-slate-600">
-                    "প্রডাক্ট হাতে পাওয়ার পর চেক করে দেখেছি, একদম অরিজিনাল দুবাই বক্স সিল প্যাক ছিল। সাউন্ড কোয়ালিটি এবং ব্যাটারি ব্যাকআপ নিয়ে কোনো কথা হবে না!"
+                    {lang === 'en'
+                      ? '"Received genuine sealed Dubai pack product. Sound quality and battery backup exceeded my expectations!"'
+                      : '"প্রডাক্ট হাতে পাওয়ার পর চেক করে দেখেছি, একদম অরিজিনাল দুবাই বক্স সিল প্যাক ছিল। সাউন্ড কোয়ালিটি এবং ব্যাটারি ব্যাকআপ নিয়ে কোনো কথা হবে না!"'}
                   </p>
                 </div>
 
                 <div className="p-4 rounded-xl border border-slate-100 bg-slate-50/50">
                   <div className="flex items-center justify-between">
-                    <span className="font-bold text-slate-900 text-xs">মেহেদী হাসান (চট্টগ্রাম)</span>
-                    <span className="text-[10px] text-slate-400">৪ দিন আগে</span>
+                    <span className="font-bold text-slate-900 text-xs">
+                      {lang === 'en' ? 'Mehedi Hasan (Chattogram)' : 'মেহেদী হাসান (চট্টগ্রাম)'}
+                    </span>
+                    <span className="text-[10px] text-slate-400">
+                      {lang === 'en' ? '4 days ago' : '৪ দিন আগে'}
+                    </span>
                   </div>
                   <div className="flex text-amber-400 my-1">
                     {[...Array(5)].map((_, i) => (
@@ -370,7 +384,9 @@ export default function ProductDetailsPage() {
                     ))}
                   </div>
                   <p className="text-xs text-slate-600">
-                    "খুব দ্রুত ডেলিভারি পেয়েছি। প্রোডাক্টের বিল্ড কোয়ালিটি বেশ প্রিমিয়াম। ধন্যবাদ Galaxy Gadgets টিমকে!"
+                    {lang === 'en'
+                      ? '"Very fast delivery. Build quality is extremely premium. Thanks to Galaxy Gadgets team!"'
+                      : '"খুব দ্রুত ডেলিভারি পেয়েছি। প্রোডাক্টের বিল্ড কোয়ালিটি বেশ প্রিমিয়াম। ধন্যবাদ Galaxy Gadgets টিমকে!"'}
                   </p>
                 </div>
               </div>
@@ -382,7 +398,7 @@ export default function ProductDetailsPage() {
         {relatedProducts.length > 0 && (
           <div className="mt-14">
             <h3 className="text-xl font-black text-slate-900 font-sans mb-5">
-              সম্পর্কিত অন্যান্য গ্যাজেট
+              {t('related_products')}
             </h3>
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-4 md:gap-5 lg:gap-6">
               {relatedProducts.map(p => (

@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useProducts } from '../context/ProductContext';
 import { useCart } from '../context/CartContext';
+import { useLanguage } from '../context/LanguageContext';
 import { CATEGORIES } from '../data/products';
 import ProductCard from '../components/ProductCard';
 import { Sparkles, Search } from 'lucide-react';
@@ -9,6 +10,7 @@ import { Sparkles, Search } from 'lucide-react';
 export default function ShopPage() {
   const { products } = useProducts();
   const { wishlist } = useCart();
+  const { lang, t } = useLanguage();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const categoryParam = searchParams.get('category') || 'all';
@@ -51,7 +53,7 @@ export default function ShopPage() {
       if (sortBy === 'price-high') return b.price - a.price;
       return (b.rating * b.reviewsCount) - (a.rating * a.reviewsCount);
     });
-  }, [products, categoryParam, filterParam, wishlist, searchFilter, sortBy]);
+  }, [products, categoryParam, filterParam, wishlist, currentSearch, sortBy]);
 
   return (
     <div className="min-h-screen pt-4 sm:pt-8 pb-24 md:pb-12">
@@ -63,13 +65,17 @@ export default function ShopPage() {
             <div>
               <div className="flex items-center gap-1.5 text-xs font-bold text-cyan-400 uppercase tracking-wider mb-1">
                 <Sparkles className="size-3.5" />
-                <span>সকল গ্যাজেট ব্রাউজ করুন</span>
+                <span>{lang === 'en' ? 'Browse All Gadgets' : 'সকল গ্যাজেট ব্রাউজ করুন'}</span>
               </div>
               <h1 className="text-2xl sm:text-3xl font-black font-sans">
-                {filterParam === 'wishlist' ? 'আপনার পছন্দের গ্যাজেট (উইশলিস্ট)' : 'গ্যাজেট কালেকশন'}
+                {filterParam === 'wishlist' 
+                  ? (lang === 'en' ? 'Your Wishlist' : 'আপনার পছন্দের গ্যাজেট (উইশলিস্ট)') 
+                  : (lang === 'en' ? 'Gadget Collection' : 'গ্যাজেট কালেকশন')}
               </h1>
               <p className="text-xs sm:text-sm text-slate-400 mt-1">
-                ১০০% অথেনটিক গ্যাজেট, ইনস্ট্যান্ট ওয়ারেন্টি ও ক্যাশ অন ডেলিভারি
+                {lang === 'en' 
+                  ? '100% authentic gadgets with nationwide fast cash on delivery' 
+                  : '১০০% অথেনটিক গ্যাজেট, ইনস্ট্যান্ট ওয়ারেন্টি ও ক্যাশ অন ডেলিভারি'}
               </p>
             </div>
 
@@ -77,7 +83,7 @@ export default function ShopPage() {
             <div className="w-full md:w-72 relative">
               <input
                 type="text"
-                placeholder="প্রডাক্ট ফিল্টার করুন..."
+                placeholder={lang === 'en' ? 'Filter products...' : 'প্রডাক্ট ফিল্টার করুন...'}
                 value={currentSearch}
                 onChange={(e) => setUserSearchText(e.target.value)}
                 className="w-full bg-slate-800 text-white pl-9 pr-3 py-2 rounded-xl text-xs border border-slate-700 outline-none focus:border-cyan-400"
@@ -96,28 +102,30 @@ export default function ShopPage() {
               <button
                 key={cat.id}
                 onClick={() => setSearchParams({ category: cat.id })}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition shrink-0 ${
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition shrink-0 cursor-pointer ${
                   categoryParam === cat.id
                     ? 'bg-slate-950 text-white shadow'
                     : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                 }`}
               >
-                {cat.nameBn}
+                {lang === 'en' ? (cat.nameEn || cat.nameBn) : cat.nameBn}
               </button>
             ))}
           </div>
 
           {/* Sort Dropdown */}
           <div className="flex items-center gap-2 self-end sm:self-auto text-xs shrink-0">
-            <span className="text-slate-500 font-medium">সর্ট করুন:</span>
+            <span className="text-slate-500 font-medium">
+              {lang === 'en' ? 'Sort by:' : 'সর্ট করুন:'}
+            </span>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
               className="bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-1.5 font-semibold text-slate-800 outline-none"
             >
-              <option value="popular">জনপ্রিয়তা অনুযায়ী</option>
-              <option value="price-low">দাম: কম থেকে বেশি</option>
-              <option value="price-high">দাম: বেশি থেকে কম</option>
+              <option value="popular">{lang === 'en' ? 'Most Popular' : 'জনপ্রিয়তা অনুযায়ী'}</option>
+              <option value="price-low">{lang === 'en' ? 'Price: Low to High' : 'দাম: কম থেকে বেশি'}</option>
+              <option value="price-high">{lang === 'en' ? 'Price: High to Low' : 'দাম: বেশি থেকে কম'}</option>
             </select>
           </div>
         </div>
@@ -125,16 +133,20 @@ export default function ShopPage() {
         {/* Products Grid */}
         {filteredProducts.length === 0 ? (
           <div className="bg-white rounded-3xl p-16 text-center border border-slate-200 shadow-xs">
-            <p className="text-base font-bold text-slate-800">কোনো প্রডাক্ট পাওয়া যায়নি!</p>
-            <p className="text-xs text-slate-500 mt-1">দয়া করে অন্য ক্যাটাগরি বেছে নিন অথবা ফিল্টার রিসেট করুন।</p>
+            <p className="text-base font-bold text-slate-800">{t('search_no_results')}</p>
+            <p className="text-xs text-slate-500 mt-1">
+              {lang === 'en' 
+                ? 'Please select another category or reset filters.' 
+                : 'দয়া করে অন্য ক্যাটাগরি বেছে নিন অথবা ফিল্টার রিসেট করুন।'}
+            </p>
             <button
               onClick={() => {
                 setSearchParams({});
                 setUserSearchText('');
               }}
-              className="mt-4 bg-slate-950 text-white text-xs font-bold px-4 py-2 rounded-xl shadow"
+              className="mt-4 bg-slate-950 text-white text-xs font-bold px-4 py-2 rounded-xl shadow cursor-pointer"
             >
-              সকল প্রডাক্ট রিসেট করুন
+              {lang === 'en' ? 'Reset All Filters' : 'সকল প্রডাক্ট রিসেট করুন'}
             </button>
           </div>
         ) : (

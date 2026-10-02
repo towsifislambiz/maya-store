@@ -2,9 +2,11 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Star, ShoppingBag, Heart, RotateCcw, Zap } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function ProductCard({ product }) {
   const { addToCart, toggleWishlist, isInWishlist } = useCart();
+  const { lang, t } = useLanguage();
   const navigate = useNavigate();
   const isWished = isInWishlist(product.id);
 
@@ -52,7 +54,7 @@ export default function ProductCard({ product }) {
           {product.has360View && (
             <span
               className="bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-black text-[8px] sm:text-[10px] px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full shadow flex items-center gap-0.5 sm:gap-1 animate-pulse transition"
-              title="৩৬০° ভিউ সম্ভব"
+              title={lang === 'en' ? '360° interactive view' : '৩৬০° ভিউ সম্ভব'}
             >
               <RotateCcw className="size-2.5 sm:size-3" />
               <span>360°</span>
@@ -60,12 +62,12 @@ export default function ProductCard({ product }) {
           )}
           <button
             onClick={handleToggleWish}
-            className={`p-1.5 sm:p-2 rounded-full transition shadow-xs backdrop-blur-md ${
+            className={`p-1.5 sm:p-2 rounded-full transition shadow-xs backdrop-blur-md cursor-pointer ${
               isWished
                 ? 'bg-rose-500 text-white scale-110'
                 : 'bg-white/90 text-slate-400 hover:text-rose-500 hover:bg-white'
             }`}
-            title="পছন্দের তালিকায় রাখুন"
+            title={lang === 'en' ? 'Save to wishlist' : 'পছন্দের তালিকায় রাখুন'}
           >
             <Heart className={`size-3.5 sm:size-4 ${isWished ? 'fill-current' : ''}`} />
           </button>
@@ -91,7 +93,7 @@ export default function ProductCard({ product }) {
         {product.colors && product.colors.length > 1 && (
           <div className="absolute bottom-1.5 left-2 sm:bottom-2.5 sm:left-3.5 flex items-center gap-1 bg-white/95 backdrop-blur-md px-1.5 sm:px-2 py-0.5 rounded-full text-[8px] sm:text-[10px] font-bold text-slate-700 shadow-xs border border-slate-200/80">
             <span className="size-1.5 sm:size-2 rounded-full bg-cyan-500"></span>
-            <span>{product.colors.length} কালার</span>
+            <span>{product.colors.length} {t('colors_count')}</span>
           </div>
         )}
       </Link>
@@ -114,10 +116,10 @@ export default function ProductCard({ product }) {
           {/* Titles */}
           <Link to={`/product/${product.id}`} className="block group-hover:text-cyan-600 transition-colors">
             <h3 className="font-extrabold text-slate-900 text-xs sm:text-sm md:text-base leading-snug line-clamp-2 min-h-[2rem] sm:min-h-[2.5rem]">
-              {product.name}
+              {lang === 'en' ? product.name : (product.nameBn || product.name)}
             </h3>
             <p className="text-[10px] sm:text-xs text-slate-600 line-clamp-1 mt-0.5 font-medium">
-              {product.nameBn}
+              {lang === 'en' ? (product.nameBn || '') : product.name}
             </p>
           </Link>
 
@@ -135,7 +137,7 @@ export default function ProductCard({ product }) {
             </div>
             {savingsAmount > 0 && (
               <span className="text-[8px] sm:text-[10px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200 mt-1 inline-block truncate max-w-full">
-                সাশ্রয়: ৳{savingsAmount.toLocaleString()}
+                {t('save_short')}: ৳{savingsAmount.toLocaleString()}
               </span>
             )}
           </div>
@@ -146,17 +148,17 @@ export default function ProductCard({ product }) {
           {/* 1-Click Order Now Button */}
           <button
             onClick={handleBuyNow}
-            className="grow bg-slate-950 hover:bg-slate-900 text-white font-extrabold py-2 sm:py-2.5 px-2 rounded-xl sm:rounded-2xl text-[11px] sm:text-xs md:text-sm flex items-center justify-center gap-1 shadow-md hover:shadow-xl transition-all active:scale-95 group/btn"
+            className="grow bg-slate-950 hover:bg-slate-900 text-white font-extrabold py-2 sm:py-2.5 px-2 rounded-xl sm:rounded-2xl text-[11px] sm:text-xs md:text-sm flex items-center justify-center gap-1 shadow-md hover:shadow-xl transition-all active:scale-95 group/btn cursor-pointer"
           >
             <Zap className="size-3.5 sm:size-4 text-amber-400 fill-amber-400 group-hover/btn:scale-110 transition-transform shrink-0" />
-            <span className="truncate">অর্ডার করুন</span>
+            <span className="truncate">{t('buy_now')}</span>
           </button>
 
           {/* Add to Cart Icon Button */}
           <button
             onClick={handleAddToCart}
-            className="p-2 sm:p-2.5 bg-slate-100 hover:bg-emerald-50 text-slate-700 hover:text-emerald-600 border border-slate-200 hover:border-emerald-300 rounded-xl sm:rounded-2xl transition shadow-xs active:scale-90 shrink-0"
-            title="কার্টে যোগ করুন"
+            className="p-2 sm:p-2.5 bg-slate-100 hover:bg-emerald-50 text-slate-700 hover:text-emerald-600 border border-slate-200 hover:border-emerald-300 rounded-xl sm:rounded-2xl transition shadow-xs active:scale-90 shrink-0 cursor-pointer"
+            title={t('add_to_cart')}
           >
             <ShoppingBag className="size-3.5 sm:size-4" />
           </button>

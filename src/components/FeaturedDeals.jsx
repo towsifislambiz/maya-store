@@ -15,11 +15,13 @@ import {
 import { useCart } from '../context/CartContext';
 import { useProducts } from '../context/ProductContext';
 import { useStoreSettings } from '../context/StoreSettingsContext';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function FeaturedDeals() {
   const { products } = useProducts();
   const { addToCart } = useCart();
   const { settings } = useStoreSettings();
+  const { lang, t } = useLanguage();
   const navigate = useNavigate();
 
   // Pick top 2 flagship deals dynamically from product catalog
@@ -51,8 +53,8 @@ export default function FeaturedDeals() {
               <Truck className="size-4 sm:size-5" />
             </div>
             <div className="min-w-0">
-              <h4 className="text-xs sm:text-sm font-black text-slate-900 truncate">সারা দেশে ক্যাশ অন ডেলিভারি</h4>
-              <p className="text-[10px] sm:text-xs text-slate-500 truncate">পণ্য হাতে পেয়ে টাকা দিন</p>
+              <h4 className="text-xs sm:text-sm font-black text-slate-900 truncate">{t('trust_cod_title')}</h4>
+              <p className="text-[10px] sm:text-xs text-slate-500 truncate">{t('trust_cod_desc')}</p>
             </div>
           </div>
 
@@ -62,8 +64,8 @@ export default function FeaturedDeals() {
               <ShieldCheck className="size-4 sm:size-5" />
             </div>
             <div className="min-w-0">
-              <h4 className="text-xs sm:text-sm font-black text-slate-900 truncate">১০০% অরিজিনাল গ্যাজেট</h4>
-              <p className="text-[10px] sm:text-xs text-slate-500 truncate">যাচাইকৃত প্রিমিয়াম কোয়ালিটি</p>
+              <h4 className="text-xs sm:text-sm font-black text-slate-900 truncate">{t('trust_original_title')}</h4>
+              <p className="text-[10px] sm:text-xs text-slate-500 truncate">{t('trust_original_desc')}</p>
             </div>
           </div>
 
@@ -73,8 +75,8 @@ export default function FeaturedDeals() {
               <RotateCcw className="size-4 sm:size-5" />
             </div>
             <div className="min-w-0">
-              <h4 className="text-xs sm:text-sm font-black text-slate-900 truncate">৭ দিনের রিপ্লেসমেন্ট</h4>
-              <p className="text-[10px] sm:text-xs text-slate-500 truncate">কোনো ত্রুটিতে সহজ এক্সচেঞ্জ</p>
+              <h4 className="text-xs sm:text-sm font-black text-slate-900 truncate">{t('trust_replacement_title')}</h4>
+              <p className="text-[10px] sm:text-xs text-slate-500 truncate">{t('trust_replacement_desc')}</p>
             </div>
           </div>
 
@@ -89,8 +91,8 @@ export default function FeaturedDeals() {
               <MessageCircle className="size-4 sm:size-5" />
             </div>
             <div className="min-w-0">
-              <h4 className="text-xs sm:text-sm font-black text-slate-900 group-hover:text-emerald-700 transition truncate">২৪/৭ লাইভ সাপোর্ট</h4>
-              <p className="text-[10px] sm:text-xs text-slate-500 truncate">হোয়াটসঅ্যাপে সরাসরি চ্যাট</p>
+              <h4 className="text-xs sm:text-sm font-black text-slate-900 group-hover:text-emerald-700 transition truncate">{t('trust_support_title')}</h4>
+              <p className="text-[10px] sm:text-xs text-slate-500 truncate">{t('trust_support_desc')}</p>
             </div>
           </a>
 
@@ -113,26 +115,26 @@ export default function FeaturedDeals() {
               <div className="flex items-center gap-2 mb-3">
                 <span className="bg-gradient-to-r from-rose-500 to-red-600 text-white text-[10px] sm:text-xs font-black px-2.5 py-0.5 rounded-full shadow uppercase tracking-wider flex items-center gap-1">
                   <Zap className="size-3 fill-white" />
-                  হট ডিল • {deal1.discountPercent || 38}% ছাড়
+                  {t('hot_deal')} • {deal1.discountPercent || 38}% {t('special_discount')}
                 </span>
                 <span className="bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded-full">
-                  বেস্টসেলার
+                  {t('bestseller')}
                 </span>
               </div>
 
               {/* Title & Description */}
               <h3 className="text-lg sm:text-2xl font-black text-white font-sans tracking-tight mb-1.5 group-hover:text-cyan-300 transition-colors">
-                {deal1.name}
+                {lang === 'en' ? deal1.name : (deal1.nameBn || deal1.name)}
               </h3>
               <p className="text-xs sm:text-sm text-slate-300 line-clamp-2 mb-4 leading-relaxed font-normal">
-                {deal1.shortDescBn || 'দুবাই ভ্যারিয়েন্ট গোল্ড সিল ANC ও টাইপ-সি স্পিকার কেস সহ প্রিমিয়াম অডিও এক্সপেরিয়েন্স।'}
+                {lang === 'en' ? (deal1.shortDescEn || deal1.shortDescBn) : (deal1.shortDescBn || deal1.shortDescEn)}
               </p>
             </div>
 
             {/* Middle: Product Image Showcase with Price */}
             <div className="relative py-2 sm:py-4 flex items-center justify-between gap-4">
               <div className="space-y-1 z-10">
-                <span className="text-[11px] text-slate-400 font-medium block">স্পেশাল অফার মূল্য</span>
+                <span className="text-[11px] text-slate-400 font-medium block">{t('offer_price')}</span>
                 <div className="flex items-baseline gap-2">
                   <span className="text-2xl sm:text-3xl font-black text-white font-sans">
                     ৳{deal1.price}
@@ -145,7 +147,7 @@ export default function FeaturedDeals() {
                 </div>
                 <div className="flex items-center gap-1 text-[11px] text-emerald-400 font-semibold pt-1">
                   <CheckCircle2 className="size-3.5" />
-                  <span>স্টক সীমিত • দ্রুত অর্ডার করুন</span>
+                  <span>{t('stock_limited_order_fast')}</span>
                 </div>
               </div>
 
@@ -170,7 +172,7 @@ export default function FeaturedDeals() {
                 className="flex-1 bg-gradient-to-r from-cyan-400 to-cyan-500 hover:from-cyan-300 hover:to-cyan-400 text-slate-950 font-black py-2.5 sm:py-3 px-4 rounded-xl sm:rounded-2xl text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg hover:shadow-cyan-500/25 transition active:scale-95 cursor-pointer"
               >
                 <ShoppingBag className="size-4" />
-                <span>সরাসরি অর্ডার করুন</span>
+                <span>{t('order_now')}</span>
               </button>
 
               <Link
@@ -178,7 +180,7 @@ export default function FeaturedDeals() {
                 className="bg-slate-800/90 hover:bg-slate-800 border border-slate-700 hover:border-cyan-400/50 text-white font-bold py-2.5 sm:py-3 px-3.5 sm:px-4 rounded-xl sm:rounded-2xl text-xs sm:text-sm flex items-center gap-1.5 transition active:scale-95"
               >
                 <Eye className="size-3.5 text-cyan-400" />
-                <span>বিস্তারিত</span>
+                <span>{t('view_details')}</span>
                 <ArrowRight className="size-3.5 text-slate-400 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
@@ -196,26 +198,26 @@ export default function FeaturedDeals() {
               <div className="flex items-center gap-2 mb-3">
                 <span className="bg-gradient-to-r from-emerald-500 to-teal-600 text-slate-950 text-[10px] sm:text-xs font-black px-2.5 py-0.5 rounded-full shadow uppercase tracking-wider flex items-center gap-1">
                   <Sparkles className="size-3 fill-slate-950" />
-                  ফ্ল্যাগশিপ অফার • ২টি ব্যাটারি ফ্রি
+                  {t('flagship_offer')}
                 </span>
                 <span className="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded-full">
-                  টপ রেটেড
+                  {t('top_rated')}
                 </span>
               </div>
 
               {/* Title & Description */}
               <h3 className="text-lg sm:text-2xl font-black text-white font-sans tracking-tight mb-1.5 group-hover:text-emerald-300 transition-colors">
-                {deal2.name}
+                {lang === 'en' ? deal2.name : (deal2.nameBn || deal2.name)}
               </h3>
               <p className="text-xs sm:text-sm text-slate-300 line-clamp-2 mb-4 leading-relaxed font-normal">
-                {deal2.shortDescBn || 'ডুয়াল এইচডি ক্যামেরা ও অপটিক্যাল ফ্লো সেন্সর দিয়ে বাতাসে স্ট্যাবল ওড়ে। ফ্রি হার্ড কেস ও মডুলার ব্যাটারি সহ।'}
+                {lang === 'en' ? (deal2.shortDescEn || deal2.shortDescBn) : (deal2.shortDescBn || deal2.shortDescEn)}
               </p>
             </div>
 
             {/* Middle: Product Image Showcase with Price */}
             <div className="relative py-2 sm:py-4 flex items-center justify-between gap-4">
               <div className="space-y-1 z-10">
-                <span className="text-[11px] text-slate-400 font-medium block">স্পেশাল অফার মূল্য</span>
+                <span className="text-[11px] text-slate-400 font-medium block">{t('offer_price')}</span>
                 <div className="flex items-baseline gap-2">
                   <span className="text-2xl sm:text-3xl font-black text-white font-sans">
                     ৳{deal2.price}
@@ -228,7 +230,7 @@ export default function FeaturedDeals() {
                 </div>
                 <div className="flex items-center gap-1 text-[11px] text-emerald-400 font-semibold pt-1">
                   <CheckCircle2 className="size-3.5" />
-                  <span>রেডি স্টক • ক্যাশ অন ডেলিভারি</span>
+                  <span>{t('stock_limited_order_fast')}</span>
                 </div>
               </div>
 
@@ -253,7 +255,7 @@ export default function FeaturedDeals() {
                 className="flex-1 bg-gradient-to-r from-emerald-400 to-emerald-500 hover:from-emerald-300 hover:to-emerald-400 text-slate-950 font-black py-2.5 sm:py-3 px-4 rounded-xl sm:rounded-2xl text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg hover:shadow-emerald-500/25 transition active:scale-95 cursor-pointer"
               >
                 <ShoppingBag className="size-4" />
-                <span>সরাসরি অর্ডার করুন</span>
+                <span>{t('order_now')}</span>
               </button>
 
               <Link
@@ -261,7 +263,7 @@ export default function FeaturedDeals() {
                 className="bg-slate-800/90 hover:bg-slate-800 border border-slate-700 hover:border-emerald-400/50 text-white font-bold py-2.5 sm:py-3 px-3.5 sm:px-4 rounded-xl sm:rounded-2xl text-xs sm:text-sm flex items-center gap-1.5 transition active:scale-95"
               >
                 <Eye className="size-3.5 text-emerald-400" />
-                <span>বিস্তারিত</span>
+                <span>{t('view_details')}</span>
                 <ArrowRight className="size-3.5 text-slate-400 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>

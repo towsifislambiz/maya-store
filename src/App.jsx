@@ -5,6 +5,7 @@ import { StoreSettingsProvider } from './context/StoreSettingsContext';
 import { CartProvider } from './context/CartContext';
 import { OrderProvider } from './context/OrderContext';
 import { AdminAuthProvider } from './context/AdminAuthContext';
+import { LanguageProvider } from './context/LanguageContext';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -48,48 +49,50 @@ function PageLoader() {
 export default function App() {
   return (
     <StoreSettingsProvider>
-      <ProductProvider>
-        <CartProvider>
-          <OrderProvider>
-            <AdminAuthProvider>
-              <BrowserRouter>
-                <ScrollToTop />
-                <div className="flex flex-col min-h-screen bg-[#F8FAFC]">
-                  <Header />
-                  <CartDrawer />
-                  
-                  <main className="grow">
-                    <Suspense fallback={<PageLoader />}>
-                      <Routes>
-                        <Route path="/" element={<HomePage />} />
-                        <Route path="/product/:id" element={<ProductDetailsPage />} />
-                        <Route path="/shop" element={<ShopPage />} />
-                        <Route path="/checkout" element={<CheckoutPage />} />
-                        <Route path="/order-success/:trackingId" element={<OrderSuccessPage />} />
-                        <Route path="/admin/login" element={<AdminLoginPage />} />
-                        <Route
-                          path="/admin"
-                          element={
-                            <AdminGuard>
-                              <AdminDashboard />
-                            </AdminGuard>
-                          }
-                        />
-                      </Routes>
-                    </Suspense>
-                  </main>
+      <LanguageProvider>
+        <ProductProvider>
+          <CartProvider>
+            <OrderProvider>
+              <AdminAuthProvider>
+                <BrowserRouter>
+                  <ScrollToTop />
+                  <div className="flex flex-col min-h-screen bg-[#F8FAFC]">
+                    <Header />
+                    <CartDrawer />
+                    
+                    <main className="grow">
+                      <Suspense fallback={<PageLoader />}>
+                        <Routes>
+                          <Route path="/" element={<HomePage />} />
+                          <Route path="/product/:id" element={<ProductDetailsPage />} />
+                          <Route path="/shop" element={<ShopPage />} />
+                          <Route path="/checkout" element={<CheckoutPage />} />
+                          <Route path="/order-success/:trackingId" element={<OrderSuccessPage />} />
+                          <Route path="/admin/login" element={<AdminLoginPage />} />
+                          <Route
+                            path="/admin"
+                            element={
+                              <AdminGuard>
+                                <AdminDashboard />
+                              </AdminGuard>
+                            }
+                          />
+                        </Routes>
+                      </Suspense>
+                    </main>
 
-                  <Footer />
-                  <FloatingWhatsApp />
-                  <MobileDock />
-                  {/* WebCraft Guard Remote Anti-Theft & Kill-Switch */}
-                  <WebcraftGuard projectId="wg_galaxygadgets" />
-                </div>
-              </BrowserRouter>
-            </AdminAuthProvider>
-          </OrderProvider>
-        </CartProvider>
-      </ProductProvider>
+                    <Footer />
+                    <FloatingWhatsApp />
+                    <MobileDock />
+                    {/* WebCraft Guard Remote Anti-Theft & Kill-Switch */}
+                    <WebcraftGuard projectId="wg_galaxygadgets" />
+                  </div>
+                </BrowserRouter>
+              </AdminAuthProvider>
+            </OrderProvider>
+          </CartProvider>
+        </ProductProvider>
+      </LanguageProvider>
     </StoreSettingsProvider>
   );
 }

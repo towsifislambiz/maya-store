@@ -4,11 +4,13 @@ import { Home, Grid, Heart, ShoppingBag, MessageSquare, ShieldCheck } from 'luci
 import { useCart } from '../context/CartContext';
 import { useAdminAuth } from '../context/AdminAuthContext';
 import { useStoreSettings } from '../context/StoreSettingsContext';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function MobileDock() {
   const { totalItemsCount, setIsCartOpen, wishlist } = useCart();
   const { isAdminUnlocked } = useAdminAuth();
   const { settings } = useStoreSettings();
+  const { t } = useLanguage();
   const location = useLocation();
 
   const rawWa = settings?.whatsappNumber || '8801322302319';
@@ -28,7 +30,7 @@ export default function MobileDock() {
           }`}
         >
           <Home className="size-5" />
-          <span className="text-[10px]">হোম</span>
+          <span className="text-[10px]">{t('dock_home')}</span>
         </Link>
 
         {/* Shop */}
@@ -39,7 +41,7 @@ export default function MobileDock() {
           }`}
         >
           <Grid className="size-5" />
-          <span className="text-[10px]">শপিং</span>
+          <span className="text-[10px]">{t('dock_shop')}</span>
         </Link>
 
         {/* Wishlist */}
@@ -57,7 +59,7 @@ export default function MobileDock() {
               </span>
             )}
           </div>
-          <span className="text-[10px]">পছন্দ</span>
+          <span className="text-[10px]">{t('dock_wishlist')}</span>
         </Link>
 
         {/* WhatsApp Chat */}
@@ -68,13 +70,13 @@ export default function MobileDock() {
           className="flex flex-col items-center justify-center gap-0.5 py-1 text-emerald-400 hover:text-emerald-300 transition"
         >
           <MessageSquare className="size-5 fill-emerald-400/20" />
-          <span className="text-[10px] font-medium">হোয়াটসঅ্যাপ</span>
+          <span className="text-[10px] font-medium">{t('dock_whatsapp')}</span>
         </a>
 
         {/* Cart */}
         <button
           onClick={() => setIsCartOpen(true)}
-          className="flex flex-col items-center justify-center gap-0.5 py-1 text-slate-400 hover:text-white transition relative"
+          className="flex flex-col items-center justify-center gap-0.5 py-1 text-slate-400 hover:text-white transition relative cursor-pointer"
         >
           <div className="relative">
             <ShoppingBag className="size-5" />
@@ -84,7 +86,7 @@ export default function MobileDock() {
               </span>
             )}
           </div>
-          <span className="text-[10px]">কার্ট</span>
+          <span className="text-[10px]">{t('dock_cart')}</span>
         </button>
 
         {/* Admin (Only visible if 5-click unlocked) */}
@@ -96,7 +98,7 @@ export default function MobileDock() {
             }`}
           >
             <ShieldCheck className="size-5 text-amber-400" />
-            <span className="text-[10px] text-amber-400 font-bold">অ্যাডমিন</span>
+            <span className="text-[10px] text-amber-400 font-bold">{t('dock_admin')}</span>
           </Link>
         )}
       </div>

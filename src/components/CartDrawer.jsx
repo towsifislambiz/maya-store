@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { X, Trash2, Plus, Minus, ShoppingBag, ArrowRight, ShieldCheck } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function CartDrawer() {
   const {
@@ -18,6 +19,7 @@ export default function CartDrawer() {
     deliveryZone,
     setDeliveryZone
   } = useCart();
+  const { lang, t } = useLanguage();
 
   const navigate = useNavigate();
 
@@ -27,7 +29,7 @@ export default function CartDrawer() {
     <div className="fixed inset-0 z-50 overflow-hidden">
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-black/70 backdrop-blur-xs transition-opacity"
+        className="absolute inset-0 bg-black/70 backdrop-blur-xs transition-opacity cursor-pointer"
         onClick={() => setIsCartOpen(false)}
       />
 
@@ -38,11 +40,11 @@ export default function CartDrawer() {
           <div className="p-4 sm:p-5 border-b border-slate-100 flex items-center justify-between bg-slate-900 text-white">
             <div className="flex items-center gap-2">
               <ShoppingBag className="size-5 text-emerald-400" />
-              <h2 className="font-bold text-base sm:text-lg">আপনার শপিং কার্ট ({cartItems.length})</h2>
+              <h2 className="font-bold text-base sm:text-lg">{t('your_cart')} ({cartItems.length})</h2>
             </div>
             <button
               onClick={() => setIsCartOpen(false)}
-              className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition"
+              className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition cursor-pointer"
             >
               <X className="size-5" />
             </button>
@@ -53,13 +55,13 @@ export default function CartDrawer() {
             {cartItems.length === 0 ? (
               <div className="py-16 text-center text-slate-500">
                 <ShoppingBag className="size-16 mx-auto text-slate-300 mb-3 stroke-[1.5]" />
-                <p className="font-bold text-slate-800 text-lg">আপনার কার্ট খালি!</p>
-                <p className="text-xs text-slate-500 mt-1">পছন্দের গ্যাজেট কার্টে যোগ করুন।</p>
+                <p className="font-bold text-slate-800 text-lg">{t('cart_empty')}</p>
+                <p className="text-xs text-slate-500 mt-1">{t('cart_empty_sub')}</p>
                 <button
                   onClick={() => setIsCartOpen(false)}
-                  className="mt-5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-5 py-2.5 rounded-xl shadow transition"
+                  className="mt-5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-5 py-2.5 rounded-xl shadow transition cursor-pointer"
                 >
-                  শপিং চালিয়ে যান
+                  {t('continue_shopping')}
                 </button>
               </div>
             ) : (
@@ -74,11 +76,11 @@ export default function CartDrawer() {
                   />
                   <div className="grow min-w-0">
                     <h4 className="text-xs sm:text-sm font-bold text-slate-900 truncate">
-                      {item.product.name}
+                      {lang === 'en' ? item.product.name : (item.product.nameBn || item.product.name)}
                     </h4>
                     {item.selectedColor && (
                       <span className="inline-block mt-0.5 text-[10px] font-semibold text-slate-600 bg-slate-100 px-2 py-0.5 rounded">
-                        কালার: {item.selectedColor}
+                        {lang === 'en' ? 'Color' : 'কালার'}: {item.selectedColor}
                       </span>
                     )}
                     <div className="flex items-center justify-between mt-2">
@@ -90,16 +92,16 @@ export default function CartDrawer() {
                       <div className="flex items-center border border-slate-200 rounded-lg overflow-hidden bg-slate-50">
                         <button
                           onClick={() => updateQuantity(item.product.id, item.selectedColor, item.quantity - 1)}
-                          className="p-1 hover:bg-slate-200 text-slate-600 transition"
+                          className="p-1 hover:bg-slate-200 text-slate-600 transition cursor-pointer"
                         >
                           <Minus className="size-3" />
                         </button>
-                        <span className="px-2 text-xs font-bold text-slate-900">
+                        <span className="px-2 text-xs font-bold text-slate-900 font-sans">
                           {item.quantity}
                         </span>
                         <button
                           onClick={() => updateQuantity(item.product.id, item.selectedColor, item.quantity + 1)}
-                          className="p-1 hover:bg-slate-200 text-slate-600 transition"
+                          className="p-1 hover:bg-slate-200 text-slate-600 transition cursor-pointer"
                         >
                           <Plus className="size-3" />
                         </button>
@@ -109,8 +111,8 @@ export default function CartDrawer() {
 
                   <button
                     onClick={() => removeFromCart(item.product.id, item.selectedColor)}
-                    className="p-1.5 text-slate-400 hover:text-rose-500 transition"
-                    title="মুছে ফেলুন"
+                    className="p-1.5 text-slate-400 hover:text-rose-500 transition cursor-pointer"
+                    title={lang === 'en' ? 'Remove' : 'মুছে ফেলুন'}
                   >
                     <Trash2 className="size-4" />
                   </button>
@@ -124,30 +126,30 @@ export default function CartDrawer() {
             <div className="p-4 sm:p-5 border-t border-slate-100 bg-slate-50/80 space-y-3">
               {/* Delivery Zone Selector */}
               <div className="flex items-center justify-between text-xs">
-                <span className="font-semibold text-slate-700">ডেলিভারি এরিয়া:</span>
+                <span className="font-semibold text-slate-700">{t('delivery_area')}</span>
                 <select
                   value={deliveryZone}
                   onChange={(e) => setDeliveryZone(e.target.value)}
                   className="bg-white border border-slate-200 rounded-lg px-2 py-1 text-xs font-medium text-slate-800 outline-none"
                 >
-                  <option value="inside_dhaka">ঢাকা সিটির ভিতরে (৳{feeInside || 80})</option>
-                  <option value="outside_dhaka">ঢাকার বাইরে (৳{feeOutside || 150})</option>
+                  <option value="inside_dhaka">{t('inside_dhaka_opt')} (৳{feeInside || 80})</option>
+                  <option value="outside_dhaka">{t('outside_dhaka_opt')} (৳{feeOutside || 150})</option>
                 </select>
               </div>
 
               {/* Subtotal & Total */}
               <div className="space-y-1.5 text-xs text-slate-600">
                 <div className="flex justify-between">
-                  <span>সাবটোটাল:</span>
-                  <span className="font-bold text-slate-900">৳{subtotal.toLocaleString()}</span>
+                  <span>{t('cart_subtotal')}</span>
+                  <span className="font-bold text-slate-900 font-sans">৳{subtotal.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>ডেলিভারি চার্জ:</span>
-                  <span className="font-bold text-slate-900">৳{deliveryFee}</span>
+                  <span>{t('delivery_charge')}</span>
+                  <span className="font-bold text-slate-900 font-sans">৳{deliveryFee}</span>
                 </div>
                 <div className="pt-2 border-t border-slate-200 flex justify-between text-base font-black text-slate-900">
-                  <span>সর্বমোট:</span>
-                  <span className="text-emerald-600 text-lg">৳{grandTotal.toLocaleString()}</span>
+                  <span>{t('grand_total')}</span>
+                  <span className="text-emerald-600 text-lg font-sans">৳{grandTotal.toLocaleString()}</span>
                 </div>
               </div>
 
@@ -157,15 +159,15 @@ export default function CartDrawer() {
                   setIsCartOpen(false);
                   navigate('/checkout');
                 }}
-                className="w-full bg-slate-950 hover:bg-slate-900 text-white font-black py-4 px-4 rounded-xl text-sm flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transition active:scale-98"
+                className="w-full bg-slate-950 hover:bg-slate-900 text-white font-black py-4 px-4 rounded-xl text-sm flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transition active:scale-98 cursor-pointer"
               >
-                <span>Proceed to Checkout (চেকআউট করুন)</span>
+                <span>{t('proceed_to_checkout')}</span>
                 <ArrowRight className="size-4 text-emerald-400" />
               </button>
 
               <div className="flex items-center justify-center gap-1.5 text-[10px] text-slate-500 text-center">
                 <ShieldCheck className="size-3.5 text-emerald-600" />
-                <span>ক্যাশ অন ডেলিভারি | ১০০% নিরাপদ চেকআউট</span>
+                <span>{t('safe_checkout_text')}</span>
               </div>
             </div>
           )}

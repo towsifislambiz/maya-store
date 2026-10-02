@@ -1,16 +1,18 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, ShoppingBag, Heart, ShieldCheck, Phone, Zap, X, ArrowRight } from 'lucide-react';
+import { Search, ShoppingBag, Heart, ShieldCheck, Phone, Zap, X, ArrowRight, Globe } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useProducts } from '../context/ProductContext';
 import { useStoreSettings } from '../context/StoreSettingsContext';
 import { useAdminAuth } from '../context/AdminAuthContext';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Header() {
   const { totalItemsCount, subtotal, setIsCartOpen, wishlist } = useCart();
   const { products } = useProducts();
   const { settings } = useStoreSettings();
   const { isAdminUnlocked, unlockNotification, recordLogoClick } = useAdminAuth();
+  const { lang, toggleLang, t } = useLanguage();
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   
@@ -71,12 +73,25 @@ export default function Header() {
           <div className="flex items-center gap-4">
             <span className="flex items-center gap-1.5 text-emerald-400 font-medium">
               <Zap className="size-3.5 fill-emerald-400" />
-              <span>সারা বাংলাদেশে ফাস্ট ক্যাশ অন ডেলিভারি</span>
+              <span>{t('cod_announcement')}</span>
             </span>
             <span className="hidden sm:inline text-slate-500">|</span>
-            <span className="hidden sm:inline text-slate-300">৭ দিনের রিপ্লেসমেন্ট গ্যারান্টি</span>
+            <span className="hidden sm:inline text-slate-300">{t('replacement_guarantee')}</span>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5 sm:gap-3">
+            {/* Language Switcher Pill */}
+            <button
+              type="button"
+              onClick={toggleLang}
+              className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-slate-900 hover:bg-slate-800 border border-slate-700/80 text-[11px] font-bold text-white transition active:scale-95 cursor-pointer shadow-xs"
+              title={lang === 'bn' ? 'Switch to English' : 'বাংলায় দেখুন'}
+            >
+              <Globe className="size-3 text-cyan-400" />
+              <span className={lang === 'bn' ? 'text-cyan-400 font-black' : 'text-slate-400'}>বাংলা</span>
+              <span className="text-slate-600 text-[10px]">/</span>
+              <span className={lang === 'en' ? 'text-cyan-400 font-black' : 'text-slate-400'}>EN</span>
+            </button>
+
             <a href={`tel:${settings?.hotline || '+8801322302319'}`} className="flex items-center gap-1 text-slate-300 hover:text-white transition">
               <Phone className="size-3 text-emerald-400" />
               <span className="font-sans text-[11px] sm:text-xs">{settings?.hotline || '+880 1322-302319'}</span>
@@ -89,7 +104,7 @@ export default function Header() {
                   className="bg-amber-400/10 border border-amber-400/40 text-amber-400 hover:bg-amber-400 hover:text-slate-950 px-2.5 py-0.5 rounded-full hidden sm:flex items-center gap-1 font-bold text-[11px] transition shadow-xs animate-pulse"
                 >
                   <ShieldCheck className="size-3.5" />
-                  <span>অ্যাডমিন প্যানেল</span>
+                  <span>{t('admin_panel')}</span>
                 </Link>
               </>
             )}
@@ -138,7 +153,7 @@ export default function Header() {
             <div className="relative">
               <input
                 type="text"
-                placeholder="প্রডাক্টের নাম, মডেল বা স্পেসিফিকেশন দিয়ে খুঁজুন..."
+                placeholder={t('search_placeholder')}
                 value={searchQuery}
                 onChange={(e) => {
                   setSearchQuery(e.target.value);
@@ -164,14 +179,14 @@ export default function Header() {
             {isSearchOpen && searchQuery.trim() !== '' && (
               <div className="absolute left-0 right-0 top-full mt-2 bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl overflow-hidden z-50 max-h-96 overflow-y-auto">
                 <div className="p-2.5 bg-slate-950/80 border-b border-slate-800 text-xs text-slate-400 flex items-center justify-between">
-                  <span>অনুসন্ধান ফলাফল: ({searchResults.length}) টি প্রডাক্ট পাওয়া গেছে</span>
-                  <span className="text-cyan-400 font-medium">ক্লিক করে ডিটেইলস দেখুন</span>
+                  <span>{t('search_results_title')}: ({searchResults.length}) {t('search_results_count')}</span>
+                  <span className="text-cyan-400 font-medium">{t('click_for_details')}</span>
                 </div>
 
                 {searchResults.length === 0 ? (
                   <div className="p-8 text-center text-slate-400 text-sm">
-                    <p>দুঃখিত, <span className="text-white font-semibold">"{searchQuery}"</span> দিয়ে কোনো প্রডাক্ট পাওয়া যায়নি!</p>
-                    <p className="text-xs text-slate-500 mt-1">দয়া করে সঠিক নাম বা মডেল লিখে আবার চেষ্টা করুন।</p>
+                    <p>{lang === 'bn' ? 'দুঃখিত,' : 'Sorry,'} <span className="text-white font-semibold">"{searchQuery}"</span> {lang === 'bn' ? 'দিয়ে কোনো প্রডাক্ট পাওয়া যায়নি!' : 'no products found!'}</p>
+                    <p className="text-xs text-slate-500 mt-1">{t('search_not_found_desc')}</p>
                   </div>
                 ) : (
                   <div className="divide-y divide-slate-800/80">
@@ -192,8 +207,12 @@ export default function Header() {
                           className="size-12 object-contain rounded-lg bg-slate-800 p-1 shrink-0 group-hover:scale-105 transition-transform"
                         />
                         <div className="grow min-w-0">
-                          <p className="text-sm font-bold text-white truncate group-hover:text-cyan-400 transition">{item.name}</p>
-                          <p className="text-xs text-slate-400 truncate">{item.nameBn}</p>
+                          <p className="text-sm font-bold text-white truncate group-hover:text-cyan-400 transition">
+                            {lang === 'en' ? item.name : (item.nameBn || item.name)}
+                          </p>
+                          {lang === 'bn' && item.nameBn && (
+                            <p className="text-xs text-slate-400 truncate">{item.name}</p>
+                          )}
                           <div className="flex items-center gap-2 mt-0.5">
                             <span className="text-emerald-400 font-bold text-sm font-sans">৳{item.price}</span>
                             {item.regularPrice && (
@@ -217,14 +236,14 @@ export default function Header() {
           <div className="flex items-center gap-2 sm:gap-4 shrink-0">
             {/* Quick Links */}
             <Link to="/shop" className="text-sm text-slate-300 hover:text-white font-medium hidden lg:inline-block transition px-2 py-1">
-              শপিং
+              {t('shop_link')}
             </Link>
 
             {/* Wishlist Button */}
             <Link
               to="/shop?filter=wishlist"
               className="relative p-2 rounded-xl hover:bg-slate-800 text-slate-300 hover:text-white transition"
-              title="উইশলিস্ট"
+              title={t('wishlist_title')}
             >
               <Heart className="size-5" />
               {wishlist.length > 0 && (
@@ -247,7 +266,7 @@ export default function Header() {
                   </span>
                 )}
               </div>
-              <span className="hidden sm:inline">কার্ট</span>
+              <span className="hidden sm:inline">{t('cart_btn')}</span>
               {subtotal > 0 && (
                 <span className="hidden sm:inline font-bold border-l border-emerald-400/40 pl-2">
                   ৳{subtotal}
@@ -261,7 +280,7 @@ export default function Header() {
         <div className="mt-3 md:hidden relative" ref={mobileSearchRef}>
           <input
             type="text"
-            placeholder="প্রডাক্ট সার্চ করুন..."
+            placeholder={t('search_placeholder')}
             value={searchQuery}
             onChange={(e) => {
               setSearchQuery(e.target.value);
@@ -286,7 +305,7 @@ export default function Header() {
           {isSearchOpen && searchQuery.trim() !== '' && (
             <div className="absolute left-0 right-0 top-full mt-2 bg-slate-900 border border-slate-700 rounded-xl shadow-2xl overflow-hidden z-50 max-h-80 overflow-y-auto">
               {searchResults.length === 0 ? (
-                <div className="p-4 text-center text-slate-400 text-sm">কোনো প্রডাক্ট পাওয়া যায়নি</div>
+                <div className="p-4 text-center text-slate-400 text-sm">{t('search_no_results')}</div>
               ) : (
                 searchResults.map((item) => (
                   <Link
@@ -301,7 +320,9 @@ export default function Header() {
                   >
                     <img src={item.image || item.images?.[0] || '/assets/logo.webp'} alt={item.name} className="size-10 object-contain rounded bg-slate-800 shrink-0" />
                     <div className="grow min-w-0">
-                      <p className="text-xs font-bold text-white truncate">{item.name}</p>
+                      <p className="text-xs font-bold text-white truncate">
+                        {lang === 'en' ? item.name : (item.nameBn || item.name)}
+                      </p>
                       <span className="text-emerald-400 font-bold text-xs">৳{item.price}</span>
                     </div>
                     <ArrowRight className="size-3.5 text-slate-500 shrink-0" />

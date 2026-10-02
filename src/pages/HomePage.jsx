@@ -5,12 +5,14 @@ import FeaturedDeals from '../components/FeaturedDeals';
 import ProductCard from '../components/ProductCard';
 import { useProducts } from '../context/ProductContext';
 import { useStoreSettings } from '../context/StoreSettingsContext';
+import { useLanguage } from '../context/LanguageContext';
 import { Sparkles, ArrowRight, ChevronDown, ChevronUp, Headphones, MessageCircle, Phone } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function HomePage() {
   const { products } = useProducts();
   const { settings } = useStoreSettings();
+  const { lang, t } = useLanguage();
   const [activeCategory, setActiveCategory] = useState('all');
   
   const INITIAL_COUNT = 12;
@@ -47,7 +49,7 @@ export default function HomePage() {
         }}
       />
 
-      {/* 3. High-Converting Featured Deals & Store Benefits (Replaced Countdown Bar) */}
+      {/* 3. High-Converting Featured Deals & Store Benefits */}
       <FeaturedDeals />
 
       {/* 4. Elevated Product Grid Section (Exactly 4 Cards Per Row on Desktop) */}
@@ -56,20 +58,20 @@ export default function HomePage() {
           <div>
             <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-600 uppercase tracking-wider">
               <Sparkles className="size-3.5" />
-              <span>প্রিমিয়াম গ্যাজেট কালেকশন</span>
+              <span>{t('premium_gadget_collection')}</span>
             </div>
             <h2 className="text-xl sm:text-2xl font-black text-slate-900 font-sans tracking-tight">
-              {activeCategory === 'all' ? 'সকল ট্রেন্ডিং গ্যাজেট' : 'ক্যাটাগরি প্রডাক্টসমূহ'}
+              {activeCategory === 'all' ? t('all_trending_gadgets') : t('category_products')}
             </h2>
             <p className="text-xs text-slate-500 mt-0.5">
-              প্রদর্শিত হচ্ছে {displayedProducts.length} / মোট {filteredProducts.length} টি প্রডাক্ট
+              {t('showing_prefix')} {displayedProducts.length} {t('of_total_prefix')} {filteredProducts.length} {t('products_unit')}
             </p>
           </div>
           <Link
             to="/shop"
             className="text-xs sm:text-sm font-bold text-slate-700 hover:text-slate-950 flex items-center gap-1 transition"
           >
-            <span>সব দেখুন</span>
+            <span>{t('view_all')}</span>
             <ArrowRight className="size-4" />
           </Link>
         </div>
@@ -87,9 +89,9 @@ export default function HomePage() {
           {filteredProducts.length > visibleCount && (
             <button
               onClick={handleSeeMore}
-              className="bg-slate-950 hover:bg-slate-900 text-white font-black py-3 sm:py-3.5 px-5 sm:px-7 rounded-xl sm:rounded-2xl text-xs sm:text-sm flex items-center gap-1.5 sm:gap-2 shadow-xl hover:shadow-2xl transition active:scale-95 group"
+              className="bg-slate-950 hover:bg-slate-900 text-white font-black py-3 sm:py-3.5 px-5 sm:px-7 rounded-xl sm:rounded-2xl text-xs sm:text-sm flex items-center gap-1.5 sm:gap-2 shadow-xl hover:shadow-2xl transition active:scale-95 group cursor-pointer"
             >
-              <span>See More (+৪টি প্রডাক্ট)</span>
+              <span>{t('see_more')}</span>
               <ChevronDown className="size-4 text-cyan-400 group-hover:translate-y-0.5 transition-transform" />
             </button>
           )}
@@ -98,9 +100,9 @@ export default function HomePage() {
           {visibleCount > INITIAL_COUNT && (
             <button
               onClick={handleLessProduct}
-              className="bg-white hover:bg-slate-100 text-slate-800 border border-slate-300 font-bold py-3 sm:py-3.5 px-4 sm:px-6 rounded-xl sm:rounded-2xl text-xs sm:text-sm flex items-center gap-1.5 sm:gap-2 shadow-xs transition active:scale-95 group"
+              className="bg-white hover:bg-slate-100 text-slate-800 border border-slate-300 font-bold py-3 sm:py-3.5 px-4 sm:px-6 rounded-xl sm:rounded-2xl text-xs sm:text-sm flex items-center gap-1.5 sm:gap-2 shadow-xs transition active:scale-95 group cursor-pointer"
             >
-              <span>Less Product (-৪টি প্রডাক্ট)</span>
+              <span>{t('less_product')}</span>
               <ChevronUp className="size-4 text-slate-500 group-hover:-translate-y-0.5 transition-transform" />
             </button>
           )}
@@ -113,13 +115,13 @@ export default function HomePage() {
           <div className="space-y-1.5 text-center md:text-left">
             <span className="text-xs font-bold text-cyan-400 uppercase tracking-wider flex items-center justify-center md:justify-start gap-1.5">
               <Headphones className="size-4" />
-              <span>সহায়তা বা অর্ডার করতে সমস্যা হচ্ছে?</span>
+              <span>{t('help_tag')}</span>
             </span>
             <h3 className="text-xl sm:text-2xl font-black text-white font-sans">
-              আমাদের টিম আপনাকে সরাসরি সাহায্য করতে প্রস্তুত!
+              {t('help_title')}
             </h3>
             <p className="text-xs sm:text-sm text-slate-400 max-w-xl">
-              সরাসরি কল করুন অথবা হোয়াটসঅ্যাপে আপনার নাম, ঠিকানা ও পছন্দের পণ্যের নাম লিখে মেসেজ দিন।
+              {t('help_desc')}
             </p>
           </div>
 
@@ -131,7 +133,7 @@ export default function HomePage() {
               className="bg-emerald-600 hover:bg-emerald-500 text-white font-black py-3 px-6 rounded-2xl text-xs sm:text-sm flex items-center gap-2 shadow-lg hover:shadow-emerald-500/25 transition active:scale-95 cursor-pointer"
             >
               <MessageCircle className="size-4" />
-              <span>হোয়াটসঅ্যাপে মেসেজ</span>
+              <span>{t('whatsapp_chat_btn')}</span>
             </a>
 
             <a
