@@ -11,13 +11,19 @@ export const ProductProvider = ({ children }) => {
       const saved = localStorage.getItem('galaxy_gadgets_products');
       if (saved) {
         let parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length >= INITIAL_PRODUCTS.length) {
-          // Auto-migrate legacy .png asset paths to ultra-fast .webp
-          parsed = parsed.map(p => ({
-            ...p,
-            image: typeof p.image === 'string' ? p.image.replace(/\.png$/i, '.webp') : p.image,
-            images: Array.isArray(p.images) ? p.images.map(img => typeof img === 'string' ? img.replace(/\.png$/i, '.webp') : img) : p.images
-          }));
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          // Auto-migrate legacy .png asset paths to ultra-fast .webp and guarantee valid images array
+          parsed = parsed.map(p => {
+            const cleanImg = typeof p.image === 'string' ? p.image.replace(/\.png$/i, '.webp') : (p.images?.[0] || '/assets/logo.webp');
+            const cleanImgs = Array.isArray(p.images) && p.images.length > 0
+              ? p.images.map(img => typeof img === 'string' ? img.replace(/\.png$/i, '.webp') : img)
+              : [cleanImg];
+            return {
+              ...p,
+              image: cleanImg,
+              images: cleanImgs
+            };
+          });
           return parsed;
         }
       }
@@ -61,7 +67,17 @@ export const ProductProvider = ({ children }) => {
   // Add new product
   const addProduct = async (productData) => {
     const id = productData.id || `gadget-${Date.now()}`;
-    const newProd = { ...productData, id };
+    const cleanImg = productData.image || productData.images?.[0] || '/assets/logo.webp';
+    const cleanImgs = Array.isArray(productData.images) && productData.images.length > 0
+      ? productData.images
+      : [cleanImg];
+
+    const newProd = {
+      ...productData,
+      id,
+      image: cleanImg,
+      images: cleanImgs
+    };
     setProducts(prev => [newProd, ...prev]);
 
     try {
@@ -69,11 +85,20 @@ export const ProductProvider = ({ children }) => {
     } catch (err) {
       console.warn('Firestore write error:', err);
     }
+    return newProd;
   };
 
   // Update existing product
   const updateProduct = async (id, fields) => {
-    setProducts(prev => prev.map(p => p.id === id ? { ...p, ...fields } : p));
+    setProducts(prev => prev.map(p => {
+      if (p.id !== id) return p;
+      const updated = { ...p, ...fields };
+      const cleanImg = updated.image || updated.images?.[0] || '/assets/logo.webp';
+      const cleanImgs = Array.isArray(updated.images) && updated.images.length > 0
+        ? updated.images
+        : [cleanImg];
+      return { ...updated, image: cleanImg, images: cleanImgs };
+    }));
     try {
       await updateDoc(doc(db, 'products', id), fields);
     } catch (err) {

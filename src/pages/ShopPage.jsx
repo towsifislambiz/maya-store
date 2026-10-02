@@ -13,8 +13,11 @@ export default function ShopPage() {
 
   const categoryParam = searchParams.get('category') || 'all';
   const filterParam = searchParams.get('filter') || '';
+  const urlSearchParam = searchParams.get('search') || '';
   const [sortBy, setSortBy] = useState('popular'); // 'popular', 'price-low', 'price-high'
-  const [searchFilter, setSearchFilter] = useState('');
+  const [userSearchText, setUserSearchText] = useState('');
+
+  const currentSearch = userSearchText !== '' ? userSearchText : urlSearchParam;
 
   const filteredProducts = useMemo(() => {
     return products.filter((p) => {
@@ -27,10 +30,20 @@ export default function ShopPage() {
         return false;
       }
       // Search text filter
-      if (searchFilter.trim() !== '') {
-        const q = searchFilter.toLowerCase();
-        const match = p.name.toLowerCase().includes(q) || p.nameBn.toLowerCase().includes(q) || p.model.toLowerCase().includes(q);
-        if (!match) return false;
+      if (currentSearch.trim() !== '') {
+        const q = currentSearch.toLowerCase().trim();
+        const matchName = p.name?.toLowerCase().includes(q);
+        const matchBn = p.nameBn?.toLowerCase().includes(q);
+        const matchModel = p.model?.toLowerCase().includes(q);
+        const matchCategory = p.category?.toLowerCase().includes(q);
+        const matchPrice = p.price?.toString().includes(q);
+        const matchSpecs = Object.values(p.specs || {}).some(val => typeof val === 'string' && val.toLowerCase().includes(q));
+        const matchSpecKeys = Object.keys(p.specs || {}).some(key => typeof key === 'string' && key.toLowerCase().includes(q));
+        const matchBullets = (p.bulletPointsBn || []).some(pt => typeof pt === 'string' && pt.toLowerCase().includes(q));
+        const matchShortDesc = p.shortDescBn?.toLowerCase().includes(q) || p.shortDescEn?.toLowerCase().includes(q);
+        if (!(matchName || matchBn || matchModel || matchCategory || matchPrice || matchSpecs || matchSpecKeys || matchBullets || matchShortDesc)) {
+          return false;
+        }
       }
       return true;
     }).sort((a, b) => {
@@ -65,8 +78,8 @@ export default function ShopPage() {
               <input
                 type="text"
                 placeholder="প্রডাক্ট ফিল্টার করুন..."
-                value={searchFilter}
-                onChange={(e) => setSearchFilter(e.target.value)}
+                value={currentSearch}
+                onChange={(e) => setUserSearchText(e.target.value)}
                 className="w-full bg-slate-800 text-white pl-9 pr-3 py-2 rounded-xl text-xs border border-slate-700 outline-none focus:border-cyan-400"
               />
               <Search className="size-4 text-slate-400 absolute left-3 top-2.5" />
@@ -117,7 +130,7 @@ export default function ShopPage() {
             <button
               onClick={() => {
                 setSearchParams({});
-                setSearchFilter('');
+                setUserSearchText('');
               }}
               className="mt-4 bg-slate-950 text-white text-xs font-bold px-4 py-2 rounded-xl shadow"
             >

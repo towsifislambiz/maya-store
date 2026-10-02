@@ -69,7 +69,7 @@ export default function ProductDetailsPage() {
   const selectedColorObj = product?.colors?.find(c => c.name === selectedColor);
   const activeImages = (product?.images && selectedColorObj?.image)
     ? [selectedColorObj.image, ...product.images.filter(img => img !== selectedColorObj.image)]
-    : (product?.images || []);
+    : (product?.images && product.images.length > 0 ? product.images : [product?.image || '/assets/logo.webp']);
 
   const relatedProducts = products
     .filter(p => p.id !== product.id && (p.category === product.category || p.featured))
@@ -122,7 +122,7 @@ export default function ProductDetailsPage() {
               )}
             </div>
 
-            {/* Product Title */}
+            {/* Product Title & Short Description */}
             <div>
               <h1 className="text-2xl sm:text-3xl font-black text-slate-900 font-sans tracking-tight leading-snug">
                 {product.name}
@@ -130,6 +130,11 @@ export default function ProductDetailsPage() {
               <p className="text-sm font-semibold text-slate-600 mt-1">
                 {product.nameBn}
               </p>
+              {product.shortDescBn && (
+                <p className="text-xs sm:text-sm text-slate-600 mt-2.5 leading-relaxed bg-slate-50 border border-slate-200/80 p-3 rounded-2xl">
+                  {product.shortDescBn}
+                </p>
+              )}
             </div>
 
             {/* Ratings & SKU */}
@@ -233,12 +238,19 @@ export default function ProductDetailsPage() {
                 <span>প্রধান বৈশিষ্ট্যসমূহ:</span>
               </h4>
               <ul className="space-y-1.5 pl-1">
-                {(product.bulletPointsBn || []).map((pt, i) => (
-                  <li key={i} className="flex items-start gap-2">
+                {(product.bulletPointsBn && product.bulletPointsBn.length > 0) ? (
+                  product.bulletPointsBn.map((pt, i) => (
+                    <li key={i} className="flex items-start gap-2">
+                      <CheckCircle2 className="size-3.5 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>{pt}</span>
+                    </li>
+                  ))
+                ) : (
+                  <li className="flex items-start gap-2 text-slate-600">
                     <CheckCircle2 className="size-3.5 text-emerald-500 shrink-0 mt-0.5" />
-                    <span>{pt}</span>
+                    <span>১০০% অরিজিনাল গ্যাজেট ও ফাস্ট ক্যাশ অন ডেলিভারি</span>
                   </li>
-                ))}
+                )}
               </ul>
             </div>
 
@@ -291,23 +303,29 @@ export default function ProductDetailsPage() {
 
           {activeTab === 'specs' && (
             <div className="overflow-x-auto">
-              <table className="w-full text-xs sm:text-sm text-left border-collapse">
-                <tbody>
-                  {Object.entries(product.specs || {}).map(([key, value], idx) => (
-                    <tr
-                      key={key}
-                      className={idx % 2 === 0 ? 'bg-slate-50' : 'bg-white'}
-                    >
-                      <td className="p-3.5 font-bold text-slate-700 w-1/3 border-b border-slate-100">
-                        {key}
-                      </td>
-                      <td className="p-3.5 text-slate-900 border-b border-slate-100 font-medium">
-                        {value}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              {(!product.specs || Object.keys(product.specs).length === 0) ? (
+                <div className="py-8 text-center text-slate-400 text-sm">
+                  <p>এই প্রোডাক্টের জন্য কোনো অতিরিক্ত স্পেসিফিকেশন যুক্ত করা হয়নি।</p>
+                </div>
+              ) : (
+                <table className="w-full text-xs sm:text-sm text-left border-collapse">
+                  <tbody>
+                    {Object.entries(product.specs).map(([key, value], idx) => (
+                      <tr
+                        key={key}
+                        className={idx % 2 === 0 ? 'bg-slate-50' : 'bg-white'}
+                      >
+                        <td className="p-3.5 font-bold text-slate-700 w-1/3 border-b border-slate-100">
+                          {key}
+                        </td>
+                        <td className="p-3.5 text-slate-900 border-b border-slate-100 font-medium">
+                          {value}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
             </div>
           )}
 

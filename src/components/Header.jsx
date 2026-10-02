@@ -18,17 +18,19 @@ export default function Header() {
   const mobileSearchRef = useRef(null);
   const navigate = useNavigate();
 
-  // Universal search filter across title, bangla name, model, specs, and price
+  // Universal search filter across title, bangla name, model, specs (keys & values), bullet points, and price
   const searchResults = searchQuery.trim() === '' ? [] : products.filter(p => {
-    const q = searchQuery.toLowerCase();
+    const q = searchQuery.toLowerCase().trim();
     const matchName = p.name?.toLowerCase().includes(q);
     const matchBn = p.nameBn?.toLowerCase().includes(q);
     const matchModel = p.model?.toLowerCase().includes(q);
     const matchCategory = p.category?.toLowerCase().includes(q);
     const matchPrice = p.price?.toString().includes(q);
-    const matchSpecs = Object.values(p.specs || {}).some(val => val.toLowerCase().includes(q));
+    const matchSpecs = Object.values(p.specs || {}).some(val => typeof val === 'string' && val.toLowerCase().includes(q));
+    const matchSpecKeys = Object.keys(p.specs || {}).some(key => typeof key === 'string' && key.toLowerCase().includes(q));
+    const matchBullets = (p.bulletPointsBn || []).some(pt => typeof pt === 'string' && pt.toLowerCase().includes(q));
     const matchShortDesc = p.shortDescBn?.toLowerCase().includes(q) || p.shortDescEn?.toLowerCase().includes(q);
-    return matchName || matchBn || matchModel || matchCategory || matchPrice || matchSpecs || matchShortDesc;
+    return Boolean(matchName || matchBn || matchModel || matchCategory || matchPrice || matchSpecs || matchSpecKeys || matchBullets || matchShortDesc);
   });
 
   // Close search dropdown on click outside
@@ -185,7 +187,7 @@ export default function Header() {
                         className="p-3 hover:bg-slate-800/90 flex items-center gap-3.5 cursor-pointer transition group"
                       >
                         <img
-                          src={item.images[0]}
+                          src={item.image || item.images?.[0] || '/assets/logo.webp'}
                           alt={item.name}
                           className="size-12 object-contain rounded-lg bg-slate-800 p-1 shrink-0 group-hover:scale-105 transition-transform"
                         />
@@ -297,7 +299,7 @@ export default function Header() {
                     onClick={() => handleSelectProduct(item.id)}
                     className="p-3 border-b border-slate-800 flex items-center gap-3 cursor-pointer hover:bg-slate-800/80"
                   >
-                    <img src={item.images[0]} alt={item.name} className="size-10 object-contain rounded bg-slate-800 shrink-0" />
+                    <img src={item.image || item.images?.[0] || '/assets/logo.webp'} alt={item.name} className="size-10 object-contain rounded bg-slate-800 shrink-0" />
                     <div className="grow min-w-0">
                       <p className="text-xs font-bold text-white truncate">{item.name}</p>
                       <span className="text-emerald-400 font-bold text-xs">৳{item.price}</span>

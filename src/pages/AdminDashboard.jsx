@@ -63,9 +63,13 @@ export default function AdminDashboard() {
     badgeText: '',
     has360View: false,
     shortDescBn: '',
+    bulletPointsText: '১০০% অরিজিনাল গ্যাজেট\nফাস্ট হোম ডেলিভারি সারা বাংলাদেশে\n৭ দিনের রিপ্লেসমেন্ট গ্যারান্টি',
+    specRows: [
+      { key: 'ওয়ারেন্টি', value: '৭ দিনের রিপ্লেসমেন্ট গ্যারান্টি' },
+      { key: 'কানেক্টিভিটি', value: 'ব্লুটুথ / ওয়্যারলেস' }
+    ],
     image: '/assets/products/airpods_pro_2_open_case.webp',
-    specs: { 'ওয়ারেন্টি': '৭ দিনের রিপ্লেসমেন্ট গ্যারান্টি' },
-    colors: [{ name: 'Black', hex: '#000000', inStock: true }]
+    colors: [{ name: 'Default', hex: '#000000', inStock: true }]
   };
   const [newProductForm, setNewProductForm] = useState(initialNewProductForm);
 
@@ -221,10 +225,84 @@ export default function AdminDashboard() {
     }
   };
 
+  // Open Edit Modal with structured specRows and bulletPointsText
+  const handleOpenEditModal = (p) => {
+    const specRows = Object.entries(p.specs || {}).map(([key, value]) => ({ key, value }));
+    setEditingProduct({
+      ...p,
+      shortDescBn: p.shortDescBn || '',
+      bulletPointsText: Array.isArray(p.bulletPointsBn) ? p.bulletPointsBn.join('\n') : '',
+      specRows: specRows.length > 0 ? specRows : [
+        { key: 'ওয়ারেন্টি', value: '৭ দিনের রিপ্লেসমেন্ট গ্যারান্টি' },
+        { key: 'কানেক্টিভিটি', value: 'ব্লুটুথ / ওয়্যারলেস' }
+      ]
+    });
+  };
+
+  // Spec Row Handlers for New Product
+  const handleAddNewSpecRow = () => {
+    setNewProductForm(prev => ({
+      ...prev,
+      specRows: [...(prev.specRows || []), { key: '', value: '' }]
+    }));
+  };
+
+  const handleUpdateNewSpecRow = (index, field, val) => {
+    setNewProductForm(prev => {
+      const rows = [...(prev.specRows || [])];
+      rows[index] = { ...rows[index], [field]: val };
+      return { ...prev, specRows: rows };
+    });
+  };
+
+  const handleRemoveNewSpecRow = (index) => {
+    setNewProductForm(prev => {
+      const rows = (prev.specRows || []).filter((_, i) => i !== index);
+      return { ...prev, specRows: rows };
+    });
+  };
+
+  // Spec Row Handlers for Editing Product
+  const handleAddEditSpecRow = () => {
+    setEditingProduct(prev => ({
+      ...prev,
+      specRows: [...(prev.specRows || []), { key: '', value: '' }]
+    }));
+  };
+
+  const handleUpdateEditSpecRow = (index, field, val) => {
+    setEditingProduct(prev => {
+      const rows = [...(prev.specRows || [])];
+      rows[index] = { ...rows[index], [field]: val };
+      return { ...prev, specRows: rows };
+    });
+  };
+
+  const handleRemoveEditSpecRow = (index) => {
+    setEditingProduct(prev => {
+      const rows = (prev.specRows || []).filter((_, i) => i !== index);
+      return { ...prev, specRows: rows };
+    });
+  };
+
   // Handle Add Product Submit
   const handleCreateProduct = async (e) => {
     e.preventDefault();
     if (!newProductForm.name.trim() || !newProductForm.price) return;
+
+    // Parse bullet points
+    const bulletPointsBn = (newProductForm.bulletPointsText || '')
+      .split('\n')
+      .map(line => line.replace(/^[•\-*]\s*/, '').trim())
+      .filter(Boolean);
+
+    // Parse specs object
+    const specs = {};
+    (newProductForm.specRows || []).forEach(row => {
+      if (row.key && row.key.trim()) {
+        specs[row.key.trim()] = (row.value || '').trim();
+      }
+    });
 
     const created = {
       ...newProductForm,
@@ -233,10 +311,14 @@ export default function AdminDashboard() {
       regularPrice: newProductForm.regularPrice ? Number(newProductForm.regularPrice) : null,
       stockCount: Number(newProductForm.stockCount) || 20,
       discountPercent: newProductForm.discountPercent ? Number(newProductForm.discountPercent) : null,
+      shortDescBn: newProductForm.shortDescBn?.trim() || '',
+      bulletPointsBn: bulletPointsBn.length > 0 ? bulletPointsBn : ['১০০% অরিজিনাল গ্যাজেট', 'ফাস্ট হোম ডেলিভারি'],
+      specs: Object.keys(specs).length > 0 ? specs : { 'ওয়ারেন্টি': '৭ দিনের রিপ্লেসমেন্ট গ্যারান্টি' },
+      image: newProductForm.image || '/assets/products/airpods_pro_2_open_case.webp',
       images: [newProductForm.image || '/assets/products/airpods_pro_2_open_case.webp'],
       reviewsCount: 12,
       rating: 4.9,
-      bulletPointsBn: ['১০০% অরিজিনাল গ্যাজেট', 'ফাস্ট হোম ডেলিভারি']
+      inStock: true
     };
 
     await addProduct(created);
@@ -249,6 +331,20 @@ export default function AdminDashboard() {
     e.preventDefault();
     if (!editingProduct) return;
 
+    // Parse bullet points
+    const bulletPointsBn = (editingProduct.bulletPointsText || '')
+      .split('\n')
+      .map(line => line.replace(/^[•\-*]\s*/, '').trim())
+      .filter(Boolean);
+
+    // Parse specs object
+    const specs = {};
+    (editingProduct.specRows || []).forEach(row => {
+      if (row.key && row.key.trim()) {
+        specs[row.key.trim()] = (row.value || '').trim();
+      }
+    });
+
     const updatedImages = editingProduct.image
       ? [editingProduct.image, ...(editingProduct.images?.filter(img => img !== editingProduct.image) || [])]
       : (editingProduct.images || []);
@@ -259,7 +355,10 @@ export default function AdminDashboard() {
       price: Number(editingProduct.price),
       regularPrice: editingProduct.regularPrice ? Number(editingProduct.regularPrice) : null,
       stockCount: Number(editingProduct.stockCount) || 0,
-      discountPercent: editingProduct.discountPercent ? Number(editingProduct.discountPercent) : null
+      discountPercent: editingProduct.discountPercent ? Number(editingProduct.discountPercent) : null,
+      shortDescBn: editingProduct.shortDescBn?.trim() || '',
+      bulletPointsBn: bulletPointsBn,
+      specs: specs
     });
     setEditingProduct(null);
   };
@@ -712,7 +811,7 @@ export default function AdminDashboard() {
                             <span>কালার</span>
                           </button>
                           <button
-                            onClick={() => setEditingProduct(p)}
+                            onClick={() => handleOpenEditModal(p)}
                             className="p-1.5 bg-slate-800 hover:bg-cyan-600 text-slate-300 hover:text-white rounded-lg transition active:scale-95"
                             title="এডিট করুন"
                           >
@@ -814,7 +913,7 @@ export default function AdminDashboard() {
                             <Palette className="size-3.5 text-pink-400" />
                           </button>
                           <button
-                            onClick={() => setEditingProduct(p)}
+                            onClick={() => handleOpenEditModal(p)}
                             className="p-1.5 bg-slate-800 hover:bg-cyan-600 text-slate-300 hover:text-white rounded-lg transition"
                             title="এডিট করুন"
                           >
@@ -1728,15 +1827,91 @@ export default function AdminDashboard() {
                 </div>
               </div>
 
+              {/* Short Description */}
               <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1">সংক্ষিপ্ত বিবরণ (Bangla)</label>
+                <label className="block text-xs font-bold text-slate-300 mb-1">
+                  সংক্ষিপ্ত বিবরণ (Short Description)
+                </label>
                 <textarea
                   rows={2}
-                  placeholder="প্রোডাক্টের আকর্ষণীয় বিবরণ..."
-                  value={newProductForm.shortDescBn}
+                  placeholder="যেমন: দুবাই ভ্যারিয়েন্ট গোল্ড সিল ANC ও টাইপ-সি স্পিকার কেস সহ প্রিমিয়াম অডিও এক্সপেরিয়েন্স..."
+                  value={newProductForm.shortDescBn || ''}
                   onChange={(e) => setNewProductForm({ ...newProductForm, shortDescBn: e.target.value })}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white outline-none"
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white outline-none focus:border-cyan-400"
                 />
+              </div>
+
+              {/* Key Features / Bullet Points */}
+              <div>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="text-xs font-bold text-slate-300 flex items-center gap-1.5">
+                    <CheckCircle2 className="size-3.5 text-emerald-400" />
+                    <span>প্রধান বৈশিষ্ট্যসমূহ (Bullet Points)</span>
+                  </label>
+                  <span className="text-[11px] text-slate-400 font-normal">প্রতি লাইনে ১টি করে পয়েন্ট</span>
+                </div>
+                <textarea
+                  rows={3}
+                  placeholder={"যেমন:\nঅরিজিনাল দুবাই সিরিয়াল বক্স ও গোল্ড সিল প্যাক।\nআইফোন ও অ্যান্ড্রয়েড উভয় ফোনেই ইনস্ট্যান্ট কানেক্ট।\nটাইপ-সি ফাস্ট চার্জিং সুবিধা ও সাউন্ড স্পিকার কেস।"}
+                  value={newProductForm.bulletPointsText || ''}
+                  onChange={(e) => setNewProductForm({ ...newProductForm, bulletPointsText: e.target.value })}
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white outline-none focus:border-cyan-400 font-mono leading-relaxed"
+                />
+              </div>
+
+              {/* Technical Specifications Table */}
+              <div className="bg-slate-950/70 border border-slate-800 rounded-2xl p-3 sm:p-4 space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h4 className="text-xs font-bold text-white flex items-center gap-1.5">
+                      <Layers className="size-3.5 text-cyan-400" />
+                      <span>টেকনিক্যাল স্পেসিফিকেশন (Specifications)</span>
+                    </h4>
+                    <p className="text-[10px] text-slate-400">প্রোডাক্টের চিপসেট, ব্লুটুথ, ব্যাটারি ব্যাকআপ ইত্যাদি টেবিল আকারে দেখাবে</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleAddNewSpecRow}
+                    className="bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-[11px] font-bold px-2.5 py-1 rounded-lg flex items-center gap-1 transition active:scale-95 cursor-pointer"
+                  >
+                    <Plus className="size-3" />
+                    <span>রো যোগ করুন</span>
+                  </button>
+                </div>
+
+                <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
+                  {(newProductForm.specRows || []).map((row, idx) => (
+                    <div key={idx} className="flex items-center gap-2">
+                      <input
+                        type="text"
+                        placeholder="বিষয়/নাম (যেমন: ব্যাটারি)"
+                        value={row.key}
+                        onChange={(e) => handleUpdateNewSpecRow(idx, 'key', e.target.value)}
+                        className="w-2/5 bg-slate-900 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-white outline-none focus:border-cyan-400"
+                      />
+                      <input
+                        type="text"
+                        placeholder="মান/বিবরণ (যেমন: ২৪+ ঘণ্টা)"
+                        value={row.value}
+                        onChange={(e) => handleUpdateNewSpecRow(idx, 'value', e.target.value)}
+                        className="flex-1 bg-slate-900 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-white outline-none focus:border-cyan-400"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveNewSpecRow(idx)}
+                        className="p-1.5 text-slate-500 hover:text-rose-400 hover:bg-rose-500/10 rounded-lg transition"
+                        title="মুছে ফেলুন"
+                      >
+                        <Trash2 className="size-3.5" />
+                      </button>
+                    </div>
+                  ))}
+                  {(newProductForm.specRows || []).length === 0 && (
+                    <p className="text-[11px] text-slate-500 text-center py-2">
+                      কোনো স্পেসিফিকেশন রো নেই। "+ রো যোগ করুন" বাটনে ক্লিক করুন।
+                    </p>
+                  )}
+                </div>
               </div>
 
               <div className="pt-2 flex items-center justify-end gap-2">
@@ -1882,6 +2057,93 @@ export default function AdminDashboard() {
                     onChange={(e) => setEditingProduct({ ...editingProduct, discountPercent: e.target.value })}
                     className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white outline-none"
                   />
+                </div>
+              </div>
+
+              {/* Short Description */}
+              <div>
+                <label className="block text-xs font-bold text-slate-300 mb-1">
+                  সংক্ষিপ্ত বিবরণ (Short Description)
+                </label>
+                <textarea
+                  rows={2}
+                  placeholder="যেমন: দুবাই ভ্যারিয়েন্ট গোল্ড সিল ANC ও টাইপ-সি স্পিকার কেস সহ প্রিমিয়াম অডিও এক্সপেরিয়েন্স..."
+                  value={editingProduct.shortDescBn || ''}
+                  onChange={(e) => setEditingProduct({ ...editingProduct, shortDescBn: e.target.value })}
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white outline-none focus:border-cyan-400"
+                />
+              </div>
+
+              {/* Key Features / Bullet Points */}
+              <div>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="text-xs font-bold text-slate-300 flex items-center gap-1.5">
+                    <CheckCircle2 className="size-3.5 text-emerald-400" />
+                    <span>প্রধান বৈশিষ্ট্যসমূহ (Bullet Points)</span>
+                  </label>
+                  <span className="text-[11px] text-slate-400 font-normal">প্রতি লাইনে ১টি করে পয়েন্ট</span>
+                </div>
+                <textarea
+                  rows={3}
+                  placeholder={"যেমন:\nঅরিজিনাল দুবাই সিরিয়াল বক্স ও গোল্ড সিল প্যাক।\nআইফোন ও অ্যান্ড্রয়েড উভয় ফোনেই ইনস্ট্যান্ট কানেক্ট।\nটাইপ-সি ফাস্ট চার্জিং সুবিধা ও সাউন্ড স্পিকার কেস।"}
+                  value={editingProduct.bulletPointsText || ''}
+                  onChange={(e) => setEditingProduct({ ...editingProduct, bulletPointsText: e.target.value })}
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white outline-none focus:border-cyan-400 font-mono leading-relaxed"
+                />
+              </div>
+
+              {/* Technical Specifications Table */}
+              <div className="bg-slate-950/70 border border-slate-800 rounded-2xl p-3 sm:p-4 space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h4 className="text-xs font-bold text-white flex items-center gap-1.5">
+                      <Layers className="size-3.5 text-cyan-400" />
+                      <span>টেকনিক্যাল স্পেসিফিকেশন (Specifications)</span>
+                    </h4>
+                    <p className="text-[10px] text-slate-400">প্রোডাক্টের চিপসেট, ব্লুটুথ, ব্যাটারি ব্যাকআপ ইত্যাদি টেবিল আকারে দেখাবে</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleAddEditSpecRow}
+                    className="bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-[11px] font-bold px-2.5 py-1 rounded-lg flex items-center gap-1 transition active:scale-95 cursor-pointer"
+                  >
+                    <Plus className="size-3" />
+                    <span>রো যোগ করুন</span>
+                  </button>
+                </div>
+
+                <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
+                  {(editingProduct.specRows || []).map((row, idx) => (
+                    <div key={idx} className="flex items-center gap-2">
+                      <input
+                        type="text"
+                        placeholder="বিষয়/নাম (যেমন: চিপসেট)"
+                        value={row.key}
+                        onChange={(e) => handleUpdateEditSpecRow(idx, 'key', e.target.value)}
+                        className="w-2/5 bg-slate-900 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-white outline-none focus:border-cyan-400"
+                      />
+                      <input
+                        type="text"
+                        placeholder="মান/বিবরণ (যেমন: Upgraded H2 Chip)"
+                        value={row.value}
+                        onChange={(e) => handleUpdateEditSpecRow(idx, 'value', e.target.value)}
+                        className="flex-1 bg-slate-900 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-white outline-none focus:border-cyan-400"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveEditSpecRow(idx)}
+                        className="p-1.5 text-slate-500 hover:text-rose-400 hover:bg-rose-500/10 rounded-lg transition"
+                        title="মুছে ফেলুন"
+                      >
+                        <Trash2 className="size-3.5" />
+                      </button>
+                    </div>
+                  ))}
+                  {(editingProduct.specRows || []).length === 0 && (
+                    <p className="text-[11px] text-slate-500 text-center py-2">
+                      কোনো স্পেসিফিকেশন রো নেই। "+ রো যোগ করুন" বাটনে ক্লিক করুন।
+                    </p>
+                  )}
                 </div>
               </div>
 
