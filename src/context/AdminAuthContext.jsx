@@ -8,15 +8,15 @@ export const AdminAuthProvider = ({ children }) => {
   // Check if admin is currently unlocked within the 1-hour active window
   const checkIsUnlocked = () => {
     try {
-      const isUnlocked = localStorage.getItem('galaxy_admin_unlocked') === 'true';
-      const unlockTime = parseInt(localStorage.getItem('galaxy_admin_unlocked_time') || '0', 10);
+      const isUnlocked = localStorage.getItem('maya_admin_unlocked') === 'true';
+      const unlockTime = parseInt(localStorage.getItem('maya_admin_unlocked_time') || '0', 10);
       if (isUnlocked && unlockTime) {
         if (Date.now() - unlockTime < ONE_HOUR_MS) {
           return true;
         } else {
           // 1 hour expired! Automatically lock again
-          localStorage.removeItem('galaxy_admin_unlocked');
-          localStorage.removeItem('galaxy_admin_unlocked_time');
+          localStorage.removeItem('maya_admin_unlocked');
+          localStorage.removeItem('maya_admin_unlocked_time');
           return false;
         }
       }
@@ -41,7 +41,7 @@ export const AdminAuthProvider = ({ children }) => {
   // Whether user is currently logged in with username & password
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     try {
-      return sessionStorage.getItem('galaxy_admin_authenticated') === 'true';
+      return sessionStorage.getItem('maya_admin_authenticated') === 'true';
     } catch {
       return false;
     }
@@ -72,8 +72,8 @@ export const AdminAuthProvider = ({ children }) => {
 
       setIsAdminUnlocked(true);
       try {
-        localStorage.setItem('galaxy_admin_unlocked', 'true');
-        localStorage.setItem('galaxy_admin_unlocked_time', Date.now().toString());
+        localStorage.setItem('maya_admin_unlocked', 'true');
+        localStorage.setItem('maya_admin_unlocked_time', Date.now().toString());
       } catch {}
 
       setUnlockNotification('🔐 সিক্রেট আনলক সফল! অ্যাডমিন প্যানেল দৃশ্যমান হয়েছে (১ ঘণ্টার জন্য কার্যকর)।');
@@ -91,9 +91,9 @@ export const AdminAuthProvider = ({ children }) => {
     setIsAdminUnlocked(false);
     setIsAuthenticated(false);
     try {
-      localStorage.removeItem('galaxy_admin_unlocked');
-      localStorage.removeItem('galaxy_admin_unlocked_time');
-      sessionStorage.removeItem('galaxy_admin_authenticated');
+      localStorage.removeItem('maya_admin_unlocked');
+      localStorage.removeItem('maya_admin_unlocked_time');
+      sessionStorage.removeItem('maya_admin_authenticated');
     } catch {}
   };
 
@@ -102,20 +102,23 @@ export const AdminAuthProvider = ({ children }) => {
     const cleanUser = (username || '').trim().toLowerCase().replace(/\s+/g, ' ');
     const cleanPass = (password || '').trim();
 
-    // Allowed usernames (including fixed "Gadgets Galaxy")
+    // Allowed usernames
     const allowedUsernames = [
-      'gadgets galaxy',
-      'gadgetsgalaxy',
+      'maya shopping mall',
+      'mayashoppingmall',
+      'maya',
+      'masud',
       'admin',
-      'gadgetsgalaxy2026gg@gmail.com'
+      'masud97186@gmail.com'
     ];
 
-    // Allowed passwords (defaults to SameerXnjr10 or client custom changed password)
+    // Allowed passwords
     const allowedPasswords = [
+      'maya2026',
       'sameerxnjr10',
       'SameerXnjr10',
       'admin',
-      'galaxy2026'
+      '123456'
     ];
 
     if (storeAdminPassword) {
@@ -128,7 +131,7 @@ export const AdminAuthProvider = ({ children }) => {
     if (isUserValid && isPassValid) {
       setIsAuthenticated(true);
       try {
-        sessionStorage.setItem('galaxy_admin_authenticated', 'true');
+        sessionStorage.setItem('maya_admin_authenticated', 'true');
       } catch {}
       return { success: true };
     }
@@ -143,7 +146,7 @@ export const AdminAuthProvider = ({ children }) => {
   const logout = () => {
     setIsAuthenticated(false);
     try {
-      sessionStorage.removeItem('galaxy_admin_authenticated');
+      sessionStorage.removeItem('maya_admin_authenticated');
     } catch {}
   };
 

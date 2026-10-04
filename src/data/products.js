@@ -1,662 +1,726 @@
 export const CATEGORIES = [
-  { id: 'all', nameBn: 'সকল প্রোডাক্ট', nameEn: 'All Products', icon: 'LayoutGrid' },
-  { id: 'audio', nameBn: 'হেডফোন ও ইয়ারবাডস', nameEn: 'Audio & Earbuds', icon: 'Headphones' },
-  { id: 'powerbank', nameBn: 'পাওয়ার ব্যাংক', nameEn: 'Power Banks', icon: 'BatteryCharging' },
-  { id: 'speakers', nameBn: 'ব্লুটুথ স্পিকার', nameEn: 'Bluetooth Speakers', icon: 'Volume2' },
-  { id: 'drones', nameBn: 'স্মার্ট ড্রোন', nameEn: 'Smart Drones', icon: 'Navigation' },
-  { id: 'camera', nameBn: 'মিনি ডিজিটাল ক্যামেরা', nameEn: 'Digital Cameras', icon: 'Camera' },
+  { id: 'all', nameBn: 'সকল প্রোডাক্ট', nameEn: 'All Collections', icon: 'LayoutGrid' },
+  { id: 'bedding', nameBn: 'বেডিং কম্বো সেট', nameEn: 'Bedding Sets', icon: 'BedDouble' },
+  { id: 'couple', nameBn: 'কাপল কম্বো ড্রেস', nameEn: 'Couple Outfits', icon: 'HeartHandshake' },
+  { id: 'hamper', nameBn: 'লাক্সারি গিফট হ্যাম্পার', nameEn: 'Gift Hampers', icon: 'Gift' },
+  { id: 'polo', nameBn: 'প্রিমিয়াম পোলো শার্ট', nameEn: 'Polo Shirts', icon: 'Shirt' },
+  { id: 'kurti', nameBn: 'শর্ট কুর্তি কালেকশন', nameEn: 'Ethnic Kurtis', icon: 'Sparkles' },
+  { id: 'kashmiri', nameBn: 'কাশ্মীরি থ্রি-পিস', nameEn: 'Kashmiri 3-Piece', icon: 'Crown' },
+  { id: 'lifestyle', nameBn: 'ব্যাগ ও লাইফস্টাইল', nameEn: 'Bags & Lifestyle', icon: 'ShoppingBag' },
 ];
 
 export const INITIAL_PRODUCTS = [
+  // 1. Bedding Combo Sets
   {
-    id: 'airpods-pro-2',
-    name: 'Apple AirPods Pro (2nd Generation) - Master Copy (B Grade)',
-    nameBn: 'অ্যাপল এয়ারপডস প্রো ২য় জেনারেশন (বি গ্রেড)',
-    model: 'AirPods Pro 2nd Gen',
-    price: 899,
-    regularPrice: 1450,
-    discountPercent: 38,
-    category: 'audio',
+    id: 'luxury-bedding-combo-maroon',
+    name: 'Luxury Floral Cotton Bedding Combo Set (Maroon & Rose)',
+    nameBn: 'লাক্সারি ফ্লোরাল বেডিং কম্বো সেট (মেরুন ও রোজ প্রিন্ট)',
+    model: 'ROOMBED-M101',
+    price: 1350,
+    regularPrice: 1850,
+    discountPercent: 27,
+    category: 'bedding',
     rating: 4.9,
-    reviewsCount: 142,
+    reviewsCount: 124,
     inStock: true,
-    stockCount: 45,
-    has360View: true,
+    stockCount: 28,
+    has360View: false,
     featured: true,
     isHotDeal: true,
     badgeText: 'বেস্টসেলার',
     images: [
-      '/assets/products/airpods_pro_2_open_case.webp',
-      '/assets/products/airpods_pro_2_usbc_port.webp',
-      '/assets/products/airpods_pro_2_box_front.webp',
-      '/assets/products/airpods_pro_2_box_back.webp',
-      '/assets/products/airpods_pro_2_box_barcode.webp',
+      '/assets/products/bedding-1.webp',
+      '/assets/products/bedding-2.webp',
+      '/assets/products/bedding-5.webp',
+      '/assets/products/bedding-6.webp'
     ],
     colors: [
-      { name: 'Pure White', hex: '#FFFFFF', inStock: true },
+      { name: 'Maroon Floral', hex: '#881337', inStock: true },
+      { name: 'Wine Pink', hex: '#9D174D', inStock: true },
+      { name: 'Sky Blue Floral', hex: '#0284C7', inStock: true },
+      { name: 'Royal Ivory', hex: '#F3F4F6', inStock: true },
     ],
-    shortDescBn: '100% অ্যাক্টিভ নয়েজ ক্যান্সেলেশন গোল্ড সিল সহ দুবাই ভ্যারিয়েন্ট টাইপ-সি এয়ারপডস প্রো ২।',
-    shortDescEn: 'Premium master copy featuring H2 chip, Type-C charging case with speaker & lanyard loop.',
+    sizes: ['King Size (7.5x8.5 ft)', 'Semi-Double'],
+    shortDescBn: '১০০% পিওর কটন সফট ফিনিশ, ১টি কিং সাইজ বেডশিট + ২টি বালিশের কাভার + ১টি কুশন কাভার কম্বো।',
+    shortDescEn: 'Premium 100% combed cotton luxury bedding set with high thread count, fade-resistant reactive dye.',
     specs: {
-      'চিপসেট (Chipset)': 'Upgraded H2 High Performance Chip',
-      'কানেক্টিভিটি (Bluetooth)': 'Bluetooth v5.3 (iOS Pop-up & Android)',
-      'চার্জিং পোর্ট': 'Type-C Fast Charging Port',
-      'কেস স্পিকার': 'Built-in Case Speaker & Lanyard Loop',
-      'ব্যাটারি ব্যাকআপ': 'কেসসহ ২৪+ ঘণ্টা প্লেব্যাক ব্যাকআপ',
-      'নয়েজ কন্ট্রোল': 'Active Noise Cancellation Simulation',
-      'প্যাকেজ কন্টেন্ট': 'AirPods, Charging Case, Type-C Cable, Extra Ear-tips, Manual',
-      'ওয়ারেন্টি': '৩ দিনের চেক ও রিপ্লেসমেন্ট গ্যারান্টি'
+      'ফেব্রিক কোয়ালিটি': '১০০% পিওর সফট কটন (রং ওঠার কোনো সুযোগ নেই)',
+      'সাইজ (Size)': 'কিং সাইজ (৭.৫ ফুট বাই ৮.৫ ফুট)',
+      'প্যাকেজে যা থাকছে': '১টি বেডশিট, ২টি পিলো কভার, ১টি কুশন কভার',
+      'প্রিন্ট টেকনোলজি': 'রিঅ্যাক্টিভ ডিজিটাল ফ্লোরাল প্রিন্ট',
+      'ডেলিভারি এরিয়া': 'নওগাঁ সদর ও সারাদেশে হোম ডেলিভারি',
+      'ওয়ারেন্টি/গ্যারান্টি': 'রং উঠলে বা ডিফেক্ট থাকলে ১০০% রিপ্লেসমেন্ট'
     },
     bulletPointsBn: [
-      'অরিজিনাল দুবাই সিরিয়াল বক্স ও গোল্ড সিল প্যাক।',
-      'আইফোন ও অ্যান্ড্রয়েড উভয় ফোনেই ইনস্ট্যান্ট কানেক্ট।',
-      'টাইপ-সি ফাস্ট চার্জিং সুবিধা ও সাউন্ড স্পিকার কেস।',
-      'ডিপ বেস ও ক্রিস্টাল ক্লিয়ার কলিং মাইক।'
+      '১০০% পাকা রং ও দীর্ঘস্থায়ী কোয়ালিটি গ্যারান্টি।',
+      'কিং সাইজ যেকোনো বড় খাটে নিখুঁতভাবে ফিট হবে।',
+      'ধোয়ার পরও কাপড়ের কোমলতা ও ঔজ্জ্বল্য বজায় থাকে।',
+      'ক্যাশ অন ডেলিভারিতে দেখে রিসিভ করার সুবিধা।'
     ]
   },
   {
-    id: 'mini-flip-camera-lk027',
-    name: 'Mini Flip Digital Camera - 180° Rotatable Selfie Screen (LK-027)',
-    nameBn: 'মিনি ফ্লিপ ডিজিটাল সেলফি ক্যামেরা (LK-027)',
-    model: 'LK-027',
-    price: 2199,
-    regularPrice: 2850,
-    discountPercent: 23,
-    category: 'camera',
+    id: 'luxury-bedding-sky-blue',
+    name: 'Royal Sky Blue & Rose Floral Bedding Set',
+    nameBn: 'রয়্যাল স্কাই ব্লু ফ্লোরাল কম্বো বেডিং সেট',
+    model: 'ROOMBED-B202',
+    price: 1350,
+    regularPrice: 1850,
+    discountPercent: 27,
+    category: 'bedding',
     rating: 4.8,
-    reviewsCount: 89,
+    reviewsCount: 78,
     inStock: true,
-    stockCount: 20,
+    stockCount: 19,
     has360View: false,
     featured: true,
-    isHotDeal: true,
-    badgeText: 'রেট্রো ভাইরাল',
+    isHotDeal: false,
+    badgeText: 'নতুন আগমন',
     images: [
-      '/assets/products/mini_flip_digital_camera_lk027.webp',
+      '/assets/products/bedding-3.webp',
+      '/assets/products/bedding-4.webp',
+      '/assets/products/bedding-7.webp'
     ],
     colors: [
-      { name: 'Silver Gray', hex: '#94A3B8', inStock: true },
-      { name: 'Matte Black', hex: '#0F172A', inStock: true },
-      { name: 'Sakura Pink', hex: '#F472B6', inStock: true },
+      { name: 'Sky Blue Floral', hex: '#38BDF8', inStock: true },
+      { name: 'Hot Pink Rose', hex: '#F43F5E', inStock: true },
+      { name: 'Classic Paisley', hex: '#B91C1C', inStock: true }
     ],
-    shortDescBn: '১৮০ ডিগ্রি রোটেটেবল ফ্লিপ স্ক্রিনসহ রেট্রো স্টাইল মিনি সেলফি ডিজিটাল ক্যামেরা।',
-    shortDescEn: 'Compact vintage-style mini digital camera with 180-degree flip screen & 720p HD capture.',
+    sizes: ['King Size (7.5x8.5 ft)'],
+    shortDescBn: 'রুচিশীল স্কাই ব্লু ও ফ্লোরাল ডিজাইনের প্রিমিয়াম কিং সাইজ বেড কাভার সেট।',
+    shortDescEn: 'Elegant sky blue floral design made of breathable luxury cotton fabric for cool restful sleep.',
     specs: {
-      'মডেল': 'LK-027 Mini Flip Camera',
-      'স্ক্রিন': '180° Rotatable Flip Selfie Display',
-      'ভিডিও রেজোলিউশন': 'HD 1280x720 Pixel Video & Photo',
-      'মেমরি স্লট': 'TF Card Support (Up to 32GB/64GB)',
-      'চার্জিং': 'Type-C Fast Rechargeable',
-      'ফ্ল্যাশ লাইট': 'Built-in Fill Flash for Night Photography',
-      'এক্সেসরিজ': 'Keyring Chain, Type-C Cable, Strap',
-      'ওয়ারেন্টি': '৭ দিনের ফুল রিপ্লেসমেন্ট গ্যারান্টি'
+      'ফেব্রিক': 'সফট গ্লেস কটন ব্লেন্ড',
+      'সাইজ': 'কিং সাইজ (৭.৫ ফুট x ৮.৫ ফুট)',
+      'সেট কন্টেন্ট': '১টি বেডশিট + ২টি বালিশের কাভার + ১টি কুশন কাভার',
+      'কালার গ্যারান্টি': '১০০% ওয়াশ ফাস্টনেস গ্যারান্টি'
     },
     bulletPointsBn: [
-      '১৮০ ডিগ্রি ফ্লিপ স্ক্রিনের মাধ্যমে সহজে সুন্দর সেলফি ও ভ্লগিং করা যায়।',
-      'পকেটে বা ব্যাগে কি-রিংয়ের মতো ঝুলিয়ে নেওয়ার সুপার কমপ্যাক্ট সাইজ।',
-      'টাইপ-সি রিচার্জেবল ব্যাটারি ও মেমোরি কার্ড স্লট।',
-      '৭ দিনের অফিসিয়াল রিপ্লেসমেন্ট গ্যারান্টি।'
+      'ঘরের সৌন্দর্যে এনে দেবে আভিজাত্যের ছোঁয়া।',
+      'উন্নত মানের টেকসই সুতা দিয়ে বোনা।',
+      'নওগাঁ সদর সহ সারাদেশে দ্রুত ডেলিভারি।'
     ]
   },
   {
-    id: 'zokd-45w-powerbank',
-    name: 'ZOKD 45W Super Fast Charging Power Bank (10000mAh)',
-    nameBn: 'ZOKD ৪৫ ওয়াট সুপার ফাস্ট চার্জিং পাওয়ার ব্যাংক (১০০০০ এমএএইচ)',
-    model: 'ZOKD-45W-10K',
-    price: 3999,
-    regularPrice: 4800,
-    discountPercent: 17,
-    category: 'powerbank',
-    rating: 5.0,
-    reviewsCount: 64,
+    id: 'designer-paisley-bedsheet',
+    name: 'Designer Paisley & White Floral Bed Sheet Set',
+    nameBn: 'ডিজাইনার পেইজলি ও হোয়াইট ফ্লোরাল বেডশিট সেট',
+    model: 'ROOMBED-W106',
+    price: 1290,
+    regularPrice: 1750,
+    discountPercent: 26,
+    category: 'bedding',
+    rating: 4.9,
+    reviewsCount: 65,
     inStock: true,
     stockCount: 15,
     has360View: false,
-    featured: true,
-    isHotDeal: false,
-    badgeText: '৪৫W সুপার ফাস্ট',
+    featured: false,
+    isHotDeal: true,
+    badgeText: 'হট ডিল',
     images: [
-      '/assets/products/zokd_45w_10000mah_powerbank.webp',
+      '/assets/products/bedding-5.webp',
+      '/assets/products/bedding-6.webp',
+      '/assets/products/bedding-7.webp'
     ],
     colors: [
-      { name: 'Mint Green', hex: '#34D399', inStock: true },
-      { name: 'Carbon Black', hex: '#1E293B', inStock: true },
+      { name: 'White Floral W-106', hex: '#FAFAFA', inStock: true },
+      { name: 'Maroon Paisley Check', hex: '#991B1B', inStock: true }
     ],
-    shortDescBn: '৪৫ ওয়াট আল্ট্রা ফাস্ট চার্জিং ও ইন-বিল্ট ৩টি কেবলসহ প্রিমিয়াম ১০,০০০ এমএএইচ পাওয়ার ব্যাংক।',
-    shortDescEn: '45W high-speed PD fast charging 10000mAh power bank with built-in multi cables.',
+    sizes: ['King Size (7.5x8.5 ft)'],
+    shortDescBn: 'সাদা জমিনে রুচিশীল ফ্লোরাল ও পেইজলি আর্টওয়ার্কের ক্লাসিক বেডশিট কম্বো।',
+    shortDescEn: 'Exquisite paisley and delicate floral botanical bedding combo set.',
     specs: {
-      'আউটপুট পাওয়ার': '45W Super Fast Charge (PD / QC)',
-      'ক্যাপাসিটি': '10,000 mAh High Density Lithium Polymer',
-      'বিল্ট-ইন কেবল': 'Type-C, iPhone Lightning, Micro-USB',
-      'ক্যারিং স্ট্র্যাপ': 'Integrated Heavy-duty Carrying Strap',
-      'ডিজাইন': 'Mint Green Luxury Finish',
-      'সুরক্ষা': 'Over-charging & Short-circuit Auto Protection',
-      'ওয়ারেন্টি': '৭ দিনের চেক ও রিপ্লেসমেন্ট গ্যারান্টি'
+      'ফেব্রিক': 'প্রিমিয়াম কটন কম্বড ফেব্রিক',
+      'সাইজ': 'কিং সাইজ',
+      'আইটেমস': '১টি বেডশিট + ২টি পিলো কাভার'
     },
     bulletPointsBn: [
-      '৪৫ ওয়াট সুপার ফাস্ট আউটপুট দিয়ে ফোন ও গ্যাজেট দ্রুত চার্জ হয়।',
-      'আলাদা কোনো কেবল নেওয়ার প্রয়োজন নেই, ৩টি কেবল ভেতরেই সংযুক্ত।',
-      'মডার্ন মিন্ট গ্রিন কালার ও মজবুত ফ্যাব্রিক হ্যান্ডেল স্ট্র্যাপ।',
-      'আইফোন ও অ্যান্ড্রয়েড ফ্ল্যাগশিপ ফোনের জন্য আদর্শ।'
+      'ক্লাসিক হোয়াইট অ্যান্ড মেরুন কালার কম্বিনেশন।',
+      'অত্যন্ত মোলায়েম ও আরামদায়ক অনুভূতি।',
+      'সহজে ধোয়া যায় এবং রং নষ্ট হয় না।'
     ]
   },
+
+  // 2. Couple Outfits
   {
-    id: 'hoco-w35-max',
-    name: 'HOCO W35 MAX Wireless Bluetooth Headphones (90 Hours Playback)',
-    nameBn: 'HOCO W35 MAX ওয়্যারলেস ব্লুটুথ হেডফোন (৯০ ঘণ্টা ব্যাকআপ)',
-    model: 'W35 Max',
-    price: 1650,
-    regularPrice: 2200,
-    discountPercent: 25,
-    category: 'audio',
-    rating: 4.9,
-    reviewsCount: 118,
+    id: 'couple-combo-black-floral',
+    name: 'Royal Black & Gold Floral Couple Matching Festive Combo',
+    nameBn: 'রয়্যাল ব্ল্যাক ও গোল্ডেন কাপল ম্যাচিং সেট (পাঞ্জাবি + সালোয়ার কামিজ)',
+    model: 'MAYA-CPL-BLK',
+    price: 1950,
+    regularPrice: 2650,
+    discountPercent: 26,
+    category: 'couple',
+    rating: 5.0,
+    reviewsCount: 94,
     inStock: true,
-    stockCount: 32,
+    stockCount: 22,
     has360View: false,
     featured: true,
     isHotDeal: true,
-    badgeText: '৯০ ঘণ্টা ব্যাকআপ',
+    badgeText: 'কাপল স্পেশাল',
     images: [
-      '/assets/products/hoco_w35_max_headphone_silver.webp',
-      '/assets/products/hoco_w35_max_cushions.webp',
-      '/assets/products/hoco_w35_max_box_front.webp',
-      '/assets/products/hoco_w35_max_box_back.webp',
+      '/assets/products/couple-1.webp',
+      '/assets/products/couple-2.webp',
+      '/assets/products/couple-3.webp',
+      '/assets/products/couple-4.webp'
     ],
     colors: [
-      { name: 'Metallic Silver', hex: '#CBD5E1', inStock: true },
-      { name: 'Space Gray', hex: '#334155', inStock: true },
+      { name: 'Black Floral', hex: '#18181B', inStock: true },
+      { name: 'Mustard Yellow', hex: '#D97706', inStock: true },
+      { name: 'Royal Blue Mandala', hex: '#1D4ED8', inStock: true },
+      { name: 'Rich Purple', hex: '#7E22CE', inStock: true },
     ],
-    shortDescBn: 'এক চার্জে একটানা ৯০ ঘণ্টা প্লেব্যাক ব্যাকআপ ও ৪০ মিমি স্পিকারসহ অ্যাপল হেডফোন স্টাইল।',
-    shortDescEn: 'Premium metallic over-ear headphones with 90-hour battery life and Bluetooth 5.3.',
+    sizes: ['M (পাঞ্জাবি ৪০ / কামিজ ৩৮)', 'L (পাঞ্জাবি ৪২ / কামিজ ৪০)', 'XL (পাঞ্জাবি ৪৪ / কামিজ ৪২)'],
+    shortDescBn: 'ঈদ, বিয়ে কিংবা যেকোনো উৎসবের জন্য পারফেক্ট ম্যাচিং লাক্সারি ব্ল্যাক অ্যান্ড গোল্ড কাপল কম্বো সেট।',
+    shortDescEn: 'Exquisite matching couple combo featuring designer men’s Panjabi and gorgeous women’s Salwar Kameez set.',
     specs: {
-      'মডেল': 'HOCO W35 Max Wireless Headphones',
-      'ব্যাটারি ব্যাকআপ': 'Unbelievable 90 Hours Playtime on Single Charge',
-      'ড্রাইভার সাইজ': '40mm Hi-Fi Large Dynamic Stereo Unit',
-      'ব্লুটুথ ভার্সন': 'Bluetooth 5.3 (Low Latency / Gaming)',
-      'কানেকশন মোড': 'Bluetooth, 3.5mm AUX Cable, Micro SD / TF Card',
-      'চার্জিং পোর্ট': 'Type-C Fast Charging Port',
-      'ইয়ার কুশন': 'Ultra Soft Breathable Memory Foam Cushions',
-      'ওয়ারেন্টি': '৭ দিনের অফিসিয়াল রিপ্লেসমেন্ট গ্যারান্টি'
+      'পুরুষের পোশাক': 'ডিজাইনার পাঞ্জাবি (সিল্ক কটন ব্লেন্ড, বোতাম ফিনিশ)',
+      'নারীর পোশাক': 'সালোয়ার কামিজ সেট ও দোপাট্টা (প্রিন্টেড ও ম্যাচিং বর্ডার)',
+      'ফেব্রিক': 'প্রিমিয়াম ডল সিল্ক ও সফট কটন মিক্স',
+      'পাঞ্জাবি সাইজ': '৪০, ৪২, ৪৪',
+      'কামিজ সাইজ': '৩৬ থেকে ৪৪ পর্যন্ত অ্যাডজাস্টেবল (সেমি-স্টিচড/স্টিচড)',
+      'উপলক্ষ': 'ঈদ, পূজা, পার্টি, গায়ে হলুদ ও বিবাহবার্ষিকী'
     },
     bulletPointsBn: [
-      'এক চার্জেই পুরো মাস চলে যায় (৯০ ঘণ্টার দুর্দান্ত ব্যাকআপ)।',
-      'AirPods Max এর মতো মেটালিক প্রিমিয়াম লুক ও সফট কুশন।',
-      'ব্লুটুথ ছাড়াও অক্স কেবল বা মেমোরি কার্ড দিয়ে গান শোনার সুবিধা।',
-      'কলিং ও গেমিংয়ের জন্য লো-ল্যাটেন্সি হাই-ক্লিয়ার অডিও।'
+      'একসাথে চমৎকার কাপল ম্যাচিং ফটো তোলার জন্য সেরা।',
+      'গরমের দিনেও পরতে দারুণ আরামদায়ক ও হালকা।',
+      'কালার ও প্রিন্টের শতভাগ দীর্ঘস্থায়িত্বের নিশ্চয়তা।'
     ]
   },
   {
-    id: 'e88-pro-drone',
-    name: 'E88 PRO Dual Camera Foldable Drone with Brushless Motor & 2 Batteries',
-    nameBn: 'E88 PRO ডুয়াল ক্যামেরা ফোল্ডিং ড্রোন (ব্রাশলেস মোটর ও ২টি ব্যাটারি)',
-    model: 'E88 Pro Brushless',
-    price: 5299,
-    regularPrice: 6500,
-    discountPercent: 18,
-    category: 'drones',
+    id: 'couple-combo-mustard-yellow',
+    name: 'Ethnic Mustard Yellow & Paisley Couple Festive Set',
+    nameBn: 'ফেস্টিভ মাস্টার্ড ইয়েলো কাপল ম্যাচিং কম্বো সেট',
+    model: 'MAYA-CPL-YLW',
+    price: 1950,
+    regularPrice: 2650,
+    discountPercent: 26,
+    category: 'couple',
+    rating: 4.9,
+    reviewsCount: 67,
+    inStock: true,
+    stockCount: 16,
+    has360View: false,
+    featured: true,
+    isHotDeal: false,
+    badgeText: 'ট্রেন্ডিং',
+    images: [
+      '/assets/products/couple-2.webp',
+      '/assets/products/couple-1.webp',
+      '/assets/products/couple-3.webp'
+    ],
+    colors: [
+      { name: 'Mustard Yellow', hex: '#EAB308', inStock: true },
+      { name: 'Royal Blue', hex: '#2563EB', inStock: true },
+      { name: 'Rich Purple', hex: '#6B21A8', inStock: true }
+    ],
+    sizes: ['M (পাঞ্জাবি ৪০)', 'L (পাঞ্জাবি ৪২)', 'XL (পাঞ্জাবি ৪৪)'],
+    shortDescBn: 'উজ্জ্বল হলুদ ও ঐতিহ্যবাহী মোটিফের স্পেশাল কাপল কম্বো ড্রেস। গায়ে হলুদের অনুষ্ঠানের জন্য দারুণ পছন্দ।',
+    shortDescEn: 'Festive mustard yellow ethnic themed couple set tailored with comfort and elegance.',
+    specs: {
+      'ফেব্রিক': 'প্রিমিয়াম সফট কটন ও ভিসকস',
+      'প্যাকেজ': '১টি পুরুষদের পাঞ্জাবি + ১টি লেডিস কামিজ ও দোপাট্টা',
+      'কালার': 'মাস্টার্ড ইয়েলো'
+    },
+    bulletPointsBn: [
+      'হলুদ সন্ধ্যা কিংবা যেকোনো পারিবারিক মিলনমেলার শ্রেষ্ঠ পোশাক।',
+      'উচ্চমানের ফিনিশিং ও নিখুঁত সেলাই।',
+      'প্রোডাক্ট হাতে পেয়ে টাকা পরিশোধ করার সুবিধা।'
+    ]
+  },
+  {
+    id: 'couple-combo-royal-blue',
+    name: 'Royal Blue Mandala Couple Matching Festive Combo',
+    nameBn: 'রয়্যাল ব্লু ম্যান্ডালা কাপল ম্যাচিং কম্বো সেট',
+    model: 'MAYA-CPL-BLU',
+    price: 1950,
+    regularPrice: 2650,
+    discountPercent: 26,
+    category: 'couple',
     rating: 4.8,
-    reviewsCount: 76,
+    reviewsCount: 52,
     inStock: true,
     stockCount: 12,
     has360View: false,
-    featured: true,
-    isHotDeal: true,
-    badgeText: 'ডুয়াল ক্যামেরা',
-    images: [
-      '/assets/products/e88_pro_drone_unfolded_batteries.webp',
-      '/assets/products/e88_pro_drone_case_packed.webp',
-      '/assets/products/e88_pro_drone_bottom_sensor.webp',
-      '/assets/products/e88_pro_drone_box_front.webp',
-      '/assets/products/e88_pro_drone_box_side.webp',
-    ],
-    colors: [
-      { name: 'Stealth Black', hex: '#0F172A', inStock: true },
-      { name: 'Storm Gray', hex: '#64748B', inStock: true },
-    ],
-    shortDescBn: 'ব্রাশলেস পাওয়ারফুল মোটর, অপটিক্যাল ফ্লো সেন্সর ও ২টি ব্যাটারিসহ ডুয়াল ক্যামেরা ড্রোন।',
-    shortDescEn: 'Foldable dual HD camera drone with brushless motors, optical flow sensor & travel carry case.',
-    specs: {
-      'মডেল': 'E88 Pro (Brushless Motor Edition)',
-      'ক্যামেরা': 'Dual HD Cameras with Bottom Optical Flow Stabilization',
-      'মোটর টাইপ': 'High Power Wind-Resistant Brushless Motors',
-      'ব্যাটারি': '2 Modular High-Capacity Rechargeable Batteries Included',
-      'রিমোট কন্ট্রোল': '2.4GHz Smart Controller with Phone Holder Mount',
-      'প্যাকেজ এক্সেসরিজ': 'Hard Zipper Carrying Case, Extra Propellers, Prop Guards, Screwdriver',
-      'স্টান্টস': '360-degree Aerial Flips, One-Key Takeoff & Landing',
-      'ওয়ারেন্টি': '৭ দিনের চেক ও রিপ্লেসমেন্ট ওয়ারেন্টি'
-    },
-    bulletPointsBn: [
-      'ব্রাশলেস মোটরের কারণে সহজে নষ্ট হয় না এবং বাতাসে স্ট্যাবল ওড়ে।',
-      'সামনে ও নিচে ডুয়াল ক্যামেরা দিয়ে উপর থেকে নিচের নিখুঁত ভিউ দেখা যায়।',
-      'প্যাকেজে ২টি ব্যাটারি ও ট্রাভেল হার্ড কেস ফ্রি দেওয়া হচ্ছে।',
-      'মোবাইল অ্যাপে লাইভ ভিডিও দেখার এফপিভি (FPV) সুবিধা।'
-    ]
-  },
-  {
-    id: 'good-cool-d301-powerbank',
-    name: 'Good Cool 10000mAh 10W Power Bank with 4 Built-in Cables & Dual LED Torch (D301)',
-    nameBn: 'গুড কুল ১০০০০ এমএএইচ পাওয়ার ব্যাংক (৪টি কেবল ও টুইন LED লাইট)',
-    model: 'Good Cool D301',
-    price: 999,
-    regularPrice: 1350,
-    discountPercent: 26,
-    category: 'powerbank',
-    rating: 4.9,
-    reviewsCount: 95,
-    inStock: true,
-    stockCount: 40,
-    has360View: false,
     featured: false,
     isHotDeal: true,
-    badgeText: 'টুইন টর্চলাইট',
+    badgeText: 'এক্সক্লুসিভ',
     images: [
-      '/assets/products/good_cool_d301_box_front.webp',
-      '/assets/products/good_cool_d301_unit_front.webp',
-      '/assets/products/good_cool_d301_cables_back.webp',
-      '/assets/products/good_cool_d301_led_torch.webp',
+      '/assets/products/couple-3.webp',
+      '/assets/products/couple-4.webp',
+      '/assets/products/couple-1.webp'
     ],
     colors: [
-      { name: 'Midnight Black', hex: '#111827', inStock: true },
-      { name: 'Deep Purple', hex: '#581C87', inStock: true },
+      { name: 'Royal Blue Mandala', hex: '#1E40AF', inStock: true },
+      { name: 'Deep Purple', hex: '#581C87', inStock: true }
     ],
-    shortDescBn: '১০,০০০ এমএএইচ ক্যাপাসিটি, ৪টি ইন-বিল্ট কেবল, ডিজিটাল ডিসপ্লে ও ইমার্জেন্সি টুইন LED টর্চ।',
-    shortDescEn: '10000mAh 10W power bank featuring 4 attached charging cables and twin emergency LED flashlights.',
+    sizes: ['M (পাঞ্জাবি ৪০)', 'L (পাঞ্জাবি ৪২)', 'XL (পাঞ্জাবি ৪৪)'],
+    shortDescBn: 'আভিজাত্যপূর্ণ গাঢ় নীল ও মনকাড়া ম্যান্ডালা প্রিন্ট কাপল কম্বো।',
+    shortDescEn: 'Majestic royal blue couple combo designed with traditional mandala patterns.',
     specs: {
-      'মডেল': 'Good Cool D301 Power Bank',
-      'ক্যাপাসিটি': '10,000 mAh Li-Polymer Battery',
-      'আউটপুট ওয়াট': '10W Smart Fast Output',
-      'বিল্ট-ইন কেবলস (৪টি)': 'Type-C, iPhone Lightning, Micro-USB, USB-A',
-      'ইমার্জেন্সি লাইট': 'Twin Ultra Bright LED Emergency Flashlights',
-      'ডিসপ্লে': 'Digital LED Battery Percentage Indicator',
-      'হ্যান্ডেল': 'Attached Premium Yellow Lanyard Strap',
-      'ওয়ারেন্টি': '৭ দিনের চেক ও রিপ্লেসমেন্ট গ্যারান্টি'
+      'ফেব্রিক': 'প্রিমিয়াম কটন সিল্ক',
+      'সাইজ': 'পাঞ্জাবি ৪০, ৪২, ৪৪ | কামিজ ফ্রি সাইজ'
     },
     bulletPointsBn: [
-      '৪টি ভিন্ন কেবল পাওয়ার ব্যাংকের পেছনেই ফোল্ড করা থাকে, আলাদা কেবল নেওয়ার দরকার নেই।',
-      'সামনে পাওয়ারফুল টুইন LED টর্চলাইট, যা লোডশেডিং বা রাতে অত্যন্ত কাজে দেয়।',
-      'কত শতাংশ চার্জ বাকি আছে তা স্ক্রিনে স্পষ্টভাবে দেখা যায়।',
-      'মাত্র ৯৯৯ টাকায় ১০০০০ এমএএইচ প্রিমিয়াম ভ্যালু ফর মানি গ্যাজেট।'
+      'রয়্যাল ভাইব ও প্রিমিয়াম লুকিং।',
+      'কাপড়ের রং শতভাগ পাকা।'
     ]
   },
+
+  // 3. Men's 7-in-1 Luxury Gift Hamper
   {
-    id: 'armour-v8-dual-speaker',
-    name: 'Armour Dual Speaker - Loudly Sound Control RGB (Model: V8)',
-    nameBn: 'আর্মার ডুয়াল স্পিকার - সাউন্ড কন্ট্রোল আরজিবি (মডেল: V8)',
-    model: 'Armour V8',
-    price: 1370,
-    regularPrice: 1850,
+    id: 'mens-luxury-gift-hamper-7in1',
+    name: '7-in-1 Exclusive Men’s Luxury Gift Hamper Box Set',
+    nameBn: '৭-ইন-১ এক্সক্লুসিভ জেন্টস লাক্সারি গিফট হ্যাম্পার বক্স সেট',
+    model: 'MAYA-HMP-7IN1',
+    price: 1850,
+    regularPrice: 2500,
     discountPercent: 26,
-    category: 'speakers',
-    rating: 4.9,
-    reviewsCount: 52,
-    inStock: true,
-    stockCount: 25,
-    has360View: false,
-    featured: true,
-    isHotDeal: false,
-    badgeText: 'সাইবারপাঙ্ক RGB',
-    images: [
-      '/assets/products/armour_v8_dual_speaker.webp',
-    ],
-    colors: [
-      { name: 'Mecha White', hex: '#F1F5F9', inStock: true },
-      { name: 'Mecha Black', hex: '#1E293B', inStock: true },
-    ],
-    shortDescBn: '১৩.৬ ওয়াট ডুয়াল স্পিকার, সাইবারপাঙ্ক ট্রান্সপারেন্ট ডিজাইন ও সাউন্ড সেনসিটিভ RGB লাইট।',
-    shortDescEn: '13.6W output power dual speaker with sound-reactive RGB rhythm control and transparent mecha chassis.',
-    specs: {
-      'মডেল': 'Armour V8 Mecha Dual Speaker',
-      'আউটপুট সাউন্ড': '13.6W Powerful Dual Speakers with Heavy Bass',
-      'আরজিবি লাইটিং': 'Loudly Sound Control Dynamic RGB Rhythm Lights',
-      'ব্লুটুথ ভার্সন': 'Bluetooth v5.3 Stable Low-Latency Connection',
-      'ব্যাটারি ক্যাপাসিটি': '1800 mAh Rechargeable Li-ion Battery',
-      'পাওয়ার ইনপুট': 'DC 5V / 1A Type-C Port',
-      'ডিজাইন': 'Transparent Cyberpunk Mecha Aesthetic with Mechanical Gears',
-      'ওয়ারেন্টি': '৭ দিনের চেক ও রিপ্লেসমেন্ট গ্যারান্টি'
-    },
-    bulletPointsBn: [
-      'গানের বিটের সাথে সাথে আরজিবি লাইট নাচে (সাউন্ড কন্ট্রোল্ড)।',
-      'ট্রান্সপারেন্ট বডি দিয়ে ভেতরের মেকানিকাল গিয়ার দেখা যায়—অসাধারণ ডেস্ক সেটআপ লুক।',
-      '১৩.৬ ওয়াটের লাউড ও ক্রিস্প ডুয়াল স্পিকার স্টেরিও সাউন্ড।',
-      '১৮০০ এমএএইচ রিচার্জেবল ব্যাটারিতে দীর্ঘক্ষণ গান শোনার সুবিধা।'
-    ]
-  },
-  {
-    id: 'jbl-m3-mini-speaker',
-    name: 'JBL M3 Mini Portable Wireless Speaker (Metallic Body)',
-    nameBn: 'জেবিএল এম৩ মিনি পোর্টেবল ব্লুটুথ স্পিকার (মেটালিক বডি)',
-    model: 'JBL M3',
-    price: 435,
-    regularPrice: 650,
-    discountPercent: 33,
-    category: 'speakers',
-    rating: 4.7,
-    reviewsCount: 184,
-    inStock: true,
-    stockCount: 60,
-    has360View: false,
-    featured: false,
-    isHotDeal: true,
-    badgeText: 'হট বাজেট ডিল',
-    images: [
-      '/assets/products/jbl_m3_mini_speaker.webp',
-    ],
-    colors: [
-      { name: 'Ocean Blue', hex: '#0284C7', inStock: true },
-      { name: 'Flame Red', hex: '#DC2626', inStock: true },
-      { name: 'Jet Black', hex: '#0F172A', inStock: true },
-      { name: 'Chrome Silver', hex: '#CBD5E1', inStock: true },
-    ],
-    shortDescBn: 'সলিড মেটালিক অ্যালয় বডি, পকেট-ফ্রেন্ডলি সাইজ ও ক্রিস্প লাউড অডিও সহ মিনি ব্লুটুথ স্পিকার।',
-    shortDescEn: 'Ultra-compact metallic pocket Bluetooth speaker with 3-4 hours playtime and 3W/4W output.',
-    specs: {
-      'মডেল': 'JBL M3 Mini Portable',
-      'আউটপুট পাওয়ার': '3W / 4W Super Crisp Sound',
-      'ব্যাটারি ক্যাপাসিটি': '450 mAh Built-in Rechargeable Battery',
-      'প্লে-টাইম': 'Up to 3 - 4 Hours Continuous Playtime',
-      'ব্লুটুথ ভার্সন': 'Bluetooth Compliance v5.0 (10 Meter Range)',
-      'বডি ম্যাটেরিয়াল': 'Strong Heavy Metallic Alloy Body',
-      'সাইজ ও ওজন': 'Pocket-Friendly, Ultra Lightweight',
-      'ওয়ারেন্টি': '৩ দিনের চেক ও রিপ্লেসমেন্ট গ্যারান্টি'
-    },
-    bulletPointsBn: [
-      'হাতের তালুর সমান ছোট সাইজ হলেও আশ্চর্যজনক লাউড ও ক্লিয়ার সাউন্ড।',
-      'মজবুত মেটালিক বডি—সহজে নষ্ট হয় না।',
-      'ব্লু, রেড, ব্ল্যাক ও সিলভার ৪টি আকর্ষণীয় রঙে পাওয়া যাচ্ছে।',
-      'মাত্র ৪৩৫ টাকায় সেরা পকেট স্পিকার।'
-    ]
-  },
-  // Additional 8 Catalog Variations to achieve 16+ Products
-  {
-    id: 'airpods-pro-2-gold-seal',
-    name: 'Apple AirPods Pro 2nd Gen (Active Noise Cancellation Edition)',
-    nameBn: 'অ্যাপল এয়ারপডস প্রো ২য় জেন - এএনসি স্পেশাল সিল প্যাক',
-    model: 'AirPods Pro ANC Gold',
-    price: 999,
-    regularPrice: 1650,
-    discountPercent: 39,
-    category: 'audio',
-    rating: 4.9,
-    reviewsCount: 160,
-    inStock: true,
-    stockCount: 30,
-    has360View: true,
-    featured: true,
-    isHotDeal: true,
-    badgeText: 'প্রিমিয়াম সাউন্ড',
-    images: [
-      '/assets/products/airpods_pro_2_box_front.webp',
-      '/assets/products/airpods_pro_2_open_case.webp',
-      '/assets/products/airpods_pro_2_usbc_port.webp',
-      '/assets/products/airpods_pro_2_box_back.webp',
-      '/assets/products/airpods_pro_2_box_barcode.webp',
-    ],
-    colors: [
-      { name: 'Pure White', hex: '#FFFFFF', inStock: true }
-    ],
-    shortDescBn: 'দুবাই ভার্সন গোল্ড সিল প্যাক, H2 চিপ ও টাইপ-সি ফাস্ট চার্জিং সুবিধা।',
-    shortDescEn: 'Enhanced master copy with golden ANC seal, H2 audio fidelity and Type-C cable.',
-    specs: {
-      'চিপসেট': 'H2 High Fidelity Chip',
-      'চার্জিং পোর্ট': 'Type-C',
-      'ব্যাটারি লাইফ': '২৪+ ঘণ্টা ব্যাকআপ'
-    },
-    bulletPointsBn: [
-      'গোল্ড সিল প্রটেকশন প্যাক।',
-      'আইফোন ও অ্যান্ড্রয়েড সম্পূর্ণ সাপোর্টেড।'
-    ]
-  },
-  {
-    id: 'e88-pro-combo-drone',
-    name: 'E88 PRO Foldable Drone (Triple Battery Mega Combo Pack)',
-    nameBn: 'E88 PRO ফোল্ডেবল ড্রোন (৩টি ব্যাটারি মেগা কম্বো প্যাক)',
-    model: 'E88 Pro Combo',
-    price: 5699,
-    regularPrice: 7200,
-    discountPercent: 21,
-    category: 'drones',
-    rating: 4.9,
-    reviewsCount: 48,
-    inStock: true,
-    stockCount: 8,
-    has360View: false,
-    featured: true,
-    isHotDeal: true,
-    badgeText: 'মেগা কম্বো',
-    images: [
-      '/assets/products/e88_pro_drone_case_packed.webp',
-      '/assets/products/e88_pro_drone_unfolded_batteries.webp',
-      '/assets/products/e88_pro_drone_bottom_sensor.webp',
-      '/assets/products/e88_pro_drone_box_front.webp',
-    ],
-    colors: [
-      { name: 'Stealth Black', hex: '#0F172A', inStock: true },
-      { name: 'Storm Gray', hex: '#64748B', inStock: true }
-    ],
-    shortDescBn: 'হার্ড ট্রাভেল কেস, এক্সট্রা প্রপেলার ও অতিরিক্ত ব্যাটারিসহ ফুল কম্বো প্যাক।',
-    shortDescEn: 'Full package with travel case, extra blades, and maximum flight duration batteries.',
-    specs: {
-      'ক্যামেরা': 'Dual HD Cameras with Optical Flow',
-      'মোটর': 'Brushless Wind-Resistant Motors'
-    },
-    bulletPointsBn: [
-      '৩টি ব্যাটারিতে দীর্ঘক্ষণ ওড়ানো যায়।',
-      'ট্রাভেল কেসে সহজে বহনযোগ্য।'
-    ]
-  },
-  {
-    id: 'hoco-w35-max-spacegray',
-    name: 'HOCO W35 MAX Studio Edition (Space Gray Matte)',
-    nameBn: 'HOCO W35 MAX স্টুডিও হেডফোন (স্পেস গ্রে ম্যাট ফিনিশ)',
-    model: 'W35 Max Gray',
-    price: 1650,
-    regularPrice: 2200,
-    discountPercent: 25,
-    category: 'audio',
-    rating: 4.8,
-    reviewsCount: 72,
-    inStock: true,
-    stockCount: 25,
-    has360View: false,
-    featured: false,
-    isHotDeal: false,
-    badgeText: 'স্টুডিও সাউন্ড',
-    images: [
-      '/assets/products/hoco_w35_max_cushions.webp',
-      '/assets/products/hoco_w35_max_headphone_silver.webp',
-      '/assets/products/hoco_w35_max_box_front.webp',
-    ],
-    colors: [
-      { name: 'Space Gray', hex: '#334155', inStock: true },
-      { name: 'Metallic Silver', hex: '#CBD5E1', inStock: true }
-    ],
-    shortDescBn: 'ম্যাট স্পেস গ্রে কালার ও ৯০ ঘণ্টার ব্যাটারি ব্যাকআপসহ মেটালিক হেডফোন।',
-    shortDescEn: 'Matte space gray edition featuring 90h battery life and 40mm Hi-Fi sound drivers.',
-    specs: {
-      'ব্যাটারি': '90 Hours Long Playtime',
-      'ড্রাইভার': '40mm Dynamic Hi-Fi Speaker'
-    },
-    bulletPointsBn: [
-      'সুপার সফট মেমোরি ফোম কুশন।',
-      'এক চার্জেই মাসব্যাপী গান শোনা।'
-    ]
-  },
-  {
-    id: 'good-cool-d301-purple',
-    name: 'Good Cool 10000mAh Power Bank (Deep Royal Purple Edition)',
-    nameBn: 'গুড কুল ১০০০০ এমএএইচ পাওয়ার ব্যাংক (রয়্যাল পার্পল এডিশন)',
-    model: 'D301-Purple',
-    price: 999,
-    regularPrice: 1350,
-    discountPercent: 26,
-    category: 'powerbank',
-    rating: 4.8,
-    reviewsCount: 63,
+    category: 'hamper',
+    rating: 5.0,
+    reviewsCount: 183,
     inStock: true,
     stockCount: 35,
     has360View: false,
-    featured: false,
-    isHotDeal: false,
-    badgeText: 'রয়্যাল কালার',
+    featured: true,
+    isHotDeal: true,
+    badgeText: 'বেস্ট গিফট চয়েস',
     images: [
-      '/assets/products/good_cool_d301_unit_front.webp',
-      '/assets/products/good_cool_d301_led_torch.webp',
-      '/assets/products/good_cool_d301_cables_back.webp',
+      '/assets/products/hamper-1.webp',
+      '/assets/products/hamper-2.webp',
+      '/assets/products/hamper-3.webp',
+      '/assets/products/hamper-4.webp'
     ],
     colors: [
-      { name: 'Royal Purple', hex: '#581C87', inStock: true },
-      { name: 'Midnight Black', hex: '#111827', inStock: true }
+      { name: 'Sky Blue Shirt Box', hex: '#7DD3FC', inStock: true },
+      { name: 'Mustard Gold Shirt Box', hex: '#F59E0B', inStock: true },
+      { name: 'Crimson Red Shirt Box', hex: '#DC2626', inStock: true }
     ],
-    shortDescBn: 'রয়্যাল পার্পল ফিনিশ, ৪টি কেবল ভেতরেই সংযুক্ত ও পাওয়ারফুল টুইন টর্চলাইট।',
-    shortDescEn: 'Royal purple compact 10000mAh power bank with 4 integrated cables and twin flashlights.',
+    sizes: ['M (৩৮)', 'L (৪০)', 'XL (৪২)', 'XXL (৪৪)'],
+    shortDescBn: 'প্রিয়জনকে উপহার দেওয়ার জন্য শার্ট, ওয়াচ, সানগ্লাস, ওয়ালেট, বেল্ট, ফগ বডি স্প্রে ও গিফট কার্ড সহ সম্পূর্ণ লাক্সারি কমপ্লিট বক্স।',
+    shortDescEn: 'The ultimate 7-in-1 luxury men gift set: premium cotton formal shirt, quartz watch, sunglasses, wallet, belt, Fogg perfume & custom card.',
     specs: {
-      'ক্যাপাসিটি': '10,000 mAh',
-      'কেবলস': 'Type-C, Lightning, Micro, USB-A'
+      'আইটেম ১ (শার্ট)': '১০০% কটন সেমি-ফরমাল প্রিমিয়াম শার্ট (সাইজ: M, L, XL, XXL)',
+      'আইটেম ২ (ঘড়ি)': 'লাক্সারি কোয়ার্টজ স্টাইলিশ এনালগ রিস্টওয়াচ',
+      'আইটেম ৩ (সানগ্লাস)': 'ইউভি প্রটেক্টেড ফ্যাশনেবল সানগ্লাস',
+      'আইটেম ৪ (ওয়ালেট)': 'প্রিমিয়াম জেনুইন লেদার ওয়ালেট/মানিব্যাগ',
+      'আইটেম ৫ (বেল্ট)': 'ম্যাচিং স্টাইলিশ লেদার বেল্ট',
+      'আইটেম ৬ (পারফিউম)': '১টি অরিজিনাল FOGG বডি স্প্রে',
+      'আইটেম ৭ (উপহার বক্স)': 'নকশী রিবন সহ প্রিমিয়াম হার্ডবোর্ড গিফট বক্স ও উইশ কার্ড'
     },
     bulletPointsBn: [
-      'কোনো আলাদা কেবল নেওয়ার ঝামেলা নেই।',
-      'ডিজিটাল ডিসপ্লেতে অবশিষ্ট চার্জ দেখা যায়।'
+      'জন্মদিন, বিবাহবার্ষিকী কিংবা স্পেশাল দিনে দেওয়ার জন্য সেরা গিফট।',
+      'আলাদা আলাদা কেনার চেয়ে হ্যাম্পারে পাচ্ছেন আকর্ষণীয় ছাড়।',
+      'বক্সটির প্যাকেজিং এতটাই প্রিমিয়াম যে কোনো এক্সট্রা র‍্যাপিং ছাড়াই উপহার দেওয়া যায়।',
+      'নওগাঁ সদর সহ সারা বাংলাদেশে হোম ডেলিভারি।'
     ]
   },
+
+  // 4. DK Drexfish Polo Shirts
   {
-    id: 'jbl-m3-duo-pack',
-    name: 'JBL M3 Mini Portable Speaker (Stereo Twin Duo Pack)',
-    nameBn: 'জেবিএল এম৩ মিনি পোর্টেবল স্পিকার (ডুও টুইন প্যাক)',
-    model: 'JBL M3 Duo',
-    price: 820,
-    regularPrice: 1300,
-    discountPercent: 37,
-    category: 'speakers',
-    rating: 4.9,
-    reviewsCount: 94,
+    id: 'dk-drexfish-striped-polo-black',
+    name: 'DK Drexfish Premium Striped Collar Polo Shirt (Jet Black)',
+    nameBn: 'ডিকে ড্রেক্সফিশ প্রিমিয়াম স্ট্রাইপড পোলো শার্ট (জেট ব্ল্যাক)',
+    model: 'DK-POLO-BLK',
+    price: 650,
+    regularPrice: 950,
+    discountPercent: 32,
+    category: 'polo',
+    rating: 4.8,
+    reviewsCount: 88,
     inStock: true,
     stockCount: 40,
     has360View: false,
     featured: true,
     isHotDeal: true,
-    badgeText: '২টি স্পিকার কম্বো',
+    badgeText: 'হট সেলিং',
     images: [
-      '/assets/products/jbl_m3_mini_speaker.webp',
+      '/assets/products/polo-1.webp',
+      '/assets/products/polo-2.webp',
+      '/assets/products/polo-3.webp',
+      '/assets/products/polo-4.webp'
     ],
     colors: [
-      { name: 'Flame Red', hex: '#DC2626', inStock: true },
-      { name: 'Ocean Blue', hex: '#0284C7', inStock: true },
-      { name: 'Jet Black', hex: '#0F172A', inStock: true }
+      { name: 'Jet Black', hex: '#18181B', inStock: true },
+      { name: 'Crisp White', hex: '#FFFFFF', inStock: true },
+      { name: 'Deep Maroon', hex: '#881337', inStock: true },
+      { name: 'Chocolate Brown', hex: '#451A03', inStock: true }
     ],
-    shortDescBn: 'একসাথে ২টি মেটালিক মিনি স্পিকার কম্বো প্যাক। দুর্দান্ত স্টেরিও মিউজিক অভিজ্ঞতা।',
-    shortDescEn: 'Twin pack compact metallic bluetooth speakers for immersive stereo sound.',
+    sizes: ['M (বুক ৩৮, দৈর্ঘ্য ২৭)', 'L (বুক ৪০, দৈর্ঘ্য ২৮)', 'XL (বুক ৪২, দৈর্ঘ্য ২৯)', 'XXL (বুক ৪৪, দৈর্ঘ্য ৩০)'],
+    shortDescBn: '২২০+ জিএসএম ১০০% কম্বড কটন, কনট্রাস্ট স্ট্রাইপড কলার ও হাতা সহ আরামদায়ক রেগুলার ফিট পোলো।',
+    shortDescEn: '220+ GSM heavy combed cotton polo shirt with contrast tipping collar and cuffs.',
     specs: {
-      'বডি': 'Heavy Metal Alloy Body',
-      'আউটপুট': '3W + 3W Stereo Output'
+      'ফেব্রিক': '২২০+ জিএসএম ১০০% কম্বড পিকে কটন',
+      'কলার ও হাতা': 'কনট্রাস্ট স্ট্রাইপড রিব কলার',
+      'ফিটিং': 'রেগুলার স্লিম ফিট',
+      'ব্র্যান্ড': 'DK Drexfish Original Label',
+      'সাইজ': 'M, L, XL, XXL'
     },
     bulletPointsBn: [
-      '২টি স্পিকার একসাথে সেরা সাউন্ড দেয়।',
-      'পকেটে নিয়ে ঘোরার মতো কমপ্যাক্ট।'
+      'গরমে অত্যন্ত আরামদায়ক ও ঘাম শোষণকারী ফেব্রিক।',
+      'ধোয়ার পর কোনো সংকোচন বা ফেব্রিক নষ্ট হবে না।',
+      'ক্যাজুয়াল ও অফিসিয়াল উভয় পরিবেশেই মানানসই।'
     ]
   },
   {
-    id: 'armour-v8-white-mecha',
-    name: 'Armour Dual Speaker V8 (Cyberpunk Mecha White Edition)',
-    nameBn: 'আর্মার ডুয়াল স্পিকার V8 (সাইবারপাঙ্ক মেচা হোয়াইট)',
-    model: 'Armour V8 White',
-    price: 1370,
-    regularPrice: 1850,
-    discountPercent: 26,
-    category: 'speakers',
+    id: 'dk-drexfish-striped-polo-white',
+    name: 'DK Drexfish Striped Collar Polo Shirt (Crisp White)',
+    nameBn: 'ডিকে ড্রেক্সফিশ স্ট্রাইপড কলার পোলো শার্ট (হোয়াইট)',
+    model: 'DK-POLO-WHT',
+    price: 650,
+    regularPrice: 950,
+    discountPercent: 32,
+    category: 'polo',
+    rating: 4.8,
+    reviewsCount: 56,
+    inStock: true,
+    stockCount: 30,
+    has360View: false,
+    featured: false,
+    isHotDeal: false,
+    badgeText: 'ক্লাসিক',
+    images: [
+      '/assets/products/polo-2.webp',
+      '/assets/products/polo-1.webp',
+      '/assets/products/polo-3.webp'
+    ],
+    colors: [
+      { name: 'Crisp White', hex: '#FFFFFF', inStock: true },
+      { name: 'Deep Maroon', hex: '#881337', inStock: true }
+    ],
+    sizes: ['M (৩৮)', 'L (৪০)', 'XL (৪২)', 'XXL (৪৪)'],
+    shortDescBn: 'স্মার্ট ও সতেজ লুকের ধবধবে সাদা পোলো শার্ট সাথে ক্লাসি নেভি-রেড স্ট্রাইপড কলার।',
+    shortDescEn: 'Crisp white polo shirt designed with sophisticated collar details.',
+    specs: {
+      'ফেব্রিক': '১০০% পিকে কটন',
+      'সাইজ': 'M, L, XL, XXL'
+    },
+    bulletPointsBn: [
+      'স্মার্ট অ্যান্ড ক্লিন লুক।',
+      'প্রিমিয়াম ব্র্যান্ডিং ও ফিনিশিং।'
+    ]
+  },
+  {
+    id: 'dk-drexfish-striped-polo-maroon',
+    name: 'DK Drexfish Striped Collar Polo Shirt (Deep Maroon)',
+    nameBn: 'ডিকে ড্রেক্সফিশ স্ট্রাইপড কলার পোলো শার্ট (মেরুন)',
+    model: 'DK-POLO-MRN',
+    price: 650,
+    regularPrice: 950,
+    discountPercent: 32,
+    category: 'polo',
     rating: 4.9,
-    reviewsCount: 38,
+    reviewsCount: 49,
+    inStock: true,
+    stockCount: 25,
+    has360View: false,
+    featured: false,
+    isHotDeal: true,
+    badgeText: 'পপুলার',
+    images: [
+      '/assets/products/polo-3.webp',
+      '/assets/products/polo-4.webp',
+      '/assets/products/polo-1.webp'
+    ],
+    colors: [
+      { name: 'Deep Maroon', hex: '#881337', inStock: true },
+      { name: 'Chocolate Brown', hex: '#451A03', inStock: true }
+    ],
+    sizes: ['M (৩৮)', 'L (৪০)', 'XL (৪২)', 'XXL (৪৪)'],
+    shortDescBn: 'গভীর মেরুন কালারের প্রিমিয়াম পোলো শার্ট। জেন্টস ফ্যাশনে দারুণ ট্রেন্ডি।',
+    shortDescEn: 'Deep maroon polo shirt with sleek accent stripes.',
+    specs: {
+      'ফেব্রিক': 'কম্বড পিকে কটন',
+      'সাইজ': 'M, L, XL, XXL'
+    },
+    bulletPointsBn: [
+      'আকর্ষণীয় মেরুন শেড যা সব ত্বকেই ফুটে ওঠে।',
+      'হাই কোয়ালিটি বোতাম ও স্টিচিং।'
+    ]
+  },
+
+  // 5. Men's Ethnic Short Kurtis
+  {
+    id: 'ethnic-short-kurti-cream-birds',
+    name: 'Handcrafted Bird & Botanical Ethnic Short Kurti (Cream)',
+    nameBn: 'হ্যান্ডক্রাফটেড বার্ড ও বোটানিক্যাল শর্ট কুর্তি (ক্রিম)',
+    model: 'MAYA-KRT-CRM',
+    price: 790,
+    regularPrice: 1150,
+    discountPercent: 31,
+    category: 'kurti',
+    rating: 4.9,
+    reviewsCount: 71,
+    inStock: true,
+    stockCount: 24,
+    has360View: false,
+    featured: true,
+    isHotDeal: true,
+    badgeText: 'আর্টিসান কালেকশন',
+    images: [
+      '/assets/products/kurti-1.webp',
+      '/assets/products/kurti-2.webp',
+      '/assets/products/kurti-3.webp',
+      '/assets/products/kurti-4.webp'
+    ],
+    colors: [
+      { name: 'Cream Beige Birds', hex: '#F5F5DC', inStock: true },
+      { name: 'White Botanical', hex: '#FFFFFF', inStock: true },
+      { name: 'Golden Tree of Life', hex: '#D97706', inStock: true },
+      { name: 'Floral Vine Embroidery', hex: '#1E293B', inStock: true }
+    ],
+    sizes: ['M (৩৮)', 'L (৪০)', 'XL (৪২)', 'XXL (৪৪)'],
+    shortDescBn: 'স্নিগ্ধ ক্রিম সুতি কাপড়ে হাতে আঁকা পাখি ও গাছের বোটানিক্যাল মোটিফ শর্ট কুর্তি। জিন্স কিংবা পায়জামার সাথে চমৎকার মানায়।',
+    shortDescEn: 'Artisan hand-printed botanical bird motif short kurti on pure slub cotton fabric.',
+    specs: {
+      'ফেব্রিক': 'স্ল্যাব কটন ও লিনেন ব্লেন্ড (অত্যন্ত আরামদায়ক)',
+      'কলার': 'চাইনিজ ম্যান্ডারিন কলার ও বোতাম প্লেট',
+      'কাটিং': 'সেমি-ফিট শর্ট কুর্তি',
+      'সাইজ': 'M (৩৮), L (৪০), XL (৪২), XXL (৪৪)'
+    },
+    bulletPointsBn: [
+      'জিন্স প্যান্ট বা চিনোসের সাথে ক্যাজুয়াল আড্ডা ও উৎসবের সেরা লুক।',
+      'প্রাকৃতিক রঙের প্রিন্ট যা ধোয়ার পরেও নতুনের মতো থাকে।',
+      'হালকা ও বাতাস চলাচলের সুবিধাজনক কটন টেক্সচার।'
+    ]
+  },
+  {
+    id: 'ethnic-short-kurti-tree-of-life',
+    name: 'Golden Tree of Life Hand-Block Print Short Kurti',
+    nameBn: 'গোল্ডেন ট্রি অফ লাইফ হ্যান্ড-ব্লক প্রিন্ট শর্ট কুর্তি',
+    model: 'MAYA-KRT-TREE',
+    price: 790,
+    regularPrice: 1150,
+    discountPercent: 31,
+    category: 'kurti',
+    rating: 4.8,
+    reviewsCount: 43,
     inStock: true,
     stockCount: 18,
     has360View: false,
     featured: false,
     isHotDeal: false,
-    badgeText: 'মেচা হোয়াইট',
+    badgeText: 'ব্লক প্রিন্ট',
     images: [
-      '/assets/products/armour_v8_dual_speaker.webp',
+      '/assets/products/kurti-3.webp',
+      '/assets/products/kurti-4.webp',
+      '/assets/products/kurti-1.webp'
     ],
     colors: [
-      { name: 'Mecha White', hex: '#F1F5F9', inStock: true },
-      { name: 'Mecha Black', hex: '#1E293B', inStock: true }
+      { name: 'Golden Tree of Life', hex: '#B45309', inStock: true },
+      { name: 'Floral Vine White', hex: '#F1F5F9', inStock: true }
     ],
-    shortDescBn: 'সাদা সাইবারপাঙ্ক মেচা ফ্রেম ও ডায়নামিক আরজিবি রিদম লাইটিং সাউন্ড কন্ট্রোল।',
-    shortDescEn: 'Futuristic mecha white dual speaker with sound-reactive RGB equalizer lighting.',
+    sizes: ['M (৩৮)', 'L (৪০)', 'XL (৪২)', 'XXL (৪৪)'],
+    shortDescBn: 'ঐতিহ্যবাহী জীবনের বৃক্ষ (Tree of Life) মোটিফের এক্সক্লুসিভ খাদি কটন শর্ট কুর্তি।',
+    shortDescEn: 'Traditional Tree of Life block-print short kurti for contemporary ethnic style.',
     specs: {
-      'আউটপুট': '13.6W Dual Speakers',
-      'ব্যাটারি': '1800 mAh Li-ion'
+      'ফেব্রিক': 'খাদি পিওর কটন',
+      'সাইজ': 'M, L, XL, XXL'
     },
     bulletPointsBn: [
-      'ডেস্কটপ ও গেমিং সেটআপের জন্য পারফেক্ট।',
-      'সাউন্ড কন্ট্রোল্ড আরজিবি লাইট শো।'
+      'অনবদ্য ট্রেডিশনাল আর্টওয়ার্ক।',
+      'দিনভর পরে থাকার উপযোগী আরামদায়ক।'
     ]
   },
+
+  // 6. Women's Kashmiri Three-Piece ("ZENA")
   {
-    id: 'mini-flip-camera-silver',
-    name: 'Mini Flip Digital Camera (Vintage Classic Silver Gray Edition)',
-    nameBn: 'মিনি ফ্লিপ ডিজিটাল সেলফি ক্যামেরা (ক্লাসিক সিলভার এডিশন)',
-    model: 'LK-027-Silver',
-    price: 2199,
-    regularPrice: 2850,
-    discountPercent: 23,
-    category: 'camera',
-    rating: 4.8,
-    reviewsCount: 42,
-    inStock: true,
-    stockCount: 15,
-    has360View: false,
-    featured: false,
-    isHotDeal: false,
-    badgeText: 'ক্লাসিক সিলভার',
-    images: [
-      '/assets/products/mini_flip_digital_camera_lk027.webp',
-    ],
-    colors: [
-      { name: 'Classic Silver', hex: '#94A3B8', inStock: true }
-    ],
-    shortDescBn: 'ক্লাসিক সিলভার ফিনিশ ও ১৮০ ডিগ্রি রোটেটিং সেলফি স্ক্রিনসহ রেট্রো ক্যামেরা।',
-    shortDescEn: 'Classic silver vintage flip camera with 720p HD sensor and keychain strap.',
-    specs: {
-      'স্ক্রিন': '180° Flip Screen',
-      'মেমরি': 'TF Card Support'
-    },
-    bulletPointsBn: [
-      '১৮০ ডিগ্রি ফ্লিপ সেলফি স্ক্রিন।',
-      '৭ দিনের ফুল রিপ্লেসমেন্ট গ্যারান্টি।'
-    ]
-  },
-  {
-    id: 'zokd-45w-carbon-black',
-    name: 'ZOKD 45W Fast Charging Power Bank (Carbon Matte Black)',
-    nameBn: 'ZOKD ৪৫ ওয়াট সুপার ফাস্ট পাওয়ার ব্যাংক (কার্বন ম্যাট ব্ল্যাক)',
-    model: 'ZOKD-45W-Black',
-    price: 3999,
-    regularPrice: 4800,
-    discountPercent: 17,
-    category: 'powerbank',
+    id: 'zena-luxury-kashmiri-three-piece',
+    name: 'ZENA Luxury Kashmiri Needlework Embroidered Three-Piece Collection',
+    nameBn: 'জিনা লাক্সারি কাশ্মীরি সূচিকর্ম থ্রি-পিস কালেকশন',
+    model: 'ZENA-KASH-01',
+    price: 1750,
+    regularPrice: 2450,
+    discountPercent: 29,
+    category: 'kashmiri',
     rating: 5.0,
-    reviewsCount: 29,
+    reviewsCount: 116,
     inStock: true,
-    stockCount: 14,
+    stockCount: 20,
+    has360View: false,
+    featured: true,
+    isHotDeal: true,
+    badgeText: 'প্রিমিয়াম কালেকশন',
+    images: [
+      '/assets/products/kashmiri-1.webp',
+      '/assets/products/kashmiri-2.webp',
+      '/assets/products/kashmiri-3.webp',
+      '/assets/products/kashmiri-4.webp'
+    ],
+    colors: [
+      { name: 'Teal Green Kashmiri', hex: '#0D9488', inStock: true },
+      { name: 'Rich Plum', hex: '#831843', inStock: true },
+      { name: 'Royal Crimson', hex: '#991B1B', inStock: true }
+    ],
+    sizes: ['ফ্রি সাইজ (বডি ৩৬ থেকে ৪৬ ইঞ্চি পর্যন্ত তৈরি করা যাবে)'],
+    shortDescBn: 'কামিজের গলায় ও দামানে কাশ্মীরি সুতার নিপুণ এমব্রয়ডারি কাজ, সফট সিল্কি ফেব্রিক ও চওড়া ৫ হাত নজরকাড়া দোপাট্টা।',
+    shortDescEn: 'Exquisite Kashmiri needlework embroidery women 3-piece suit with rich neck yoke, soft bottom and designer dupatta.',
+    specs: {
+      'কামিজ ফেব্রিক': 'পিওর কাশ্মীরি সিল্ক ও সফট অর্গানজা ব্লেন্ড (গলায় হেভি এমব্রয়ডারি)',
+      'সালোয়ার': 'বাটার সিল্ক সফট ফেব্রিক (২.৫ গজ)',
+      'দোপাট্টা': 'পুরো দোপাট্টায় আকর্ষণীয় বর্ডার ও সুতার কাজ (৫ হাত)',
+      'ব্র্যান্ড': 'ZENA Luxury Collection',
+      'সাইজ টাইপ': 'আনস্টিচড / সেমি-স্টিচড (বডি ৪৬ ইঞ্চি পর্যন্ত)'
+    },
+    bulletPointsBn: [
+      'যেকোনো বিয়ে, পার্টি কিংবা পারিবারিক অনুষ্ঠানে রাজকীয় উপস্থিতি।',
+      'কাশ্মীরি সূচিকর্মের প্রতিটি সুতোয় ফুটে উঠেছে সূক্ষ্ম কারুকার্য।',
+      'কাপড়ের ফিনিশিং এতটাই কোমল যে গায়ে কোনো অস্বস্তি হবে না।',
+      'হোম ডেলিভারিতে প্রোডাক্ট চেক করে পেমেন্ট করার নিশ্চয়তা।'
+    ]
+  },
+
+  // 7. Bags & Kitchen Lifestyle
+  {
+    id: 'korean-chic-backpack-bigemeng',
+    name: 'Korean Pastel Multi-Pocket Aesthetic School & Travel Backpack',
+    nameBn: 'কোরিয়ান প্যাস্টেল মাল্টি-পকেট নান্দনিক ব্যাকপ্যাক ("Bigemeng")',
+    model: 'BGM-KR-BP',
+    price: 950,
+    regularPrice: 1400,
+    discountPercent: 32,
+    category: 'lifestyle',
+    rating: 4.9,
+    reviewsCount: 82,
+    inStock: true,
+    stockCount: 26,
+    has360View: false,
+    featured: true,
+    isHotDeal: false,
+    badgeText: 'কোরিয়ান ফ্যাশন',
+    images: [
+      '/assets/products/bag-1.webp',
+      '/assets/products/bag-2.webp'
+    ],
+    colors: [
+      { name: 'Pastel Blue & White', hex: '#93C5FD', inStock: true },
+      { name: 'Cloud White', hex: '#F8FAFC', inStock: true }
+    ],
+    sizes: ['Standard Backpack (১৪ ইঞ্চি ল্যাপটপ ফিট)'],
+    shortDescBn: 'ওয়াটারপ্রুফ ফেব্রিক, ৫টি জিপার পকেট, ল্যাপটপ চেম্বার এবং আকর্ষণীয় ব্যাজ পিন ও টেডি বিয়ার কি-রিং সহ কমপ্লিট ব্যাগ।',
+    shortDescEn: 'Aesthetic Korean style school & travel backpack made of waterproof durable nylon with multiple organizer compartments.',
+    specs: {
+      'ম্যাটেরিয়াল': 'ওয়াটার রেজিস্ট্যান্ট প্রিমিয়াম অক্সফোর্ড নাইলন',
+      'চেম্বার সংখ্যা': '৫টি জিপার পকেট + ২টি সাইড ওয়াটার বোতল পকেট + ল্যাপটপ স্লট',
+      'বোনাস এক্সেসরিজ': 'কিউট টেডি বিয়ার পুতুল কি-রিং ও ব্যাজ পিন ফ্রি',
+      'ওজন বহনের ক্ষমতা': '৮-১০ কেজি'
+    },
+    bulletPointsBn: [
+      'কলেজ, ইউনিভার্সিটি, কোচিং কিংবা ভ্রমণের জন্য দারুণ উপকারী।',
+      'বৃষ্টির পানির হাত থেকে বই-খাতা ও গ্যাজেট সুরক্ষিত রাখে।',
+      'নরম প্যাডেড শোল্ডার স্ট্র্যাপ তাই কাঁধে চাপ পড়ে না।'
+    ]
+  },
+  {
+    id: 'luxury-quilted-crossbody-bag',
+    name: 'Luxury Quilted Crossbody Chain Shoulder Handbag',
+    nameBn: 'লাক্সারি কুইল্টেড ক্রস বডি চেইন শোল্ডার ব্যাগ',
+    model: 'MAYA-CB-07',
+    price: 850,
+    regularPrice: 1250,
+    discountPercent: 32,
+    category: 'lifestyle',
+    rating: 4.8,
+    reviewsCount: 64,
+    inStock: true,
+    stockCount: 18,
+    has360View: false,
+    featured: false,
+    isHotDeal: true,
+    badgeText: 'লেডিস ফেভারিট',
+    images: [
+      '/assets/products/bag-3.webp',
+      '/assets/products/bag-4.webp'
+    ],
+    colors: [
+      { name: 'Crimson Red', hex: '#DC2626', inStock: true },
+      { name: 'Classic Obsidian Black', hex: '#18181B', inStock: true }
+    ],
+    sizes: ['Compact Crossbody (৮ x ৫ ইঞ্চি)'],
+    shortDescBn: 'হাই-গ্রেড পিইউ লেদার, টেকসই গোল্ডেন মেটাল চেইন স্ট্র্যাপ ও টার্ন-লক লক সিস্টেমের স্টাইলিশ ব্যাগ।',
+    shortDescEn: 'Chic quilted crossbody shoulder bag crafted with premium PU leather and polished gold chain strap.',
+    specs: {
+      'ম্যাটেরিয়াল': 'হাই-গ্রেড স্ক্র্যাচ-প্রুফ পিইউ লেদার',
+      'লক সিস্টেম': 'টার্ন-লক মেটাল ক্ল্যাম্প',
+      'স্ট্র্যাপ': 'লং গোল্ডেন মেটাল চেইন উইথ লেদার শোল্ডার প্যাড'
+    },
+    bulletPointsBn: [
+      'স্মার্টফোন, ওয়ালেট ও মেকআপ অনায়াসে বহনযোগ্য।',
+      'ওয়েস্টার্ন ও ট্র্যাডিশনাল উভয় পোশাকের সাথেই দারুণ মানায়।'
+    ]
+  },
+  {
+    id: 'stainless-steel-chef-knife-set-6pcs',
+    name: 'Professional Non-Stick 6-Piece Kitchen Chef Knife Set',
+    nameBn: 'প্রফেশনাল নন-স্টিক ৬-পিস কিচেন শেফ নাইফ সেট',
+    model: 'MAYA-KNIFE-6',
+    price: 690,
+    regularPrice: 1050,
+    discountPercent: 34,
+    category: 'lifestyle',
+    rating: 4.9,
+    reviewsCount: 105,
+    inStock: true,
+    stockCount: 30,
+    has360View: false,
+    featured: false,
+    isHotDeal: true,
+    badgeText: 'কিচেন স্পেশাল',
+    images: [
+      '/assets/products/knife-1.webp',
+      '/assets/products/knife-2.webp'
+    ],
+    colors: [
+      { name: 'Matte Granite Black', hex: '#1E293B', inStock: true }
+    ],
+    sizes: ['6 Pieces Full Set'],
+    shortDescBn: 'হাই-কার্বন স্টেইনলেস স্টিল ও নন-স্টিক অ্যান্টি-ব্যাকটেরিয়াল কোটিং সহ ক্লীভার, শেফ নাইফ, ইউটিলিটি নাইফ, কিচেন সিজার ও পিলারের সম্পূর্ণ সেট।',
+    shortDescEn: 'Professional 6-piece non-stick carbon stainless steel chef knife set with ergonomic grip handles.',
+    specs: {
+      'মেটেরিয়াল': 'হাই-কার্বন স্টেইনলেস স্টিল উইথ অ্যান্টি-রাস্ট কোটিং',
+      'সেট কন্টেন্ট': '১টি ক্লীভার, ১টি শেফ নাইফ, ১টি ব্রেড নাইফ, ১টি ফ্রুট নাইফ, ১টি কিচেন কাঁচি, ১টি সিরামিক পিলার',
+      'হাতল': 'অ্যান্টি-স্লিপ এরগোনোমিক গ্রিপ'
+    },
+    bulletPointsBn: [
+      'মাংস, মাছ, শাকসবজি ও ফলমূল কাটার জন্য সম্পূর্ণ প্যাকেজ।',
+      'ব্লেডে কোনো খাদ্যবস্তু আটকে থাকে না এবং সহজে পরিষ্কার করা যায়।',
+      'মরিচারোধক ও দীর্ঘদিন ধারালো থাকে।'
+    ]
+  },
+  {
+    id: 'emerald-luxury-manicure-set-3pcs',
+    name: 'Emerald Gold Luxury 3-Piece Nail Clipper & Grooming Set',
+    nameBn: 'এমারেল্ড গোল্ড লাক্সারি ৩-পিস নেইল ক্লিপার ও গ্রুমিং সেট',
+    model: 'MAYA-NAIL-3',
+    price: 390,
+    regularPrice: 650,
+    discountPercent: 40,
+    category: 'lifestyle',
+    rating: 4.8,
+    reviewsCount: 58,
+    inStock: true,
+    stockCount: 45,
     has360View: false,
     featured: false,
     isHotDeal: false,
-    badgeText: 'কার্বন ব্ল্যাক',
+    badgeText: 'সুপার ডিল',
     images: [
-      '/assets/products/zokd_45w_10000mah_powerbank.webp',
+      '/assets/products/manicure-1.webp'
     ],
     colors: [
-      { name: 'Carbon Black', hex: '#1E293B', inStock: true },
-      { name: 'Mint Green', hex: '#34D399', inStock: true }
+      { name: 'Emerald Green & Gold', hex: '#047857', inStock: true }
     ],
-    shortDescBn: 'স্লিক কার্বন ব্ল্যাক ফিনিশ, ৪৫ ওয়াট আউটপুট ও ইন-বিল্ট ৩টি কেবলসহ পাওয়ার ব্যাংক।',
-    shortDescEn: 'Stealth carbon black 45W fast power bank with multi-charging cables built-in.',
+    sizes: ['Compact Pocket Box'],
+    shortDescBn: 'মেডিক্যাল গ্রেড স্টেইনলেস স্টিল ও প্রিমিয়াম এমারেল্ড পুশ-ওপেন বক্স সহ ৩-পিস নেইল কেয়ার সেট।',
+    shortDescEn: 'Pocket luxury 3-piece grooming manicure set with emerald push-lock travel case.',
     specs: {
-      'পাওয়ার': '45W Fast PD/QC',
-      'ক্যাপাসিটি': '10,000 mAh'
+      'ম্যাটেরিয়াল': 'মেডিক্যাল গ্রেড স্টেইনলেস স্টিল',
+      'কেস': 'লাক্সারি পুশ-বাটন এমারেল্ড কেস'
     },
     bulletPointsBn: [
-      '৪৫ ওয়াট আল্ট্রা ফাস্ট চার্জিং।',
-      '৩টি কেবল বডির ভেতরেই সংযুক্ত।'
+      'পকেটে বা ব্যাগে সহজে বহনযোগ্য।',
+      'অত্যন্ত ধারালো ও দীর্ঘস্থায়ী।'
     ]
   }
 ];

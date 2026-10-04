@@ -33,6 +33,7 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import { compressAndReadImage, getImageDataSizeKB } from '../utils/imageUpload';
 import { useAdminAuth } from '../context/AdminAuthContext';
+import { CATEGORIES } from '../data/products';
 
 export default function AdminDashboard() {
   const { orders, updateOrderStatus, deleteOrder, daysLeftInMonth, isMonthEndingSoon } = useOrders();
@@ -59,20 +60,20 @@ export default function AdminDashboard() {
     nameBn: '',
     price: '',
     regularPrice: '',
-    category: 'audio',
+    category: 'bedding',
     model: '',
     stockCount: 25,
     discountPercent: '',
     badgeText: '',
     has360View: false,
     shortDescBn: '',
-    bulletPointsText: '১০০% অরিজিনাল গ্যাজেট\nফাস্ট হোম ডেলিভারি সারা বাংলাদেশে\n৭ দিনের রিপ্লেসমেন্ট গ্যারান্টি',
+    bulletPointsText: '১০০% পাকা রং ও প্রিমিয়াম কোয়ালিটি\nনওগাঁ সদর সহ সারা দেশে হোম ডেলিভারি\nপছন্দ না হলে বা ডিফেক্ট থাকলে রিপ্লেসমেন্ট সুবিধা',
     specRows: [
-      { key: 'ওয়ারেন্টি', value: '৭ দিনের রিপ্লেসমেন্ট গ্যারান্টি' },
-      { key: 'কানেক্টিভিটি', value: 'ব্লুটুথ / ওয়্যারলেস' }
+      { key: 'ফেব্রিক', value: '১০০% পিওর সফট কটন' },
+      { key: 'ডেলিভারি', value: 'নওগাঁ সদর ও সারাদেশে হোম ডেলিভারি' }
     ],
-    image: '/assets/products/airpods_pro_2_open_case.webp',
-    colors: [{ name: 'Default', hex: '#000000', inStock: true }]
+    image: '/assets/products/bedding-1.webp',
+    colors: [{ name: 'Default', hex: '#881337', inStock: true }]
   };
   const [newProductForm, setNewProductForm] = useState(initialNewProductForm);
 
@@ -91,16 +92,16 @@ export default function AdminDashboard() {
   // Store Settings Form State
   const [prevSettings, setPrevSettings] = useState(settings);
   const [settingsForm, setSettingsForm] = useState({
-    storeName: settings?.storeName || 'Galaxy Gadgets',
-    tagline: settings?.tagline || 'প্রিমিয়াম গ্যাজেট ও ইলেকট্রনিক্স স্টোর',
-    address: settings?.address || 'অনলাইন স্টোর, বাংলাদেশ',
-    email: settings?.email || 'gadgetsgalaxy2026gg@gmail.com',
-    bkashNumber: settings?.bkashNumber || '01749765271',
-    whatsappNumber: settings?.whatsappNumber || '+880 1322-302319',
-    hotline: settings?.hotline || '+880 1322-302319',
-    deliveryFeeInside: settings?.deliveryFeeInside || 80,
-    deliveryFeeOutside: settings?.deliveryFeeOutside || 150,
-    facebookPage: settings?.facebookPage || 'https://www.facebook.com/share/1FA8LYE5Y4/'
+    storeName: settings?.storeName || 'Maya Shopping Mall',
+    tagline: settings?.tagline || 'নওগাঁর বিশ্বস্ত ফ্যাশন ও লাক্সারি লাইফস্টাইল শপ',
+    address: settings?.address || 'নওগাঁ সদর, নওগাঁ',
+    email: settings?.email || 'masud97186@gmail.com',
+    bkashNumber: settings?.bkashNumber || '01821067277',
+    whatsappNumber: settings?.whatsappNumber || '01814741111',
+    hotline: settings?.hotline || '01814741111',
+    deliveryFeeInside: settings?.deliveryFeeInside || 60,
+    deliveryFeeOutside: settings?.deliveryFeeOutside || 120,
+    facebookPage: settings?.facebookPage || ''
   });
   const [settingsSuccessMsg, setSettingsSuccessMsg] = useState('');
 
@@ -118,16 +119,16 @@ export default function AdminDashboard() {
     setPrevSettings(settings);
     if (settings) {
       setSettingsForm({
-        storeName: settings.storeName || 'Galaxy Gadgets',
-        tagline: settings.tagline || 'প্রিমিয়াম গ্যাজেট ও ইলেকট্রনিক্স স্টোর',
-        address: settings.address || 'অনলাইন স্টোর, বাংলাদেশ',
-        email: settings.email || 'gadgetsgalaxy2026gg@gmail.com',
-        bkashNumber: settings.bkashNumber || '01749765271',
-        whatsappNumber: settings.whatsappNumber || '+880 1322-302319',
-        hotline: settings.hotline || '+880 1322-302319',
-        deliveryFeeInside: settings.deliveryFeeInside || 80,
-        deliveryFeeOutside: settings.deliveryFeeOutside || 150,
-        facebookPage: settings.facebookPage || 'https://www.facebook.com/share/1FA8LYE5Y4/'
+        storeName: settings.storeName || 'Maya Shopping Mall',
+        tagline: settings.tagline || 'নওগাঁর বিশ্বস্ত ফ্যাশন ও লাক্সারি লাইফস্টাইল শপ',
+        address: settings.address || 'নওগাঁ সদর, নওগাঁ',
+        email: settings.email || 'masud97186@gmail.com',
+        bkashNumber: settings.bkashNumber || '01821067277',
+        whatsappNumber: settings.whatsappNumber || '01814741111',
+        hotline: settings.hotline || '01814741111',
+        deliveryFeeInside: settings.deliveryFeeInside || 60,
+        deliveryFeeOutside: settings.deliveryFeeOutside || 120,
+        facebookPage: settings.facebookPage || ''
       });
     }
   }
@@ -204,8 +205,8 @@ export default function AdminDashboard() {
     e.preventDefault();
     await updateSettings({
       ...settingsForm,
-      deliveryFeeInside: Number(settingsForm.deliveryFeeInside) || 80,
-      deliveryFeeOutside: Number(settingsForm.deliveryFeeOutside) || 150
+      deliveryFeeInside: Number(settingsForm.deliveryFeeInside) || 60,
+      deliveryFeeOutside: Number(settingsForm.deliveryFeeOutside) || 120
     });
     setSettingsSuccessMsg('স্টোর সেটিংস সফলভাবে সেভ করা হয়েছে!');
     setTimeout(() => setSettingsSuccessMsg(''), 3000);
@@ -353,10 +354,10 @@ export default function AdminDashboard() {
       stockCount: Number(newProductForm.stockCount) || 20,
       discountPercent: newProductForm.discountPercent ? Number(newProductForm.discountPercent) : null,
       shortDescBn: newProductForm.shortDescBn?.trim() || '',
-      bulletPointsBn: bulletPointsBn.length > 0 ? bulletPointsBn : ['১০০% অরিজিনাল গ্যাজেট', 'ফাস্ট হোম ডেলিভারি'],
-      specs: Object.keys(specs).length > 0 ? specs : { 'ওয়ারেন্টি': '৭ দিনের রিপ্লেসমেন্ট গ্যারান্টি' },
-      image: newProductForm.image || '/assets/products/airpods_pro_2_open_case.webp',
-      images: [newProductForm.image || '/assets/products/airpods_pro_2_open_case.webp'],
+      bulletPointsBn: bulletPointsBn.length > 0 ? bulletPointsBn : ['১০০% অরিজিনাল ও পাকা রং', 'নওগাঁ সদর সহ সারা দেশে হোম ডেলিভারি'],
+      specs: Object.keys(specs).length > 0 ? specs : { 'ফেব্রিক': '১০০% পিওর কটন', 'ডেলিভারি': 'হোম ডেলিভারি' },
+      image: newProductForm.image || '/assets/products/bedding-1.webp',
+      images: [newProductForm.image || '/assets/products/bedding-1.webp'],
       reviewsCount: 12,
       rating: 4.9,
       inStock: true
@@ -392,7 +393,7 @@ export default function AdminDashboard() {
 
     await updateProduct(editingProduct.id, {
       ...editingProduct,
-      images: updatedImages.length > 0 ? updatedImages : ['/assets/products/airpods_pro_2_open_case.webp'],
+      images: updatedImages.length > 0 ? updatedImages : ['/assets/products/bedding-1.webp'],
       price: Number(editingProduct.price),
       regularPrice: editingProduct.regularPrice ? Number(editingProduct.regularPrice) : null,
       stockCount: Number(editingProduct.stockCount) || 0,
@@ -429,7 +430,7 @@ export default function AdminDashboard() {
     const cleanPhone = (order.phone || '').replace(/[^0-9]/g, '');
     const phoneWithCountry = cleanPhone.startsWith('880') ? cleanPhone : `88${cleanPhone}`;
     const msg = encodeURIComponent(
-      `আসসালামু আলাইকুম ${order.customerName}!\nGalaxy Gadgets থেকে আপনার অর্ডারটি কনফার্ম করা হয়েছে।\n\nঅর্ডার আইডি: ${order.orderTrackingId}\nমোট প্রদেয়: ৳${order.totalAmount} (${order.paymentMethod === 'bkash' ? 'বিকাশ সম্পন্ন' : 'ক্যাশ অন ডেলিভারি'})\nডেলিভারি ঠিকানা: ${order.address}\n\nআমরা দ্রুততম সময়ে পার্সেলটি পাঠিয়ে দিচ্ছি। ধন্যবাদ!`
+      `আসসালামু আলাইকুম ${order.customerName}!\nমায়া শপিং মল (Maya Shopping Mall) থেকে আপনার অর্ডারটি কনফার্ম করা হয়েছে।\n\nঅর্ডার আইডি: ${order.orderTrackingId}\nমোট প্রদেয়: ৳${order.totalAmount} (${order.paymentMethod === 'bkash' ? 'বিকাশ সম্পন্ন' : 'ক্যাশ অন ডেলিভারি'})\nডেলিভারি ঠিকানা: ${order.address}\n\nআমরা দ্রুততম সময়ে পার্সেলটি পাঠিয়ে দিচ্ছি। ধন্যবাদ!`
     );
     window.open(`https://wa.me/${phoneWithCountry}?text=${msg}`, '_blank');
   };
@@ -440,27 +441,31 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="min-h-screen pt-4 sm:pt-6 pb-24 md:pb-12 bg-slate-950 text-slate-100">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 space-y-6">
+    <div className="min-h-screen pt-4 sm:pt-6 pb-24 md:pb-12 bg-gradient-to-b from-[#160610] via-[#0E0308] to-[#0A0205] text-rose-100 relative">
+      {/* Background Ambient Luxury Light */}
+      <div className="absolute top-0 right-1/4 size-96 bg-rose-600/10 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/3 left-10 size-72 bg-amber-500/10 rounded-full blur-[120px] pointer-events-none" />
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 space-y-6">
         
         {/* Top Header Bar */}
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-4 border-b border-rose-900/40">
           <div className="flex items-center gap-3.5">
             <img
-              src="/assets/logo.webp"
-              alt="Galaxy Gadgets Logo"
+              src="/assets/logo.svg"
+              alt="Maya Shopping Mall Logo"
               decoding="async"
-              className="size-12 sm:size-14 object-contain rounded-2xl bg-black border border-slate-800 shadow-xl shrink-0"
+              className="size-12 sm:size-14 object-contain rounded-2xl bg-[#1C0812] border border-rose-800/60 shadow-xl shrink-0 p-1.5"
             />
             <div>
-              <div className="flex items-center gap-2 text-xs font-bold text-cyan-400 uppercase tracking-wider mb-0.5">
+              <div className="flex items-center gap-2 text-xs font-bold text-amber-300 uppercase tracking-wider mb-0.5">
                 <ShieldCheck className="size-4" />
-                <span>GALAXY GADGETS — MASTER ADMIN CONTROL</span>
+                <span>MAYA SHOPPING MALL — MASTER ADMIN CONTROL</span>
               </div>
               <h1 className="text-xl sm:text-2xl font-black font-sans text-white">
                 বিজনেস ড্যাশবোর্ড ও শপ ম্যানেজার
               </h1>
-              <p className="text-xs text-slate-400 mt-0.5">
+              <p className="text-xs text-rose-300/70 mt-0.5">
                 রিয়েল-টাইম প্রোডাক্ট এডিটর, অর্ডার প্রসেসিং, অটো মান্থলি রিসেট ও হিসাব রিপোর্ট
               </p>
             </div>
@@ -470,14 +475,14 @@ export default function AdminDashboard() {
           <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2 w-full md:w-auto">
             <button
               onClick={handleDownloadPDF}
-              className="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black px-3.5 sm:px-4 py-2.5 rounded-xl shadow-lg flex items-center justify-center gap-1.5 transition active:scale-95 text-center"
+              className="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black px-3.5 sm:px-4 py-2.5 rounded-xl shadow-lg shadow-emerald-950/40 flex items-center justify-center gap-1.5 transition active:scale-95 text-center cursor-pointer border border-emerald-400/30"
             >
               <FileDown className="size-4 shrink-0" />
               <span>মান্থলি হিসাব PDF</span>
             </button>
             <Link
               to="/"
-              className="bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-700 text-xs font-bold px-3.5 py-2.5 rounded-xl transition flex items-center justify-center gap-1.5 text-center"
+              className="bg-[#1C0913] hover:bg-rose-950/80 text-rose-200 hover:text-white border border-rose-900/60 text-xs font-bold px-3.5 py-2.5 rounded-xl transition flex items-center justify-center gap-1.5 text-center"
             >
               <span>লাইভ শপে যান →</span>
             </Link>
@@ -486,7 +491,7 @@ export default function AdminDashboard() {
                 logout();
                 navigate('/');
               }}
-              className="bg-rose-950/80 hover:bg-rose-900 text-rose-300 hover:text-white border border-rose-500/40 text-xs font-bold px-3 py-2.5 rounded-xl transition flex items-center justify-center gap-1.5 active:scale-95 text-center"
+              className="bg-rose-950/80 hover:bg-rose-900 text-rose-300 hover:text-white border border-rose-600/40 text-xs font-bold px-3.5 py-2.5 rounded-xl transition flex items-center justify-center gap-1.5 active:scale-95 text-center cursor-pointer"
               title="অ্যাডমিন প্যানেল থেকে লগআউট করুন"
             >
               <LogOut className="size-3.5 shrink-0" />
@@ -499,10 +504,10 @@ export default function AdminDashboard() {
                   navigate('/');
                 }
               }}
-              className="bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-amber-400 border border-slate-700 text-xs font-bold px-3 py-2.5 rounded-xl transition flex items-center justify-center gap-1.5 active:scale-95 text-center"
+              className="bg-[#1C0913] hover:bg-rose-950/80 text-rose-300/80 hover:text-amber-300 border border-rose-900/60 text-xs font-bold px-3.5 py-2.5 rounded-xl transition flex items-center justify-center gap-1.5 active:scale-95 text-center cursor-pointer"
               title="অ্যাডমিন বাটনটি আবার গোপন করে সম্পূর্ণ লক করুন"
             >
-              <Lock className="size-3.5 shrink-0" />
+              <Lock className="size-3.5 shrink-0 text-amber-400" />
               <span>বাটন লক</span>
             </button>
           </div>
@@ -543,13 +548,13 @@ export default function AdminDashboard() {
         )}
 
         {/* Navigation Tabs (Mobile Edge-to-Edge Scrollable) */}
-        <div className="-mx-4 px-4 sm:mx-0 sm:px-0 flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none border-b border-slate-800">
+        <div className="-mx-4 px-4 sm:mx-0 sm:px-0 flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none border-b border-rose-900/40">
           <button
             onClick={() => setActiveTab('dashboard')}
-            className={`flex items-center gap-2 px-3.5 sm:px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition shrink-0 ${
+            className={`flex items-center gap-2 px-3.5 sm:px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition shrink-0 cursor-pointer ${
               activeTab === 'dashboard'
-                ? 'bg-cyan-500 text-slate-950 shadow-md font-black'
-                : 'bg-slate-900 text-slate-400 hover:text-white'
+                ? 'bg-gradient-to-r from-rose-600 to-rose-700 text-white shadow-lg shadow-rose-950/60 font-black border border-rose-400/30'
+                : 'bg-[#1A0A12] text-rose-200/70 hover:text-white hover:bg-rose-950/60 border border-rose-900/40'
             }`}
           >
             <Layers className="size-4 shrink-0" />
@@ -559,10 +564,10 @@ export default function AdminDashboard() {
 
           <button
             onClick={() => setActiveTab('products')}
-            className={`flex items-center gap-2 px-3.5 sm:px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition shrink-0 ${
+            className={`flex items-center gap-2 px-3.5 sm:px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition shrink-0 cursor-pointer ${
               activeTab === 'products'
-                ? 'bg-cyan-500 text-slate-950 shadow-md font-black'
-                : 'bg-slate-900 text-slate-400 hover:text-white'
+                ? 'bg-gradient-to-r from-rose-600 to-rose-700 text-white shadow-lg shadow-rose-950/60 font-black border border-rose-400/30'
+                : 'bg-[#1A0A12] text-rose-200/70 hover:text-white hover:bg-rose-950/60 border border-rose-900/40'
             }`}
           >
             <Package className="size-4 shrink-0" />
@@ -572,23 +577,23 @@ export default function AdminDashboard() {
 
           <button
             onClick={() => setActiveTab('variants')}
-            className={`flex items-center gap-2 px-3.5 sm:px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition shrink-0 ${
+            className={`flex items-center gap-2 px-3.5 sm:px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition shrink-0 cursor-pointer ${
               activeTab === 'variants'
-                ? 'bg-pink-500 text-slate-950 shadow-md font-black ring-2 ring-pink-500/30'
-                : 'bg-slate-900 text-slate-300 hover:text-white hover:bg-slate-800'
+                ? 'bg-gradient-to-r from-rose-600 to-rose-700 text-white shadow-lg shadow-rose-950/60 font-black border border-rose-400/30'
+                : 'bg-[#1A0A12] text-rose-200/70 hover:text-white hover:bg-rose-950/60 border border-rose-900/40'
             }`}
           >
-            <Palette className={`size-4 shrink-0 ${activeTab === 'variants' ? 'text-slate-950' : 'text-pink-400'}`} />
+            <Palette className={`size-4 shrink-0 ${activeTab === 'variants' ? 'text-amber-300' : 'text-amber-400'}`} />
             <span className="hidden sm:inline">৩. কালার ভ্যারিয়েন্ট পেজ</span>
             <span className="sm:hidden">৩. কালার পেজ</span>
           </button>
 
           <button
             onClick={() => setActiveTab('orders')}
-            className={`flex items-center gap-2 px-3.5 sm:px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition shrink-0 ${
+            className={`flex items-center gap-2 px-3.5 sm:px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition shrink-0 cursor-pointer ${
               activeTab === 'orders'
-                ? 'bg-cyan-500 text-slate-950 shadow-md font-black'
-                : 'bg-slate-900 text-slate-400 hover:text-white'
+                ? 'bg-gradient-to-r from-rose-600 to-rose-700 text-white shadow-lg shadow-rose-950/60 font-black border border-rose-400/30'
+                : 'bg-[#1A0A12] text-rose-200/70 hover:text-white hover:bg-rose-950/60 border border-rose-900/40'
             }`}
           >
             <Clock className="size-4 shrink-0" />
@@ -598,10 +603,10 @@ export default function AdminDashboard() {
 
           <button
             onClick={() => setActiveTab('settings')}
-            className={`flex items-center gap-2 px-3.5 sm:px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition shrink-0 ${
+            className={`flex items-center gap-2 px-3.5 sm:px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition shrink-0 cursor-pointer ${
               activeTab === 'settings'
-                ? 'bg-cyan-500 text-slate-950 shadow-md font-black'
-                : 'bg-slate-900 text-slate-400 hover:text-white'
+                ? 'bg-gradient-to-r from-rose-600 to-rose-700 text-white shadow-lg shadow-rose-950/60 font-black border border-rose-400/30'
+                : 'bg-[#1A0A12] text-rose-200/70 hover:text-white hover:bg-rose-950/60 border border-rose-900/40'
             }`}
           >
             <Settings className="size-4 shrink-0" />
@@ -611,10 +616,10 @@ export default function AdminDashboard() {
 
           <button
             onClick={() => setActiveTab('security')}
-            className={`flex items-center gap-2 px-3.5 sm:px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition shrink-0 ${
+            className={`flex items-center gap-2 px-3.5 sm:px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition shrink-0 cursor-pointer ${
               activeTab === 'security'
-                ? 'bg-amber-400 text-slate-950 shadow-md font-black ring-2 ring-amber-400/30'
-                : 'bg-slate-900 text-slate-400 hover:text-white'
+                ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 shadow-md font-black ring-2 ring-amber-400/30'
+                : 'bg-[#1A0A12] text-rose-200/70 hover:text-white hover:bg-rose-950/60 border border-rose-900/40'
             }`}
           >
             <Lock className={`size-4 shrink-0 ${activeTab === 'security' ? 'text-slate-950' : 'text-amber-400'}`} />
@@ -630,47 +635,47 @@ export default function AdminDashboard() {
           <div className="space-y-6">
             {/* KPI Cards */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-              <div className="bg-slate-900 rounded-2xl p-4 sm:p-5 border border-slate-800">
-                <span className="text-xs text-slate-400 block mb-1">মোট বিক্রয় রেভিনিউ</span>
+              <div className="bg-[#1A0A12]/90 rounded-2xl p-4 sm:p-5 border border-rose-900/40 shadow-lg">
+                <span className="text-xs text-rose-300/70 block mb-1">মোট বিক্রয় রেভিনিউ</span>
                 <span className="text-xl sm:text-2xl font-black text-emerald-400 font-sans">
                   ৳{totalRevenue.toLocaleString()}
                 </span>
-                <span className="text-[10px] text-slate-500 block mt-1">চলতি মাসের হিসেব</span>
+                <span className="text-[10px] text-rose-400/60 block mt-1">চলতি মাসের হিসেব</span>
               </div>
 
-              <div className="bg-slate-900 rounded-2xl p-4 sm:p-5 border border-slate-800">
-                <span className="text-xs text-slate-400 block mb-1">মোট অর্ডার সংখ্যা</span>
-                <span className="text-xl sm:text-2xl font-black text-cyan-400 font-sans">
+              <div className="bg-[#1A0A12]/90 rounded-2xl p-4 sm:p-5 border border-rose-900/40 shadow-lg">
+                <span className="text-xs text-rose-300/70 block mb-1">মোট অর্ডার সংখ্যা</span>
+                <span className="text-xl sm:text-2xl font-black text-rose-400 font-sans">
                   {orders.length} টি
                 </span>
-                <span className="text-[10px] text-slate-500 block mt-1">{confirmedOrders} টি কনফার্মড</span>
+                <span className="text-[10px] text-rose-400/60 block mt-1">{confirmedOrders} টি কনফার্মড</span>
               </div>
 
-              <div className="bg-slate-900 rounded-2xl p-4 sm:p-5 border border-slate-800">
-                <span className="text-xs text-slate-400 block mb-1">অপেক্ষমাণ (Pending)</span>
+              <div className="bg-[#1A0A12]/90 rounded-2xl p-4 sm:p-5 border border-rose-900/40 shadow-lg">
+                <span className="text-xs text-rose-300/70 block mb-1">অপেক্ষমাণ (Pending)</span>
                 <span className="text-xl sm:text-2xl font-black text-amber-400 font-sans">
                   {pendingOrders} টি
                 </span>
-                <span className="text-[10px] text-slate-500 block mt-1">কাস্টমারকে কনফার্ম করুন</span>
+                <span className="text-[10px] text-rose-400/60 block mt-1">কাস্টমারকে কনফার্ম করুন</span>
               </div>
 
-              <div className="bg-slate-900 rounded-2xl p-4 sm:p-5 border border-slate-800">
-                <span className="text-xs text-slate-400 block mb-1">বিকাশ পেমেন্ট অর্ডার</span>
+              <div className="bg-[#1A0A12]/90 rounded-2xl p-4 sm:p-5 border border-rose-900/40 shadow-lg">
+                <span className="text-xs text-rose-300/70 block mb-1">বিকাশ পেমেন্ট অর্ডার</span>
                 <span className="text-xl sm:text-2xl font-black text-[#E2136E] font-sans">
                   {bkashOrdersCount} টি
                 </span>
-                <span className="text-[10px] text-slate-500 block mt-1">TrxID ভেরিফাইড</span>
+                <span className="text-[10px] text-rose-400/60 block mt-1">TrxID ভেরিফাইড</span>
               </div>
             </div>
 
             {/* Quick Actions Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              <div className="bg-slate-900 rounded-2xl p-5 border border-slate-800 space-y-3">
-                <div className="flex items-center gap-2 text-cyan-400 font-bold text-sm">
+              <div className="bg-[#1A0A12]/90 rounded-2xl p-5 border border-rose-900/40 shadow-lg space-y-3">
+                <div className="flex items-center gap-2 text-rose-400 font-bold text-sm">
                   <Package className="size-4" />
                   <span>প্রোডাক্ট কুইক অ্যাকশন</span>
                 </div>
-                <p className="text-xs text-slate-400 leading-relaxed">
+                <p className="text-xs text-rose-300/70 leading-relaxed">
                   স্টোরে বর্তমানে {products.length}টি লাইভ প্রোডাক্ট রয়েছে। নতুন প্রোডাক্ট যোগ করতে বা দাম আপডেট করতে বোতাম চাপুন।
                 </p>
                 <button
@@ -678,58 +683,58 @@ export default function AdminDashboard() {
                     setActiveTab('products');
                     setIsAddProductModalOpen(true);
                   }}
-                  className="w-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold py-2.5 px-4 rounded-xl text-xs flex items-center justify-center gap-2 transition"
+                  className="w-full bg-gradient-to-r from-rose-600 via-rose-500 to-rose-600 hover:from-rose-500 hover:to-rose-400 text-white font-black py-2.5 px-4 rounded-xl text-xs flex items-center justify-center gap-2 transition active:scale-95 shadow-lg shadow-rose-950/50 cursor-pointer border border-rose-400/30"
                 >
                   <Plus className="size-4" />
                   <span>নতুন প্রোডাক্ট যোগ করুন</span>
                 </button>
               </div>
 
-              <div className="bg-slate-900 rounded-2xl p-5 border border-slate-800 space-y-3">
-                <div className="flex items-center gap-2 text-pink-400 font-bold text-sm">
+              <div className="bg-[#1A0A12]/90 rounded-2xl p-5 border border-rose-900/40 shadow-lg space-y-3">
+                <div className="flex items-center gap-2 text-amber-300 font-bold text-sm">
                   <Palette className="size-4" />
                   <span>কালার ভ্যারিয়েন্ট পেজ</span>
                 </div>
-                <p className="text-xs text-slate-400 leading-relaxed">
-                  খুব সহজে গ্যাজেটের কালার সেট করুন, পিসি বা ফোন গ্যালারি থেকে কালার ফটো আপলোড করুন।
+                <p className="text-xs text-rose-300/70 leading-relaxed">
+                  খুব সহজে পোশাক বা পণ্যের কালার সেট করুন, পিসি বা ফোন গ্যালারি থেকে কালার ফটো আপলোড করুন।
                 </p>
                 <button
                   onClick={() => setActiveTab('variants')}
-                  className="w-full bg-pink-600 hover:bg-pink-500 text-white font-bold py-2.5 px-4 rounded-xl text-xs flex items-center justify-center gap-2 transition"
+                  className="w-full bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-400 hover:to-amber-300 text-slate-950 font-black py-2.5 px-4 rounded-xl text-xs flex items-center justify-center gap-2 transition active:scale-95 shadow-lg shadow-amber-950/40 cursor-pointer"
                 >
                   <Palette className="size-4" />
                   <span>কালার ভ্যারিয়েন্ট পেজে যান</span>
                 </button>
               </div>
 
-              <div className="bg-slate-900 rounded-2xl p-5 border border-slate-800 space-y-3">
+              <div className="bg-[#1A0A12]/90 rounded-2xl p-5 border border-rose-900/40 shadow-lg space-y-3">
                 <div className="flex items-center gap-2 text-emerald-400 font-bold text-sm">
                   <Clock className="size-4" />
                   <span>অর্ডার প্রসেসিং</span>
                 </div>
-                <p className="text-xs text-slate-400 leading-relaxed">
+                <p className="text-xs text-rose-300/70 leading-relaxed">
                   পেন্ডিং অর্ডারগুলো ১-ক্লিকে কনফার্ম করুন এবং সরাসরি কাস্টমারের হোয়াটসঅ্যাপে ইনভয়েস মেসেজ পাঠান।
                 </p>
                 <button
                   onClick={() => setActiveTab('orders')}
-                  className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 px-4 rounded-xl text-xs flex items-center justify-center gap-2 transition"
+                  className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 px-4 rounded-xl text-xs flex items-center justify-center gap-2 transition active:scale-95 shadow-lg shadow-emerald-950/40 cursor-pointer border border-emerald-400/30"
                 >
                   <MessageSquare className="size-4" />
                   <span>অর্ডারসমূহ ম্যানেজ করুন</span>
                 </button>
               </div>
 
-              <div className="bg-slate-900 rounded-2xl p-5 border border-slate-800 space-y-3">
+              <div className="bg-[#1A0A12]/90 rounded-2xl p-5 border border-rose-900/40 shadow-lg space-y-3">
                 <div className="flex items-center gap-2 text-amber-400 font-bold text-sm">
                   <Settings className="size-4" />
                   <span>স্টোর ও ডেলিভারি রেট</span>
                 </div>
-                <p className="text-xs text-slate-400 leading-relaxed">
-                  ঠিকানা: {settings?.address} | বিকাশ: {settings?.bkashNumber} | ঢাকা ডেলিভারি: ৳{settings?.deliveryFeeInside}
+                <p className="text-xs text-rose-300/70 leading-relaxed">
+                  ঠিকানা: {settings?.address} | বিকাশ: {settings?.bkashNumber} | নওগাঁ সদর ডেলিভারি: ৳{settings?.deliveryFeeInside}
                 </p>
                 <button
                   onClick={() => setActiveTab('settings')}
-                  className="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 px-4 rounded-xl text-xs flex items-center justify-center gap-2 transition"
+                  className="w-full bg-[#12050B] hover:bg-rose-950 text-rose-200 hover:text-white border border-rose-900/60 font-bold py-2.5 px-4 rounded-xl text-xs flex items-center justify-center gap-2 transition active:scale-95 cursor-pointer"
                 >
                   <Settings className="size-4" />
                   <span>সেটিংস এডিট করুন</span>
@@ -745,7 +750,7 @@ export default function AdminDashboard() {
         {activeTab === 'products' && (
           <div className="space-y-6">
             {/* Products Toolbar */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-slate-900 p-4 rounded-2xl border border-slate-800">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-[#1A0A12]/90 p-4 rounded-2xl border border-rose-900/40 shadow-lg">
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto flex-1 max-w-xl">
                 <div className="relative flex-1">
                   <input
@@ -753,29 +758,28 @@ export default function AdminDashboard() {
                     placeholder="নাম, বাংলা নাম বা মডেল দিয়ে খুঁজুন..."
                     value={productSearch}
                     onChange={(e) => setProductSearch(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl pl-9 pr-3 py-2.5 text-xs text-white outline-none focus:border-cyan-400"
+                    className="w-full bg-[#12050B] border border-rose-900/60 rounded-xl pl-9 pr-3 py-2.5 text-xs text-white outline-none focus:border-rose-500 focus:ring-1 focus:ring-rose-500/20"
                   />
-                  <Search className="size-4 text-slate-500 absolute left-3 top-3" />
+                  <Search className="size-4 text-rose-400/50 absolute left-3 top-3" />
                 </div>
 
                 <select
                   value={selectedProductCategory}
                   onChange={(e) => setSelectedProductCategory(e.target.value)}
-                  className="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-xs text-white outline-none cursor-pointer"
+                  className="bg-[#12050B] border border-rose-900/60 rounded-xl px-3 py-2.5 text-xs text-white outline-none cursor-pointer focus:border-rose-500"
                 >
-                  <option value="all">সকল ক্যাটাগরি</option>
-                  <option value="audio">Audio</option>
-                  <option value="powerbank">Power Bank</option>
-                  <option value="speakers">Speakers</option>
-                  <option value="drones">Drones</option>
-                  <option value="camera">Mini Cameras</option>
+                  {CATEGORIES.map(cat => (
+                    <option key={cat.id} value={cat.id} className="bg-[#12050B] text-white">
+                      {cat.nameBn || cat.nameEn}
+                    </option>
+                  ))}
                 </select>
               </div>
 
               <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
                 <button
                   onClick={() => setIsAddProductModalOpen(true)}
-                  className="w-full sm:w-auto bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black px-4 py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow transition active:scale-95"
+                  className="w-full sm:w-auto bg-gradient-to-r from-rose-600 via-rose-500 to-rose-600 hover:from-rose-500 hover:to-rose-400 text-white font-black px-4 py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-lg shadow-rose-950/50 transition active:scale-95 cursor-pointer border border-rose-400/30"
                 >
                   <Plus className="size-4" />
                   <span>নতুন প্রোডাক্ট যোগ করুন</span>
@@ -784,39 +788,39 @@ export default function AdminDashboard() {
             </div>
 
             {/* Products Container */}
-            <div className="bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden shadow-xl">
-              <div className="p-4 border-b border-slate-800 flex items-center justify-between">
+            <div className="bg-[#1A0A12]/90 rounded-2xl border border-rose-900/40 overflow-hidden shadow-xl">
+              <div className="p-4 border-b border-rose-900/40 flex items-center justify-between">
                 <h3 className="font-bold text-white text-sm">
                   লাইভ প্রোডাক্ট ক্যাটালগ ({filteredProducts.length}টি)
                 </h3>
                 <span className="text-xs text-emerald-400 font-medium">● রিয়েল-টাইম সিঙ্ক অ্যাক্টিভ</span>
               </div>
 
-              {/* Mobile View: High Quality Responsive Product Cards (Zero Horizontal Scroll!) */}
+              {/* Mobile View: High Quality Responsive Product Cards */}
               <div className="block md:hidden p-3 space-y-3">
                 {filteredProducts.length === 0 ? (
-                  <div className="p-8 text-center text-slate-500 text-xs">
+                  <div className="p-8 text-center text-rose-300/60 text-xs">
                     কোনো প্রোডাক্ট পাওয়া যায়নি। ফিল্টার রিসেট করুন।
                   </div>
                 ) : (
                   filteredProducts.map((p) => (
-                    <div key={p.id} className="bg-slate-950 border border-slate-800/80 rounded-2xl p-3.5 space-y-3 shadow-md">
+                    <div key={p.id} className="bg-[#12050B] border border-rose-900/50 rounded-2xl p-3.5 space-y-3 shadow-md">
                       <div className="flex items-start gap-3">
                         <img
-                          src={p.images?.[0] || '/assets/products/airpods_pro_2_open_case.webp'}
+                          src={p.images?.[0] || '/assets/logo.svg'}
                           alt={p.name}
                           loading="lazy"
                           decoding="async"
-                          className="size-16 object-contain bg-black rounded-xl p-1.5 border border-slate-800 shrink-0"
+                          className="size-16 object-contain bg-[#1C0812] rounded-xl p-1.5 border border-rose-900/60 shrink-0"
                         />
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center justify-between gap-2">
-                            <span className="text-[10px] bg-slate-800 text-cyan-300 px-1.5 py-0.5 rounded font-mono uppercase">
+                            <span className="text-[10px] bg-[#1C0812] text-rose-300 px-1.5 py-0.5 rounded font-mono uppercase border border-rose-900/40">
                               {p.category}
                             </span>
                             <button
                               onClick={() => updateProduct(p.id, { stockCount: p.stockCount > 0 ? 0 : 25 })}
-                              className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                              className={`px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer ${
                                 p.stockCount > 0
                                   ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
                                   : 'bg-rose-500/20 text-rose-400 border border-rose-500/30'
@@ -826,18 +830,18 @@ export default function AdminDashboard() {
                             </button>
                           </div>
                           <h4 className="font-bold text-white text-xs mt-1 truncate">{p.name}</h4>
-                          <p className="text-[11px] text-slate-400 truncate">{p.nameBn}</p>
+                          <p className="text-[11px] text-rose-300/70 truncate">{p.nameBn}</p>
                           <div className="flex items-baseline gap-2 mt-1">
                             <span className="font-bold font-sans text-emerald-400 text-sm">৳{p.price?.toLocaleString()}</span>
                             {p.regularPrice && (
-                              <span className="text-[11px] text-slate-500 font-sans line-through">৳{p.regularPrice.toLocaleString()}</span>
+                              <span className="text-[11px] text-rose-400/50 font-sans line-through">৳{p.regularPrice.toLocaleString()}</span>
                             )}
                           </div>
                         </div>
                       </div>
 
                       {/* Colors Swatches & Action Buttons */}
-                      <div className="pt-2 border-t border-slate-800/80 flex items-center justify-between gap-2 flex-wrap">
+                      <div className="pt-2 border-t border-rose-900/40 flex items-center justify-between gap-2 flex-wrap">
                         <div className="flex items-center gap-1">
                           {(p.colors || []).map((c, i) => (
                             <span
@@ -847,7 +851,7 @@ export default function AdminDashboard() {
                               title={c.name}
                             />
                           ))}
-                          <span className="text-[10px] text-slate-400 ml-1">
+                          <span className="text-[10px] text-rose-300/70 ml-1">
                             {p.colors?.length || 0} টি কালার
                           </span>
                         </div>
@@ -858,15 +862,15 @@ export default function AdminDashboard() {
                               setSelectedVariantProductId(p.id);
                               setActiveTab('variants');
                             }}
-                            className="px-2.5 py-1.5 bg-pink-950/60 hover:bg-pink-900 border border-pink-500/30 text-pink-300 rounded-lg text-xs font-bold flex items-center gap-1 transition active:scale-95"
+                            className="px-2.5 py-1.5 bg-[#1C0812] hover:bg-rose-950 border border-amber-500/40 text-amber-300 rounded-lg text-xs font-bold flex items-center gap-1 transition active:scale-95 cursor-pointer"
                             title="কালার ভ্যারিয়েন্ট পেজ"
                           >
-                            <Palette className="size-3 text-pink-400" />
+                            <Palette className="size-3 text-amber-400" />
                             <span>কালার</span>
                           </button>
                           <button
                             onClick={() => handleOpenEditModal(p)}
-                            className="p-1.5 bg-slate-800 hover:bg-cyan-600 text-slate-300 hover:text-white rounded-lg transition active:scale-95"
+                            className="p-1.5 bg-[#1C0812] hover:bg-rose-600 text-rose-200 hover:text-white rounded-lg transition active:scale-95 cursor-pointer border border-rose-900/50"
                             title="এডিট করুন"
                           >
                             <Edit3 className="size-3.5" />
@@ -877,7 +881,7 @@ export default function AdminDashboard() {
                                 deleteProduct(p.id);
                               }
                             }}
-                            className="p-1.5 bg-slate-800 hover:bg-rose-600 text-slate-300 hover:text-white rounded-lg transition active:scale-95"
+                            className="p-1.5 bg-[#1C0812] hover:bg-rose-600 text-rose-200 hover:text-white rounded-lg transition active:scale-95 cursor-pointer border border-rose-900/50"
                             title="মুছে ফেলুন"
                           >
                             <Trash2 className="size-3.5" />
@@ -892,7 +896,7 @@ export default function AdminDashboard() {
               {/* Desktop / Tablet View: High Density Table */}
               <div className="hidden md:block overflow-x-auto">
                 <table className="w-full text-left text-xs border-collapse">
-                  <thead className="bg-slate-950 text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-800">
+                  <thead className="bg-[#12050B] text-rose-300/80 uppercase text-[10px] tracking-wider border-b border-rose-900/50">
                     <tr>
                       <th className="p-3.5">ছবি</th>
                       <th className="p-3.5">নাম ও বাংলা শিরোনাম</th>
@@ -903,35 +907,35 @@ export default function AdminDashboard() {
                       <th className="p-3.5 text-right">অ্যাকশন</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-800/80">
+                  <tbody className="divide-y divide-rose-950/60">
                     {filteredProducts.map((p) => (
-                      <tr key={p.id} className="hover:bg-slate-800/50 transition">
+                      <tr key={p.id} className="hover:bg-rose-950/30 transition">
                         <td className="p-3.5">
                           <img
-                            src={p.images?.[0] || '/assets/products/airpods_pro_2_open_case.webp'}
+                            src={p.images?.[0] || '/assets/logo.svg'}
                             alt={p.name}
                             loading="lazy"
                             decoding="async"
-                            className="size-12 object-contain bg-slate-950 rounded-lg p-1 border border-slate-800"
+                            className="size-12 object-contain bg-[#12050B] rounded-lg p-1 border border-rose-900/50"
                           />
                         </td>
                         <td className="p-3.5 max-w-xs">
                           <p className="font-bold text-white truncate">{p.name}</p>
-                          <p className="text-slate-400 truncate text-[11px]">{p.nameBn}</p>
-                          <span className="text-[10px] bg-slate-800 text-cyan-300 px-1.5 py-0.5 rounded font-mono">
+                          <p className="text-rose-300/70 truncate text-[11px]">{p.nameBn}</p>
+                          <span className="text-[10px] bg-[#1C0812] text-rose-300 px-1.5 py-0.5 rounded font-mono border border-rose-900/40">
                             {p.category}
                           </span>
                         </td>
                         <td className="p-3.5 font-bold font-sans text-emerald-400 text-sm">
                           ৳{p.price?.toLocaleString()}
                         </td>
-                        <td className="p-3.5 text-slate-500 font-sans line-through">
+                        <td className="p-3.5 text-rose-400/50 font-sans line-through">
                           {p.regularPrice ? `৳${p.regularPrice.toLocaleString()}` : '—'}
                         </td>
                         <td className="p-3.5">
                           <button
                             onClick={() => updateProduct(p.id, { stockCount: p.stockCount > 0 ? 0 : 25 })}
-                            className={`px-2 py-1 rounded text-[10px] font-bold ${
+                            className={`px-2 py-1 rounded text-[10px] font-bold cursor-pointer ${
                               p.stockCount > 0
                                 ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
                                 : 'bg-rose-500/20 text-rose-400 border border-rose-500/30'
@@ -950,7 +954,7 @@ export default function AdminDashboard() {
                                 title={c.name}
                               />
                             ))}
-                            <span className="text-[10px] text-slate-400 ml-1">
+                            <span className="text-[10px] text-rose-300/70 ml-1">
                               {p.colors?.length || 0} টি
                             </span>
                           </div>
@@ -961,14 +965,14 @@ export default function AdminDashboard() {
                               setSelectedVariantProductId(p.id);
                               setActiveTab('variants');
                             }}
-                            className="p-1.5 bg-slate-800 hover:bg-pink-600 text-slate-300 hover:text-white rounded-lg transition"
+                            className="p-1.5 bg-[#1C0812] hover:bg-amber-600 text-amber-300 hover:text-slate-950 rounded-lg transition cursor-pointer border border-amber-500/30"
                             title="কালার ভ্যারিয়েন্ট পেজে যান"
                           >
-                            <Palette className="size-3.5 text-pink-400" />
+                            <Palette className="size-3.5 text-amber-400" />
                           </button>
                           <button
                             onClick={() => handleOpenEditModal(p)}
-                            className="p-1.5 bg-slate-800 hover:bg-cyan-600 text-slate-300 hover:text-white rounded-lg transition"
+                            className="p-1.5 bg-[#1C0812] hover:bg-rose-600 text-rose-200 hover:text-white rounded-lg transition cursor-pointer border border-rose-900/50"
                             title="এডিট করুন"
                           >
                             <Edit3 className="size-3.5" />
@@ -979,7 +983,7 @@ export default function AdminDashboard() {
                                 deleteProduct(p.id);
                               }
                             }}
-                            className="p-1.5 bg-slate-800 hover:bg-rose-600 text-slate-300 hover:text-white rounded-lg transition"
+                            className="p-1.5 bg-[#1C0812] hover:bg-rose-600 text-rose-200 hover:text-white rounded-lg transition cursor-pointer border border-rose-900/50"
                             title="মুছে ফেলুন"
                           >
                             <Trash2 className="size-3.5" />
@@ -993,16 +997,16 @@ export default function AdminDashboard() {
             </div>
 
             {/* Quick Link Banner to Dedicated Color Variant Page */}
-            <div className="bg-gradient-to-r from-slate-900 via-pink-950/20 to-slate-900 rounded-3xl p-5 border border-pink-500/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="bg-gradient-to-r from-[#18070F] via-[#240A18] to-[#18070F] rounded-3xl p-5 border border-rose-900/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="flex items-center gap-3.5">
-                <div className="p-3 bg-pink-500/10 text-pink-400 rounded-2xl border border-pink-500/20 shrink-0">
+                <div className="p-3 bg-rose-500/10 text-rose-400 rounded-2xl border border-rose-500/20 shrink-0">
                   <Palette className="size-6" />
                 </div>
                 <div>
                   <h4 className="font-bold text-sm text-white">
                     প্রোডাক্ট কালার ভ্যারিয়েন্ট ও ইমেজ কন্ট্রোল
                   </h4>
-                  <p className="text-xs text-slate-400 mt-0.5 leading-relaxed">
+                  <p className="text-xs text-rose-200/70 mt-0.5 leading-relaxed">
                     সহজে যেকোনো প্রোডাক্টের কালার সেট করুন এবং পিসি বা মোবাইল গ্যালারি/ক্যামেরা থেকে সরাসরি ছবি আপলোড করুন।
                   </p>
                 </div>
@@ -1010,7 +1014,7 @@ export default function AdminDashboard() {
 
               <button
                 onClick={() => setActiveTab('variants')}
-                className="bg-pink-600 hover:bg-pink-500 text-white font-black px-4 py-2.5 rounded-xl text-xs flex items-center gap-1.5 transition shadow-lg shrink-0 active:scale-95"
+                className="bg-gradient-to-r from-rose-600 to-rose-500 hover:from-rose-500 hover:to-rose-600 text-white font-black px-4 py-2.5 rounded-xl text-xs flex items-center gap-1.5 transition shadow-lg shrink-0 active:scale-95"
               >
                 <span>কালার ভ্যারিয়েন্ট পেজে যান</span>
                 <ArrowRight className="size-3.5" />
@@ -1025,35 +1029,35 @@ export default function AdminDashboard() {
         {activeTab === 'variants' && (
           <div className="space-y-6">
             {/* Page Header */}
-            <div className="bg-slate-900/90 rounded-3xl p-5 sm:p-6 border border-slate-800 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <div className="bg-[#18070F]/90 rounded-3xl p-5 sm:p-6 border border-rose-900/40 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-xl">
               <div>
-                <div className="flex items-center gap-2 text-xs font-bold text-pink-400 uppercase tracking-wider mb-1">
+                <div className="flex items-center gap-2 text-xs font-bold text-rose-400 uppercase tracking-wider mb-1">
                   <Palette className="size-4" />
                   <span>প্রোডাক্ট কালার ও ভ্যারিয়েন্ট ম্যানেজমেন্ট</span>
                 </div>
                 <h2 className="text-xl sm:text-2xl font-black text-white">
                   কালার ভ্যারিয়েন্ট ও ইমেজ কন্ট্রোল পেজ
                 </h2>
-                <p className="text-xs text-slate-400 mt-1 max-w-2xl leading-relaxed">
-                  খুব সহজে যেকোনো গ্যাজেটের কালার ভ্যারিয়েন্ট যুক্ত করুন, পিসি ফাইল বা ফোনের গ্যালারি/ক্যামেরা থেকে ছবি আপলোড করুন এবং রিয়েল-টাইম স্টক নির্ধারণ করুন।
+                <p className="text-xs text-rose-200/70 mt-1 max-w-2xl leading-relaxed">
+                  খুব সহজে যেকোনো প্রোডাক্টের কালার ভ্যারিয়েন্ট যুক্ত করুন, পিসি ফাইল বা ফোনের গ্যালারি/ক্যামেরা থেকে ছবি আপলোড করুন এবং রিয়েল-টাইম স্টক নির্ধারণ করুন।
                 </p>
               </div>
 
               <div className="flex items-center gap-2 shrink-0">
-                <span className="text-xs bg-slate-950 border border-slate-800 text-slate-300 px-3.5 py-2 rounded-xl">
-                  মোট প্রোডাক্ট: <strong className="text-cyan-400">{products.length}</strong> টি
+                <span className="text-xs bg-[#10030A] border border-rose-900/40 text-rose-200 px-3.5 py-2 rounded-xl">
+                  মোট প্রোডাক্ট: <strong className="text-amber-400">{products.length}</strong> টি
                 </span>
               </div>
             </div>
 
             {/* Section 1: Product Selector */}
-            <div className="bg-slate-900 rounded-3xl p-5 sm:p-6 border border-slate-800 space-y-4">
+            <div className="bg-[#1A0A12] rounded-3xl p-5 sm:p-6 border border-rose-900/30 space-y-4 shadow-xl">
               <div className="flex items-center justify-between">
                 <h3 className="font-bold text-sm text-white flex items-center gap-2">
-                  <span className="size-6 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-xs font-black">১</span>
+                  <span className="size-6 rounded-full bg-rose-500/20 text-rose-400 flex items-center justify-center text-xs font-black">১</span>
                   <span>প্রোডাক্ট সিলেক্ট করুন</span>
                 </h3>
-                <span className="text-xs text-slate-400">যে প্রোডাক্টের কালার সেট করতে চান সেটি নির্বাচন করুন</span>
+                <span className="text-xs text-rose-200/60">যে প্রোডাক্টের কালার সেট করতে চান সেটি নির্বাচন করুন</span>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
@@ -1061,7 +1065,7 @@ export default function AdminDashboard() {
                   <select
                     value={activeVariantProductId}
                     onChange={(e) => setSelectedVariantProductId(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-2xl p-3.5 text-xs sm:text-sm text-white outline-none focus:border-cyan-400 font-medium cursor-pointer"
+                    className="w-full bg-[#10030A] border border-rose-900/40 rounded-2xl p-3.5 text-xs sm:text-sm text-white outline-none focus:border-rose-400 font-medium cursor-pointer"
                   >
                     {products.map(p => (
                       <option key={p.id} value={p.id}>
@@ -1073,18 +1077,18 @@ export default function AdminDashboard() {
 
                 {/* Selected Product Quick Info Card */}
                 {selectedProduct && (
-                  <div className="md:col-span-4 bg-slate-950/80 rounded-2xl p-3 border border-slate-800/80 flex items-center gap-3">
+                  <div className="md:col-span-4 bg-[#10030A]/90 rounded-2xl p-3 border border-rose-900/30 flex items-center gap-3">
                     <img
                       src={selectedProduct.images?.[0] || '/assets/logo.webp'}
                       alt={selectedProduct.name}
                       decoding="async"
-                      className="size-12 rounded-xl object-contain bg-black border border-slate-800 shrink-0 p-1"
+                      className="size-12 rounded-xl object-contain bg-black border border-rose-900/40 shrink-0 p-1"
                     />
                     <div className="min-w-0 flex-1">
                       <h4 className="text-xs font-bold text-white truncate">{selectedProduct.name}</h4>
                       <div className="flex items-center gap-2 mt-0.5">
-                        <span className="text-xs font-bold text-cyan-400">৳{selectedProduct.price}</span>
-                        <span className="text-[10px] text-slate-400">• {selectedProduct.colors?.length || 0} টি কালার বিদ্যমান</span>
+                        <span className="text-xs font-bold text-rose-400">৳{selectedProduct.price}</span>
+                        <span className="text-[10px] text-rose-200/60">• {selectedProduct.colors?.length || 0} টি কালার বিদ্যমান</span>
                       </div>
                     </div>
                   </div>
@@ -1093,10 +1097,10 @@ export default function AdminDashboard() {
             </div>
 
             {/* Section 2: Add New Color Variant Form */}
-            <div className="bg-slate-900 rounded-3xl p-5 sm:p-6 border border-slate-800 space-y-5">
-              <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+            <div className="bg-[#1A0A12] rounded-3xl p-5 sm:p-6 border border-rose-900/30 space-y-5 shadow-xl">
+              <div className="flex items-center justify-between pb-3 border-b border-rose-900/30">
                 <h3 className="font-bold text-sm sm:text-base text-white flex items-center gap-2">
-                  <span className="size-6 rounded-full bg-pink-500/20 text-pink-400 flex items-center justify-center text-xs font-black">২</span>
+                  <span className="size-6 rounded-full bg-rose-500/20 text-rose-400 flex items-center justify-center text-xs font-black">২</span>
                   <span>নতুন কালার ভ্যারিয়েন্ট যোগ করুন</span>
                 </h3>
                 {colorSuccessMsg && (
@@ -1111,21 +1115,21 @@ export default function AdminDashboard() {
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
                   {/* Color Name */}
                   <div className="md:col-span-5">
-                    <label className="block text-xs font-bold text-slate-300 mb-1.5">
-                      কালারের নাম (যেমন: Matte Black, Navy Blue, Silver, Sakura Pink) *
+                    <label className="block text-xs font-bold text-rose-200/90 mb-1.5">
+                      কালারের নাম (যেমন: Royal Maroon, Rich Wine, Rose Gold, Classic Black) *
                     </label>
                     <input
                       type="text"
                       placeholder="কালারের নাম লিখুন..."
                       value={newColorName}
                       onChange={(e) => setNewColorName(e.target.value)}
-                      className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs sm:text-sm text-white outline-none focus:border-pink-500"
+                      className="w-full bg-[#10030A] border border-rose-900/40 rounded-xl p-3 text-xs sm:text-sm text-white outline-none focus:border-rose-400"
                     />
                   </div>
 
                   {/* Color Picker & Hex */}
                   <div className="md:col-span-4">
-                    <label className="block text-xs font-bold text-slate-300 mb-1.5">
+                    <label className="block text-xs font-bold text-rose-200/90 mb-1.5">
                       কালার সিলেক্ট করুন (পিকার)
                     </label>
                     <div className="flex items-center gap-2.5">
@@ -1133,14 +1137,14 @@ export default function AdminDashboard() {
                         type="color"
                         value={newColorHex}
                         onChange={(e) => setNewColorHex(e.target.value)}
-                        className="size-11 rounded-xl bg-slate-950 border border-slate-800 cursor-pointer p-1 shrink-0"
+                        className="size-11 rounded-xl bg-[#10030A] border border-rose-900/40 cursor-pointer p-1 shrink-0"
                       />
                       <input
                         type="text"
                         value={newColorHex}
                         onChange={(e) => setNewColorHex(e.target.value)}
                         placeholder="#000000"
-                        className="w-28 bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white font-mono uppercase outline-none focus:border-pink-500"
+                        className="w-28 bg-[#10030A] border border-rose-900/40 rounded-xl p-2.5 text-xs text-white font-mono uppercase outline-none focus:border-rose-400"
                       />
                       <span className="inline-block size-8 rounded-xl border border-white/20 shadow-xs shrink-0" style={{ backgroundColor: newColorHex }} />
                     </div>
@@ -1148,7 +1152,7 @@ export default function AdminDashboard() {
 
                   {/* Stock State */}
                   <div className="md:col-span-3">
-                    <label className="block text-xs font-bold text-slate-300 mb-1.5">স্টক অবস্থা</label>
+                    <label className="block text-xs font-bold text-rose-200/90 mb-1.5">স্টক অবস্থা</label>
                     <div className="flex items-center gap-2">
                       <button
                         type="button"
@@ -1156,7 +1160,7 @@ export default function AdminDashboard() {
                         className={`flex-1 py-2.5 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 ${
                           newColorInStock
                             ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
-                            : 'bg-slate-950 text-slate-400 border border-slate-800'
+                            : 'bg-[#10030A] text-slate-400 border border-rose-900/30'
                         }`}
                       >
                         <Check className="size-3.5" />
@@ -1168,7 +1172,7 @@ export default function AdminDashboard() {
                         className={`flex-1 py-2.5 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 ${
                           !newColorInStock
                             ? 'bg-rose-500/20 text-rose-300 border border-rose-500/40'
-                            : 'bg-slate-950 text-slate-400 border border-slate-800'
+                            : 'bg-[#10030A] text-slate-400 border border-rose-900/30'
                         }`}
                       >
                         <X className="size-3.5" />
@@ -1179,18 +1183,18 @@ export default function AdminDashboard() {
                 </div>
 
                 {/* 1-Click Popular Colors Palette */}
-                <div className="pt-3 border-t border-slate-800 flex flex-wrap items-center gap-2">
-                  <span className="text-xs text-slate-400 mr-1">রেডিমেড কালার (১-ক্লিক):</span>
+                <div className="pt-3 border-t border-rose-900/30 flex flex-wrap items-center gap-2">
+                  <span className="text-xs text-rose-200/60 mr-1">রেডিমেড কালার (১-ক্লিক):</span>
                   {[
+                    { name: 'Royal Maroon', hex: '#881337' },
+                    { name: 'Rich Rose', hex: '#BE123C' },
+                    { name: 'Luxury Gold', hex: '#F59E0B' },
+                    { name: 'Deep Wine', hex: '#4C0519' },
                     { name: 'Pure White', hex: '#FFFFFF' },
                     { name: 'Matte Black', hex: '#0F172A' },
                     { name: 'Silver Gray', hex: '#94A3B8' },
                     { name: 'Deep Navy', hex: '#1E3A8A' },
-                    { name: 'Mint Green', hex: '#10B981' },
-                    { name: 'Sakura Pink', hex: '#EC4899' },
-                    { name: 'Crimson Red', hex: '#EF4444' },
-                    { name: 'Luxury Gold', hex: '#F59E0B' },
-                    { name: 'Purple', hex: '#8B5CF6' },
+                    { name: 'Emerald Green', hex: '#059669' },
                   ].map(chip => (
                     <button
                       key={chip.name}
@@ -1199,7 +1203,7 @@ export default function AdminDashboard() {
                         setNewColorHex(chip.hex);
                         setNewColorName(chip.name);
                       }}
-                      className="flex items-center gap-1.5 bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 px-3 py-1.5 rounded-xl text-xs text-slate-300 transition active:scale-95"
+                      className="flex items-center gap-1.5 bg-[#10030A] hover:bg-[#250D1B] border border-rose-900/30 hover:border-rose-700/50 px-3 py-1.5 rounded-xl text-xs text-rose-200 transition active:scale-95"
                     >
                       <span className="size-3 rounded-full border border-white/20" style={{ backgroundColor: chip.hex }} />
                       <span>{chip.name}</span>
@@ -1208,26 +1212,26 @@ export default function AdminDashboard() {
                 </div>
 
                 {/* Optional Image for this Color Variant */}
-                <div className="pt-3 border-t border-slate-800">
-                  <label className="block text-xs font-bold text-slate-300 mb-1.5 flex items-center justify-between">
+                <div className="pt-3 border-t border-rose-900/30">
+                  <label className="block text-xs font-bold text-rose-200/90 mb-1.5 flex items-center justify-between">
                     <span>এই কালারের ছবি আপলোড করুন (ঐচ্ছিক)</span>
-                    <span className="text-[11px] text-cyan-400 font-normal">PC ফাইল বা ফোনের গ্যালারি/ক্যামেরা (Auto WebP)</span>
+                    <span className="text-[11px] text-amber-400 font-normal">PC ফাইল বা ফোনের গ্যালারি/ক্যামেরা (Auto WebP)</span>
                   </label>
-                  <div className="bg-slate-950 border border-slate-800 rounded-2xl p-3 flex flex-col sm:flex-row items-center gap-3">
+                  <div className="bg-[#10030A] border border-rose-900/40 rounded-2xl p-3 flex flex-col sm:flex-row items-center gap-3">
                     {newColorImage ? (
                       <div className="flex items-center gap-3 w-full sm:w-auto">
                         <img
                           src={newColorImage}
                           alt="Variant preview"
                           decoding="async"
-                          className="size-14 rounded-xl object-contain bg-black border border-slate-800 shrink-0 p-1"
+                          className="size-14 rounded-xl object-contain bg-black border border-rose-900/40 shrink-0 p-1"
                         />
                         <div className="flex-1 space-y-1">
                           <span className="text-xs font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-md border border-emerald-500/20 inline-block">
                             ✓ WebP রেডি (~{getImageDataSizeKB(newColorImage)} KB)
                           </span>
                           <div className="flex items-center gap-2">
-                            <label className="cursor-pointer bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold px-2.5 py-1 rounded-lg transition inline-flex items-center gap-1 active:scale-95">
+                            <label className="cursor-pointer bg-[#1A0A12] hover:bg-[#250D1B] text-white text-xs font-bold px-2.5 py-1 rounded-lg border border-rose-900/40 transition inline-flex items-center gap-1 active:scale-95">
                               <Upload className="size-3" />
                               <span>পরিবর্তন</span>
                               <input
@@ -1248,8 +1252,8 @@ export default function AdminDashboard() {
                         </div>
                       </div>
                     ) : (
-                      <label className="cursor-pointer flex items-center gap-2.5 bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-pink-500/40 px-4 py-2.5 rounded-xl text-xs text-slate-300 transition w-full sm:w-auto active:scale-95">
-                        <Upload className="size-4 text-pink-400 shrink-0" />
+                      <label className="cursor-pointer flex items-center gap-2.5 bg-[#1A0A12] hover:bg-[#250D1B] border border-rose-900/40 hover:border-rose-500/50 px-4 py-2.5 rounded-xl text-xs text-rose-200 transition w-full sm:w-auto active:scale-95">
+                        <Upload className="size-4 text-rose-400 shrink-0" />
                         <span>{isColorImageUploading ? 'ছবি আপলোড ও WebP কনভার্ট হচ্ছে...' : 'ছবি সিলেক্ট করুন (PC বা ফোনের গ্যালারি/ক্যামেরা)'}</span>
                         <input
                           type="file"
@@ -1268,7 +1272,7 @@ export default function AdminDashboard() {
                     type="button"
                     onClick={handleAddColor}
                     disabled={!newColorName.trim()}
-                    className="w-full sm:w-auto bg-pink-600 hover:bg-pink-500 disabled:opacity-40 disabled:cursor-not-allowed text-white font-black py-3 px-8 rounded-xl text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg transition active:scale-95"
+                    className="w-full sm:w-auto bg-gradient-to-r from-rose-600 to-rose-500 hover:from-rose-500 hover:to-rose-600 disabled:opacity-40 disabled:cursor-not-allowed text-white font-black py-3 px-8 rounded-xl text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-rose-950/50 transition active:scale-95"
                   >
                     <Plus className="size-4" />
                     <span>+ কালার ভ্যারিয়েন্ট যোগ করুন</span>
@@ -1278,14 +1282,14 @@ export default function AdminDashboard() {
             </div>
 
             {/* Section 3: Existing Color Variants for Selected Product */}
-            <div className="bg-slate-900 rounded-3xl p-5 sm:p-6 border border-slate-800 space-y-4">
-              <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+            <div className="bg-[#1A0A12] rounded-3xl p-5 sm:p-6 border border-rose-900/30 space-y-4 shadow-xl">
+              <div className="flex items-center justify-between pb-3 border-b border-rose-900/30">
                 <div>
                   <h3 className="font-bold text-sm sm:text-base text-white flex items-center gap-2">
                     <span className="size-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xs font-black">৩</span>
                     <span>{selectedProduct?.name} — বিদ্যমান কালারসমূহ ({selectedProduct?.colors?.length || 0})</span>
                   </h3>
-                  <p className="text-xs text-slate-400 mt-0.5">
+                  <p className="text-xs text-rose-200/60 mt-0.5">
                     নিচের কার্ডগুলো থেকে সরাসরি কালারের স্টক টগল বা রিমুভ করতে পারবেন।
                   </p>
                 </div>
@@ -1293,16 +1297,16 @@ export default function AdminDashboard() {
 
               {(!selectedProduct?.colors || selectedProduct.colors.length === 0) ? (
                 <div className="py-8 text-center text-slate-500">
-                  <Palette className="size-10 mx-auto text-slate-700 mb-2" />
+                  <Palette className="size-10 mx-auto text-rose-900/60 mb-2" />
                   <p className="text-xs">এই প্রোডাক্টে এখনো কোনো কালার সেট করা হয়নি।</p>
-                  <p className="text-[11px] text-slate-600 mt-0.5">উপরের ফর্ম থেকে সহজে আপনার পছন্দের কালার যোগ করুন।</p>
+                  <p className="text-[11px] text-slate-400 mt-0.5">উপরের ফর্ম থেকে সহজে আপনার পছন্দের কালার যোগ করুন।</p>
                 </div>
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5">
                   {selectedProduct.colors.map((c) => (
                     <div
                       key={c.name}
-                      className="bg-slate-950 rounded-2xl p-4 border border-slate-800 hover:border-slate-700 transition flex items-center justify-between gap-3 shadow-md"
+                      className="bg-[#10030A] rounded-2xl p-4 border border-rose-900/30 hover:border-rose-700/60 transition flex items-center justify-between gap-3 shadow-md"
                     >
                       <div className="flex items-center gap-3 min-w-0">
                         {c.image ? (
@@ -1310,7 +1314,7 @@ export default function AdminDashboard() {
                             src={c.image}
                             alt={c.name}
                             decoding="async"
-                            className="size-11 rounded-xl object-contain bg-black border border-slate-800 shrink-0 p-0.5"
+                            className="size-11 rounded-xl object-contain bg-black border border-rose-900/40 shrink-0 p-0.5"
                           />
                         ) : (
                           <span
@@ -1320,7 +1324,7 @@ export default function AdminDashboard() {
                         )}
                         <div className="min-w-0">
                           <h4 className="text-xs font-bold text-white truncate">{c.name}</h4>
-                          <span className="text-[10px] font-mono text-slate-400 block mt-0.5">{c.hex}</span>
+                          <span className="text-[10px] font-mono text-rose-200/60 block mt-0.5">{c.hex}</span>
                           <div className="mt-1">
                             {c.inStock !== false ? (
                               <span className="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-md inline-block">
@@ -1339,7 +1343,7 @@ export default function AdminDashboard() {
                         <button
                           type="button"
                           onClick={() => toggleColorVariantStock(activeVariantProductId, c.name)}
-                          className="bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white text-[11px] font-bold py-1.5 px-2.5 rounded-xl border border-slate-800 transition text-center"
+                          className="bg-[#1A0A12] hover:bg-[#250D1B] text-rose-200 hover:text-white text-[11px] font-bold py-1.5 px-2.5 rounded-xl border border-rose-900/30 transition text-center"
                           title="স্টক পরিবর্তন"
                         >
                           {c.inStock !== false ? 'আউট' : 'ইন'}
@@ -1347,7 +1351,7 @@ export default function AdminDashboard() {
                         <button
                           type="button"
                           onClick={() => removeColorVariant(activeVariantProductId, c.name)}
-                          className="p-2 text-slate-500 hover:text-rose-400 hover:bg-rose-500/10 rounded-xl transition"
+                          className="p-2 text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 rounded-xl transition"
                           title="কালার মুছে ফেলুন"
                         >
                           <Trash2 className="size-3.5" />
@@ -1363,12 +1367,12 @@ export default function AdminDashboard() {
         )}
 
         {/* =========================================================================
-            TAB 3: ORDERS MANAGEMENT & MESSAGING
+            TAB 4: ORDERS MANAGEMENT & MESSAGING
            ========================================================================= */}
         {activeTab === 'orders' && (
           <div className="space-y-6">
             {/* Orders Toolbar */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-slate-900 p-4 rounded-2xl border border-slate-800">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-[#1A0A12] p-4 rounded-2xl border border-rose-900/40 shadow-xl">
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto flex-1 max-w-xl">
                 <div className="relative flex-1">
                   <input
@@ -1376,15 +1380,15 @@ export default function AdminDashboard() {
                     placeholder="অর্ডার আইডি, ফোন বা নাম দিয়ে খুঁজুন..."
                     value={orderSearchQuery}
                     onChange={(e) => setOrderSearchQuery(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl pl-9 pr-3 py-2.5 text-xs text-white outline-none focus:border-cyan-400"
+                    className="w-full bg-[#10030A] border border-rose-900/40 rounded-xl pl-9 pr-3 py-2.5 text-xs text-white outline-none focus:border-rose-400"
                   />
-                  <Search className="size-4 text-slate-500 absolute left-3 top-3" />
+                  <Search className="size-4 text-rose-300/50 absolute left-3 top-3" />
                 </div>
 
                 <select
                   value={orderStatusFilter}
                   onChange={(e) => setOrderStatusFilter(e.target.value)}
-                  className="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-xs text-white outline-none cursor-pointer"
+                  className="bg-[#10030A] border border-rose-900/40 rounded-xl px-3 py-2.5 text-xs text-rose-200 outline-none cursor-pointer"
                 >
                   <option value="all">সকল স্ট্যাটাস</option>
                   <option value="Pending">Pending (অপেক্ষমাণ)</option>
@@ -1406,8 +1410,8 @@ export default function AdminDashboard() {
 
             {/* Orders List */}
             {filteredOrders.length === 0 ? (
-              <div className="bg-slate-900 rounded-2xl p-12 text-center border border-slate-800 text-slate-400">
-                <Clock className="size-12 mx-auto text-slate-600 mb-2" />
+              <div className="bg-[#1A0A12] rounded-2xl p-12 text-center border border-rose-900/30 text-rose-200/60 shadow-xl">
+                <Clock className="size-12 mx-auto text-rose-900/60 mb-2" />
                 <p className="text-base font-bold text-white">কোনো অর্ডার পাওয়া যায়নি</p>
                 <p className="text-xs mt-1">ফিল্টার রিসেট করুন অথবা নতুন অর্ডারের জন্য অপেক্ষা করুন।</p>
               </div>
@@ -1416,11 +1420,11 @@ export default function AdminDashboard() {
                 {filteredOrders.map((order) => (
                   <div
                     key={order.id || order.orderTrackingId}
-                    className="bg-slate-900 rounded-2xl p-4 sm:p-5 border border-slate-800 space-y-3 shadow-md"
+                    className="bg-[#1A0A12] rounded-2xl p-4 sm:p-5 border border-rose-900/30 space-y-3 shadow-xl"
                   >
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-800">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-rose-900/30">
                       <div className="flex items-center gap-2.5 flex-wrap">
-                        <span className="font-mono font-black text-cyan-400 text-sm">
+                        <span className="font-mono font-black text-amber-400 text-sm">
                           {order.orderTrackingId || order.id}
                         </span>
                         <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
@@ -1432,7 +1436,7 @@ export default function AdminDashboard() {
                         }`}>
                           ● {order.status}
                         </span>
-                        <span className="text-slate-500 text-[11px]">
+                        <span className="text-rose-200/50 text-[11px]">
                           {order.createdAt ? new Date(order.createdAt).toLocaleDateString() : ''}
                         </span>
                       </div>
@@ -1442,7 +1446,7 @@ export default function AdminDashboard() {
                         <select
                           value={order.status}
                           onChange={(e) => updateOrderStatus(order.id || order.orderTrackingId, e.target.value)}
-                          className="flex-1 sm:flex-none bg-slate-950 border border-slate-800 text-slate-200 text-xs rounded-lg px-2.5 py-2 sm:py-1 outline-none"
+                          className="flex-1 sm:flex-none bg-[#10030A] border border-rose-900/40 text-rose-200 text-xs rounded-lg px-2.5 py-2 sm:py-1 outline-none"
                         >
                           <option value="Pending">Pending</option>
                           <option value="Confirmed">Confirmed</option>
@@ -1467,7 +1471,7 @@ export default function AdminDashboard() {
                               deleteOrder(order.id || order.orderTrackingId);
                             }
                           }}
-                          className="p-2 sm:p-1 bg-slate-800 hover:bg-rose-600 text-slate-400 hover:text-white rounded-lg transition shrink-0"
+                          className="p-2 sm:p-1 bg-[#10030A] hover:bg-rose-600 text-slate-400 hover:text-white rounded-lg transition shrink-0 border border-rose-900/30"
                           title="মুছে ফেলুন"
                         >
                           <Trash2 className="size-3.5" />
@@ -1479,27 +1483,27 @@ export default function AdminDashboard() {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
                       {/* Customer Info */}
                       <div>
-                        <span className="text-slate-400 block text-[10px]">গ্রাহকের বিবরণ:</span>
+                        <span className="text-rose-200/60 block text-[10px]">গ্রাহকের বিবরণ:</span>
                         <p className="font-bold text-white text-sm">{order.customerName}</p>
-                        <a href={`tel:${order.phone}`} className="text-cyan-400 font-mono hover:underline block">
+                        <a href={`tel:${order.phone}`} className="text-rose-400 font-mono hover:underline block">
                           📞 {order.phone}
                         </a>
-                        <p className="text-slate-300 mt-1">{order.address}</p>
-                        <span className="text-[10px] text-slate-500 block">
-                          জোন: {order.deliveryZone === 'outside_dhaka' ? 'ঢাকার বাইরে (৳' + order.deliveryFee + ')' : 'ঢাকা সিটি (৳' + order.deliveryFee + ')'}
+                        <p className="text-rose-100/80 mt-1">{order.address}</p>
+                        <span className="text-[10px] text-rose-300/60 block">
+                          জোন: {order.deliveryZone === 'outside_naogaon' || order.deliveryZone === 'outside_dhaka' ? 'নওগাঁর বাইরে সারা দেশ (৳' + (order.deliveryFee || 120) + ')' : 'নওগাঁ সদর (৳' + (order.deliveryFee || 60) + ')'}
                         </span>
                       </div>
 
                       {/* Items */}
                       <div>
-                        <span className="text-slate-400 block text-[10px] mb-1">অর্ডারকৃত পণ্য:</span>
+                        <span className="text-rose-200/60 block text-[10px] mb-1">অর্ডারকৃত পণ্য:</span>
                         <div className="space-y-1">
                           {(order.items || []).map((it, idx) => (
-                            <div key={idx} className="bg-slate-950 p-1.5 rounded-lg border border-slate-800 flex items-center justify-between">
-                              <span className="text-slate-200 truncate pr-2">
+                            <div key={idx} className="bg-[#10030A] p-1.5 rounded-lg border border-rose-900/30 flex items-center justify-between">
+                              <span className="text-rose-100 truncate pr-2">
                                 {it.product?.name} ({it.selectedColor || 'Standard'})
                               </span>
-                              <span className="font-mono text-cyan-400 font-bold shrink-0">
+                              <span className="font-mono text-rose-400 font-bold shrink-0">
                                 ×{it.quantity} (৳{it.product?.price * it.quantity})
                               </span>
                             </div>
@@ -1508,25 +1512,25 @@ export default function AdminDashboard() {
                       </div>
 
                       {/* Payment & Total */}
-                      <div className="bg-slate-950 p-3 rounded-xl border border-slate-800/80 flex flex-col justify-between">
+                      <div className="bg-[#10030A] p-3 rounded-xl border border-rose-900/40 flex flex-col justify-between">
                         <div>
-                          <span className="text-slate-400 block text-[10px]">পেমেন্ট মাধ্যম:</span>
+                          <span className="text-rose-200/60 block text-[10px]">পেমেন্ট মাধ্যম:</span>
                           <span className={`font-bold inline-block mt-0.5 text-xs ${
                             order.paymentMethod === 'bkash' ? 'text-[#E2136E]' : 'text-emerald-400'
                           }`}>
                             {order.paymentMethod === 'bkash' ? 'বিকাশ সেন্ড মানি (Manual)' : 'ক্যাশ অন ডেলিভারি (COD)'}
                           </span>
                           {order.paymentMethod === 'bkash' && (
-                            <div className="mt-1 font-mono text-[11px] text-slate-300 bg-rose-950/40 border border-rose-500/20 p-1 rounded">
+                            <div className="mt-1 font-mono text-[11px] text-rose-100 bg-rose-950/40 border border-rose-500/20 p-1 rounded">
                               <p>প্রেরক: {order.bkashSender}</p>
                               <p>TrxID: <strong className="text-white">{order.bkashTrxId}</strong></p>
                             </div>
                           )}
                         </div>
 
-                        <div className="pt-2 border-t border-slate-800 mt-2 flex items-center justify-between">
-                          <span className="text-slate-400 text-xs">সর্বমোট প্রদেয়:</span>
-                          <span className="text-lg font-black text-emerald-400 font-sans">
+                        <div className="pt-2 border-t border-rose-900/30 mt-2 flex items-center justify-between">
+                          <span className="text-rose-200/60 text-xs">সর্বমোট প্রদেয়:</span>
+                          <span className="text-lg font-black text-amber-400 font-sans">
                             ৳{Number(order.totalAmount)?.toLocaleString()}
                           </span>
                         </div>
@@ -1540,19 +1544,19 @@ export default function AdminDashboard() {
         )}
 
         {/* =========================================================================
-            TAB 4: REAL-TIME STORE SETTINGS, CONTACT & DELIVERY FEES
+            TAB 5: REAL-TIME STORE SETTINGS, CONTACT & DELIVERY FEES
            ========================================================================= */}
         {activeTab === 'settings' && (
-          <div className="bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-800 shadow-xl max-w-4xl space-y-6">
+          <div className="bg-[#1A0A12] rounded-3xl p-6 sm:p-8 border border-rose-900/40 shadow-xl max-w-4xl space-y-6">
             <div>
-              <div className="flex items-center gap-2 text-cyan-400 font-bold text-xs uppercase tracking-wider mb-1">
+              <div className="flex items-center gap-2 text-rose-400 font-bold text-xs uppercase tracking-wider mb-1">
                 <Settings className="size-4" />
                 <span>রিয়েল-টাইম স্টোর সেটিংস ও ডেলিভারি কনফিগ</span>
               </div>
               <h2 className="text-xl sm:text-2xl font-black text-white font-sans">
                 ক্লায়েন্ট তথ্য, নম্বর ও ডেলিভারি চার্জ পরিবর্তন
               </h2>
-              <p className="text-xs text-slate-400 mt-1">
+              <p className="text-xs text-rose-200/70 mt-1">
                 এখানে করা যেকোনো পরিবর্তন ওয়েবসাইটের হেডার, ফুটার, চেকআউট পেজ এবং ফ্লোটিং বাটনে তাৎক্ষণিকভাবে লাইভ হবে।
               </p>
             </div>
@@ -1567,43 +1571,43 @@ export default function AdminDashboard() {
             <form onSubmit={handleSaveSettings} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1">স্টোরের নাম</label>
+                  <label className="block text-xs font-bold text-rose-200/90 mb-1">স্টোরের নাম</label>
                   <input
                     type="text"
                     value={settingsForm.storeName}
                     onChange={(e) => setSettingsForm({ ...settingsForm, storeName: e.target.value })}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white outline-none focus:border-cyan-400"
+                    className="w-full bg-[#10030A] border border-rose-900/40 rounded-xl p-2.5 text-xs text-white outline-none focus:border-rose-400"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1">ট্যাগলাইন / স্লোগান</label>
+                  <label className="block text-xs font-bold text-rose-200/90 mb-1">ট্যাগলাইন / স্লোগান</label>
                   <input
                     type="text"
                     value={settingsForm.tagline}
                     onChange={(e) => setSettingsForm({ ...settingsForm, tagline: e.target.value })}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white outline-none focus:border-cyan-400"
+                    className="w-full bg-[#10030A] border border-rose-900/40 rounded-xl p-2.5 text-xs text-white outline-none focus:border-rose-400"
                   />
                 </div>
               </div>
 
-              {/* Physical Address & Email (Client has no physical store -> "Bangladesh") */}
+              {/* Physical Address & Email */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1">
-                    ঠিকানা (Address) — ফিজিক্যাল স্টোর না থাকায় ডিফল্ট বাংলাদেশ
+                  <label className="block text-xs font-bold text-rose-200/90 mb-1">
+                    ঠিকানা (Address)
                   </label>
                   <input
                     type="text"
                     value={settingsForm.address}
                     onChange={(e) => setSettingsForm({ ...settingsForm, address: e.target.value })}
-                    placeholder="যেমন: অনলাইন স্টোর, বাংলাদেশ"
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white outline-none focus:border-cyan-400"
+                    placeholder="নওগাঁ সদর, নওগাঁ"
+                    className="w-full bg-[#10030A] border border-rose-900/40 rounded-xl p-2.5 text-xs text-white outline-none focus:border-rose-400"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1">
+                  <label className="block text-xs font-bold text-rose-200/90 mb-1">
                     অফিসিয়াল ইমেইল (Email) *
                   </label>
                   <input
@@ -1611,8 +1615,8 @@ export default function AdminDashboard() {
                     required
                     value={settingsForm.email}
                     onChange={(e) => setSettingsForm({ ...settingsForm, email: e.target.value })}
-                    placeholder="gadgetsgalaxy2026gg@gmail.com"
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white outline-none focus:border-cyan-400"
+                    placeholder="masud97186@gmail.com"
+                    className="w-full bg-[#10030A] border border-rose-900/40 rounded-xl p-2.5 text-xs text-white outline-none focus:border-rose-400"
                   />
                 </div>
               </div>
@@ -1620,7 +1624,7 @@ export default function AdminDashboard() {
               {/* Contact Numbers: bKash, WhatsApp, Hotline */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1">
+                  <label className="block text-xs font-bold text-rose-200/90 mb-1">
                     বিকাশ পার্সোনাল নম্বর (Send Money) *
                   </label>
                   <input
@@ -1628,12 +1632,12 @@ export default function AdminDashboard() {
                     required
                     value={settingsForm.bkashNumber}
                     onChange={(e) => setSettingsForm({ ...settingsForm, bkashNumber: e.target.value })}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white font-mono outline-none focus:border-cyan-400"
+                    className="w-full bg-[#10030A] border border-rose-900/40 rounded-xl p-2.5 text-xs text-white font-mono outline-none focus:border-rose-400"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1">
+                  <label className="block text-xs font-bold text-rose-200/90 mb-1">
                     ক্লায়েন্ট হোয়াটসঅ্যাপ নম্বর *
                   </label>
                   <input
@@ -1641,12 +1645,12 @@ export default function AdminDashboard() {
                     required
                     value={settingsForm.whatsappNumber}
                     onChange={(e) => setSettingsForm({ ...settingsForm, whatsappNumber: e.target.value })}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white font-mono outline-none focus:border-cyan-400"
+                    className="w-full bg-[#10030A] border border-rose-900/40 rounded-xl p-2.5 text-xs text-white font-mono outline-none focus:border-rose-400"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1">
+                  <label className="block text-xs font-bold text-rose-200/90 mb-1">
                     জরুরি হটলাইন নম্বর *
                   </label>
                   <input
@@ -1654,14 +1658,14 @@ export default function AdminDashboard() {
                     required
                     value={settingsForm.hotline}
                     onChange={(e) => setSettingsForm({ ...settingsForm, hotline: e.target.value })}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white font-mono outline-none focus:border-cyan-400"
+                    className="w-full bg-[#10030A] border border-rose-900/40 rounded-xl p-2.5 text-xs text-white font-mono outline-none focus:border-rose-400"
                   />
                 </div>
               </div>
 
               {/* Client Facebook Page Link */}
               <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1">
+                <label className="block text-xs font-bold text-rose-200/90 mb-1">
                   ক্লায়েন্ট ফেসবুক পেজ লিংক (Facebook Page URL)
                 </label>
                 <input
@@ -1669,39 +1673,39 @@ export default function AdminDashboard() {
                   value={settingsForm.facebookPage}
                   onChange={(e) => setSettingsForm({ ...settingsForm, facebookPage: e.target.value })}
                   placeholder="https://www.facebook.com/share/1FA8LYE5Y4/"
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white outline-none focus:border-cyan-400"
+                  className="w-full bg-[#10030A] border border-rose-900/40 rounded-xl p-2.5 text-xs text-white outline-none focus:border-rose-400"
                 />
-                <p className="text-[11px] text-slate-500 mt-1">
+                <p className="text-[11px] text-rose-200/50 mt-1">
                   এই লিংকটি ওয়েবসাইটের ফুটার, হেডার এবং ফ্লোটিং সোশ্যাল বাটনে স্বয়ংক্রিয়ভাবে ব্যবহার হবে।
                 </p>
               </div>
 
               {/* Delivery Charge Controls */}
-              <div className="p-4 bg-slate-950 rounded-2xl border border-slate-800/80 space-y-3">
+              <div className="p-4 bg-[#10030A] rounded-2xl border border-rose-900/40 space-y-3">
                 <h4 className="font-bold text-sm text-white flex items-center gap-1.5">
-                  <Truck className="size-4 text-cyan-400" />
+                  <Truck className="size-4 text-rose-400" />
                   <span>ডেলিভারি চার্জ কনফিগারেশন (Delivery Fees)</span>
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs text-slate-400 mb-1">ঢাকা সিটির ভিতরে চার্জ (৳)</label>
+                    <label className="block text-xs text-rose-200/70 mb-1">নওগাঁ সদর এর ভিতরে চার্জ (৳)</label>
                     <input
                       type="number"
                       required
                       value={settingsForm.deliveryFeeInside}
                       onChange={(e) => setSettingsForm({ ...settingsForm, deliveryFeeInside: e.target.value })}
-                      className="w-full bg-slate-900 border border-slate-800 rounded-xl p-2.5 text-xs text-white font-bold outline-none focus:border-cyan-400 font-mono"
+                      className="w-full bg-[#1A0A12] border border-rose-900/40 rounded-xl p-2.5 text-xs text-white font-bold outline-none focus:border-rose-400 font-mono"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs text-slate-400 mb-1">ঢাকার বাইরে সারা দেশে চার্জ (৳)</label>
+                    <label className="block text-xs text-rose-200/70 mb-1">নওগাঁর বাইরে সারা দেশে চার্জ (৳)</label>
                     <input
                       type="number"
                       required
                       value={settingsForm.deliveryFeeOutside}
                       onChange={(e) => setSettingsForm({ ...settingsForm, deliveryFeeOutside: e.target.value })}
-                      className="w-full bg-slate-900 border border-slate-800 rounded-xl p-2.5 text-xs text-white font-bold outline-none focus:border-cyan-400 font-mono"
+                      className="w-full bg-[#1A0A12] border border-rose-900/40 rounded-xl p-2.5 text-xs text-white font-bold outline-none focus:border-rose-400 font-mono"
                     />
                   </div>
                 </div>
@@ -1711,7 +1715,7 @@ export default function AdminDashboard() {
               <div className="pt-2">
                 <button
                   type="submit"
-                  className="bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black px-6 py-3 rounded-xl text-xs sm:text-sm flex items-center gap-2 shadow-lg transition active:scale-95"
+                  className="bg-gradient-to-r from-rose-600 via-rose-500 to-rose-600 hover:from-rose-500 hover:to-rose-700 text-white font-black px-6 py-3 rounded-xl text-xs sm:text-sm flex items-center gap-2 shadow-lg shadow-rose-950/50 transition active:scale-95 cursor-pointer"
                 >
                   <Save className="size-4" />
                   <span>সব সেটিংস রিয়েল-টাইমে সেভ করুন</span>
@@ -1725,7 +1729,7 @@ export default function AdminDashboard() {
             TAB 6: ADMIN SECURITY & PASSWORD MANAGER (FIXED USERNAME)
            ========================================================================= */}
         {activeTab === 'security' && (
-          <div className="bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-800 shadow-xl max-w-2xl space-y-6">
+          <div className="bg-[#1A0A12] rounded-3xl p-6 sm:p-8 border border-rose-900/40 shadow-xl max-w-2xl space-y-6">
             <div>
               <div className="flex items-center gap-2 text-amber-400 font-bold text-xs uppercase tracking-wider mb-1">
                 <Lock className="size-4" />
@@ -1734,29 +1738,29 @@ export default function AdminDashboard() {
               <h2 className="text-xl sm:text-2xl font-black text-white font-sans">
                 অ্যাডমিন পাসওয়ার্ড পরিবর্তন
               </h2>
-              <p className="text-xs text-slate-400 mt-1 leading-relaxed">
+              <p className="text-xs text-rose-200/70 mt-1 leading-relaxed">
                 আপনার সুবিধার জন্য অ্যাডমিন ইউজারনেম ফিক্সড রাখা হয়েছে। আপনি যেকোনো সময় আপনার অ্যাডমিন পাসওয়ার্ড পরিবর্তন করতে পারবেন।
               </p>
             </div>
 
             {/* Locked Fixed Username Notice */}
-            <div className="p-4 bg-slate-950 border border-slate-800 rounded-2xl flex items-center justify-between">
+            <div className="p-4 bg-[#10030A] border border-rose-900/40 rounded-2xl flex items-center justify-between">
               <div>
-                <span className="text-[11px] text-slate-400 block font-bold uppercase tracking-wider">
+                <span className="text-[11px] text-rose-200/60 block font-bold uppercase tracking-wider">
                   ফিক্সড ইউজারনেম (অপরিবর্তনীয়)
                 </span>
                 <span className="text-base sm:text-lg font-black text-white font-mono mt-0.5 block">
-                  {settings?.adminUsername || 'Gadgets Galaxy'}
+                  {settings?.adminUsername || 'Maya Shopping Mall'}
                 </span>
               </div>
-              <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-800/80 border border-slate-700 text-slate-300 text-xs font-bold">
+              <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#240A18] border border-rose-900/50 text-rose-200 text-xs font-bold">
                 <Lock className="size-3.5 text-amber-400" />
                 <span>লকড / স্থায়ী</span>
               </div>
             </div>
 
             {/* Current Active Password Reference Card */}
-            <div className="p-4 bg-slate-950/80 border border-amber-500/20 rounded-2xl space-y-2">
+            <div className="p-4 bg-[#10030A]/90 border border-amber-500/30 rounded-2xl space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-[11px] text-amber-300/80 font-bold uppercase tracking-wider flex items-center gap-1.5">
                   <KeyRound className="size-3.5 text-amber-400" />
@@ -1780,7 +1784,7 @@ export default function AdminDashboard() {
                   )}
                 </button>
               </div>
-              <div className="font-mono text-sm sm:text-base font-bold text-white tracking-widest bg-slate-900 px-3 py-2 rounded-xl border border-slate-800 inline-block">
+              <div className="font-mono text-sm sm:text-base font-bold text-amber-300 tracking-widest bg-[#18070F] px-3 py-2 rounded-xl border border-rose-900/40 inline-block">
                 {showCurrentPassword ? (settings?.adminPassword || 'SameerXnjr10') : '••••••••••••'}
               </div>
             </div>
@@ -1803,7 +1807,7 @@ export default function AdminDashboard() {
             {/* Password Change Form */}
             <form onSubmit={handleSavePassword} className="space-y-4 pt-2">
               <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1.5">
+                <label className="block text-xs font-bold text-rose-200/90 mb-1.5">
                   নতুন পাসওয়ার্ড (কমপক্ষে ৬ অক্ষর) *
                 </label>
                 <div className="relative">
@@ -1814,7 +1818,7 @@ export default function AdminDashboard() {
                     placeholder="নতুন শক্তিশালী পাসওয়ার্ড লিখুন"
                     value={newAdminPassword}
                     onChange={(e) => setNewAdminPassword(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 pr-10 text-sm text-white font-mono outline-none focus:border-amber-400 transition"
+                    className="w-full bg-[#10030A] border border-rose-900/40 rounded-xl p-3 pr-10 text-sm text-white font-mono outline-none focus:border-amber-400 transition"
                   />
                   <button
                     type="button"
@@ -1827,7 +1831,7 @@ export default function AdminDashboard() {
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1.5">
+                <label className="block text-xs font-bold text-rose-200/90 mb-1.5">
                   নতুন পাসওয়ার্ড নিশ্চিত করুন (Confirm Password) *
                 </label>
                 <input
@@ -1837,7 +1841,7 @@ export default function AdminDashboard() {
                   placeholder="পুনরায় একই পাসওয়ার্ড লিখুন"
                   value={confirmAdminPassword}
                   onChange={(e) => setConfirmAdminPassword(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-white font-mono outline-none focus:border-amber-400 transition"
+                  className="w-full bg-[#10030A] border border-rose-900/40 rounded-xl p-3 text-sm text-white font-mono outline-none focus:border-amber-400 transition"
                 />
               </div>
 
@@ -1852,7 +1856,7 @@ export default function AdminDashboard() {
                 </button>
               </div>
 
-              <p className="text-[11px] text-slate-500 text-center leading-relaxed">
+              <p className="text-[11px] text-rose-200/50 text-center leading-relaxed">
                 পাসওয়ার্ড পরিবর্তন করার সাথে সাথে তা নিরাপদে ফায়ারবেস ক্লাউডে সেভ হয়ে যাবে।
               </p>
             </form>
@@ -1866,11 +1870,11 @@ export default function AdminDashboard() {
          ========================================================================= */}
       {isAddProductModalOpen && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl sm:rounded-3xl max-w-2xl w-full p-4 sm:p-6 text-slate-100 max-h-[90vh] overflow-y-auto shadow-2xl">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-800 mb-4">
+          <div className="bg-[#18070F] border border-rose-900/50 rounded-2xl sm:rounded-3xl max-w-2xl w-full p-4 sm:p-6 text-slate-100 max-h-[90vh] overflow-y-auto shadow-2xl shadow-rose-950/80">
+            <div className="flex items-center justify-between pb-3 border-b border-rose-900/30 mb-4">
               <h3 className="font-black text-lg text-white flex items-center gap-2">
-                <Plus className="size-5 text-cyan-400" />
-                <span>নতুন গ্যাজেট প্রোডাক্ট যোগ করুন</span>
+                <Plus className="size-5 text-rose-400" />
+                <span>নতুন প্রোডাক্ট যোগ করুন</span>
               </h3>
               <button
                 onClick={() => setIsAddProductModalOpen(false)}
@@ -1883,76 +1887,76 @@ export default function AdminDashboard() {
             <form onSubmit={handleCreateProduct} className="space-y-3.5">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1">ইংরেজি নাম *</label>
+                  <label className="block text-xs font-bold text-rose-200/90 mb-1">ইংরেজি নাম *</label>
                   <input
                     type="text"
                     required
-                    placeholder="e.g. Sony WH-1000XM5"
+                    placeholder="e.g. Royal Embroidered Cotton Bed Sheet"
                     value={newProductForm.name}
                     onChange={(e) => setNewProductForm({ ...newProductForm, name: e.target.value })}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white outline-none"
+                    className="w-full bg-[#10030A] border border-rose-900/40 rounded-xl p-2.5 text-xs text-white outline-none focus:border-rose-400"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1">বাংলা শিরোনাম</label>
+                  <label className="block text-xs font-bold text-rose-200/90 mb-1">বাংলা শিরোনাম</label>
                   <input
                     type="text"
-                    placeholder="যেমন: সনি ওয়ারলেস হেডফোন"
+                    placeholder="যেমন: প্রিমিয়াম কটন বেডশিট সেট"
                     value={newProductForm.nameBn}
                     onChange={(e) => setNewProductForm({ ...newProductForm, nameBn: e.target.value })}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white outline-none"
+                    className="w-full bg-[#10030A] border border-rose-900/40 rounded-xl p-2.5 text-xs text-white outline-none focus:border-rose-400"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1">অফার মূল্য (৳) *</label>
+                  <label className="block text-xs font-bold text-rose-200/90 mb-1">অফার মূল্য (৳) *</label>
                   <input
                     type="number"
                     required
-                    placeholder="e.g. 2999"
+                    placeholder="e.g. 1450"
                     value={newProductForm.price}
                     onChange={(e) => setNewProductForm({ ...newProductForm, price: e.target.value })}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white font-mono outline-none"
+                    className="w-full bg-[#10030A] border border-rose-900/40 rounded-xl p-2.5 text-xs text-white font-mono outline-none focus:border-rose-400"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1">রেগুলার মূল্য (৳)</label>
+                  <label className="block text-xs font-bold text-rose-200/90 mb-1">রেগুলার মূল্য (৳)</label>
                   <input
                     type="number"
-                    placeholder="e.g. 3500"
+                    placeholder="e.g. 1850"
                     value={newProductForm.regularPrice}
                     onChange={(e) => setNewProductForm({ ...newProductForm, regularPrice: e.target.value })}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white font-mono outline-none"
+                    className="w-full bg-[#10030A] border border-rose-900/40 rounded-xl p-2.5 text-xs text-white font-mono outline-none focus:border-rose-400"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1">ক্যাটাগরি *</label>
+                  <label className="block text-xs font-bold text-rose-200/90 mb-1">ক্যাটাগরি *</label>
                   <select
                     value={newProductForm.category}
                     onChange={(e) => setNewProductForm({ ...newProductForm, category: e.target.value })}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white outline-none"
+                    className="w-full bg-[#10030A] border border-rose-900/40 rounded-xl p-2.5 text-xs text-white outline-none focus:border-rose-400"
                   >
-                    <option value="audio">Audio (হেডফোন ও এয়ারপডস)</option>
-                    <option value="powerbank">Power Bank</option>
-                    <option value="speakers">Speakers</option>
-                    <option value="drones">Camera Drones</option>
-                    <option value="camera">Mini Cameras</option>
+                    {CATEGORIES.filter(c => c.id !== 'all').map(cat => (
+                      <option key={cat.id} value={cat.id}>
+                        {cat.nameBn} ({cat.nameEn})
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1.5 flex items-center justify-between">
+                <label className="block text-xs font-bold text-rose-200/90 mb-1.5 flex items-center justify-between">
                   <span>প্রোডাক্টের ছবি আপলোড করুন *</span>
-                  <span className="text-[11px] text-cyan-400 font-normal">PC ফাইল অথবা মোবাইল গ্যালারি / ক্যামেরা</span>
+                  <span className="text-[11px] text-amber-400 font-normal">PC ফাইল অথবা মোবাইল গ্যালারি / ক্যামেরা</span>
                 </label>
                 
-                <div className="bg-slate-950 border-2 border-dashed border-slate-800 hover:border-cyan-500/60 rounded-2xl p-4 transition-all">
+                <div className="bg-[#10030A] border-2 border-dashed border-rose-900/40 hover:border-rose-500/60 rounded-2xl p-4 transition-all">
                   {newProductForm.image ? (
                     <div className="flex items-center gap-4">
-                      <div className="relative size-20 sm:size-24 rounded-xl bg-black border border-slate-800 overflow-hidden shrink-0 shadow-lg">
+                      <div className="relative size-20 sm:size-24 rounded-xl bg-black border border-rose-900/40 overflow-hidden shrink-0 shadow-lg">
                         <img src={newProductForm.image} alt="Preview" className="size-full object-contain p-1" />
                       </div>
                       <div className="space-y-2 flex-1 min-w-0">
@@ -1962,7 +1966,7 @@ export default function AdminDashboard() {
                           </span>
                         </div>
                         <div className="flex items-center gap-2 flex-wrap">
-                          <label className="cursor-pointer bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition inline-flex items-center gap-1.5 active:scale-95">
+                          <label className="cursor-pointer bg-[#1A0A12] hover:bg-[#250D1B] text-white text-xs font-bold px-3 py-1.5 rounded-lg border border-rose-900/40 transition inline-flex items-center gap-1.5 active:scale-95">
                             <Upload className="size-3.5" />
                             <span>ছবি পরিবর্তন করুন</span>
                             <input
@@ -1984,13 +1988,13 @@ export default function AdminDashboard() {
                     </div>
                   ) : (
                     <label className="cursor-pointer flex flex-col items-center justify-center py-4 text-center group">
-                      <div className="size-12 rounded-2xl bg-cyan-500/10 group-hover:bg-cyan-500/20 text-cyan-400 flex items-center justify-center mb-2.5 transition">
+                      <div className="size-12 rounded-2xl bg-rose-500/10 group-hover:bg-rose-500/20 text-rose-400 flex items-center justify-center mb-2.5 transition">
                         <Upload className="size-6 group-hover:scale-110 transition" />
                       </div>
-                      <span className="text-xs font-bold text-white group-hover:text-cyan-300 transition">
+                      <span className="text-xs font-bold text-white group-hover:text-rose-300 transition">
                         {isProductImageUploading ? 'ছবি আপলোড হচ্ছে...' : 'PC ফাইল বা ফোনের গ্যালারি/ক্যামেরা থেকে ছবি দিন'}
                       </span>
-                      <span className="text-[11px] text-slate-500 mt-1">
+                      <span className="text-[11px] text-rose-200/50 mt-1">
                         ক্লিক করে ছবি সিলেক্ট করুন (JPG, PNG, WEBP)
                       </span>
                       <input
@@ -2009,79 +2013,79 @@ export default function AdminDashboard() {
                     placeholder="অথবা সরাসরি ছবির URL বা পাথ দিন (/assets/products/...)"
                     value={newProductForm.image}
                     onChange={(e) => setNewProductForm({ ...newProductForm, image: e.target.value })}
-                    className="w-full bg-slate-950 border border-slate-800/80 rounded-xl px-3 py-1.5 text-[11px] text-slate-400 outline-none focus:border-slate-700"
+                    className="w-full bg-[#10030A] border border-rose-900/40 rounded-xl px-3 py-1.5 text-[11px] text-rose-200/70 outline-none focus:border-rose-400"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1">স্টক পরিমাণ</label>
+                  <label className="block text-xs font-bold text-rose-200/90 mb-1">স্টক পরিমাণ</label>
                   <input
                     type="number"
                     value={newProductForm.stockCount}
                     onChange={(e) => setNewProductForm({ ...newProductForm, stockCount: e.target.value })}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white outline-none"
+                    className="w-full bg-[#10030A] border border-rose-900/40 rounded-xl p-2.5 text-xs text-white outline-none focus:border-rose-400"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1">ডিসকাউন্ট %</label>
+                  <label className="block text-xs font-bold text-rose-200/90 mb-1">ডিসকাউন্ট %</label>
                   <input
                     type="number"
                     placeholder="e.g. 25"
                     value={newProductForm.discountPercent}
                     onChange={(e) => setNewProductForm({ ...newProductForm, discountPercent: e.target.value })}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white outline-none"
+                    className="w-full bg-[#10030A] border border-rose-900/40 rounded-xl p-2.5 text-xs text-white outline-none focus:border-rose-400"
                   />
                 </div>
               </div>
 
               {/* Short Description */}
               <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1">
+                <label className="block text-xs font-bold text-rose-200/90 mb-1">
                   সংক্ষিপ্ত বিবরণ (Short Description)
                 </label>
                 <textarea
                   rows={2}
-                  placeholder="যেমন: দুবাই ভ্যারিয়েন্ট গোল্ড সিল ANC ও টাইপ-সি স্পিকার কেস সহ প্রিমিয়াম অডিও এক্সপেরিয়েন্স..."
+                  placeholder="যেমন: প্রিমিয়াম কোয়ালিটি ১০০% সফট কটন বেডশিট..."
                   value={newProductForm.shortDescBn || ''}
                   onChange={(e) => setNewProductForm({ ...newProductForm, shortDescBn: e.target.value })}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white outline-none focus:border-cyan-400"
+                  className="w-full bg-[#10030A] border border-rose-900/40 rounded-xl p-2.5 text-xs text-white outline-none focus:border-rose-400"
                 />
               </div>
 
               {/* Key Features / Bullet Points */}
               <div>
                 <div className="flex items-center justify-between mb-1">
-                  <label className="text-xs font-bold text-slate-300 flex items-center gap-1.5">
+                  <label className="text-xs font-bold text-rose-200/90 flex items-center gap-1.5">
                     <CheckCircle2 className="size-3.5 text-emerald-400" />
                     <span>প্রধান বৈশিষ্ট্যসমূহ (Bullet Points)</span>
                   </label>
-                  <span className="text-[11px] text-slate-400 font-normal">প্রতি লাইনে ১টি করে পয়েন্ট</span>
+                  <span className="text-[11px] text-rose-200/50 font-normal">প্রতি লাইনে ১টি করে পয়েন্ট</span>
                 </div>
                 <textarea
                   rows={3}
-                  placeholder={"যেমন:\nঅরিজিনাল দুবাই সিরিয়াল বক্স ও গোল্ড সিল প্যাক।\nআইফোন ও অ্যান্ড্রয়েড উভয় ফোনেই ইনস্ট্যান্ট কানেক্ট।\nটাইপ-সি ফাস্ট চার্জিং সুবিধা ও সাউন্ড স্পিকার কেস।"}
+                  placeholder={"যেমন:\n১০০% পাকা রং ও প্রিমিয়াম কোয়ালিটি।\nনওগাঁ সদর সহ সারা দেশে হোম ডেলিভারি।\nপছন্দ না হলে সহজ রিপ্লেসমেন্ট সুবিধা।"}
                   value={newProductForm.bulletPointsText || ''}
                   onChange={(e) => setNewProductForm({ ...newProductForm, bulletPointsText: e.target.value })}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white outline-none focus:border-cyan-400 font-mono leading-relaxed"
+                  className="w-full bg-[#10030A] border border-rose-900/40 rounded-xl p-2.5 text-xs text-white outline-none focus:border-rose-400 font-mono leading-relaxed"
                 />
               </div>
 
               {/* Technical Specifications Table */}
-              <div className="bg-slate-950/70 border border-slate-800 rounded-2xl p-3 sm:p-4 space-y-2.5">
+              <div className="bg-[#10030A] border border-rose-900/40 rounded-2xl p-3 sm:p-4 space-y-2.5">
                 <div className="flex items-center justify-between">
                   <div>
                     <h4 className="text-xs font-bold text-white flex items-center gap-1.5">
-                      <Layers className="size-3.5 text-cyan-400" />
+                      <Layers className="size-3.5 text-rose-400" />
                       <span>টেকনিক্যাল স্পেসিফিকেশন (Specifications)</span>
                     </h4>
-                    <p className="text-[10px] text-slate-400">প্রোডাক্টের চিপসেট, ব্লুটুথ, ব্যাটারি ব্যাকআপ ইত্যাদি টেবিল আকারে দেখাবে</p>
+                    <p className="text-[10px] text-rose-200/60">প্রোডাক্টের ফেব্রিক, সাইজ, ডেলিভারি ইত্যাদি টেবিল আকারে দেখাবে</p>
                   </div>
                   <button
                     type="button"
                     onClick={handleAddNewSpecRow}
-                    className="bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-[11px] font-bold px-2.5 py-1 rounded-lg flex items-center gap-1 transition active:scale-95 cursor-pointer"
+                    className="bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/30 text-[11px] font-bold px-2.5 py-1 rounded-lg flex items-center gap-1 transition active:scale-95 cursor-pointer"
                   >
                     <Plus className="size-3" />
                     <span>রো যোগ করুন</span>
@@ -2093,22 +2097,22 @@ export default function AdminDashboard() {
                     <div key={idx} className="flex items-center gap-2">
                       <input
                         type="text"
-                        placeholder="বিষয়/নাম (যেমন: ব্যাটারি)"
+                        placeholder="বিষয়/নাম (যেমন: ফেব্রিক)"
                         value={row.key}
                         onChange={(e) => handleUpdateNewSpecRow(idx, 'key', e.target.value)}
-                        className="w-2/5 bg-slate-900 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-white outline-none focus:border-cyan-400"
+                        className="w-2/5 bg-[#1A0A12] border border-rose-900/40 rounded-lg px-2.5 py-1.5 text-xs text-white outline-none focus:border-rose-400"
                       />
                       <input
                         type="text"
-                        placeholder="মান/বিবরণ (যেমন: ২৪+ ঘণ্টা)"
+                        placeholder="মান/বিবরণ (যেমন: ১০০% সফট কটন)"
                         value={row.value}
                         onChange={(e) => handleUpdateNewSpecRow(idx, 'value', e.target.value)}
-                        className="flex-1 bg-slate-900 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-white outline-none focus:border-cyan-400"
+                        className="flex-1 bg-[#1A0A12] border border-rose-900/40 rounded-lg px-2.5 py-1.5 text-xs text-white outline-none focus:border-rose-400"
                       />
                       <button
                         type="button"
                         onClick={() => handleRemoveNewSpecRow(idx)}
-                        className="p-1.5 text-slate-500 hover:text-rose-400 hover:bg-rose-500/10 rounded-lg transition"
+                        className="p-1.5 text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 rounded-lg transition"
                         title="মুছে ফেলুন"
                       >
                         <Trash2 className="size-3.5" />
@@ -2116,7 +2120,7 @@ export default function AdminDashboard() {
                     </div>
                   ))}
                   {(newProductForm.specRows || []).length === 0 && (
-                    <p className="text-[11px] text-slate-500 text-center py-2">
+                    <p className="text-[11px] text-rose-200/50 text-center py-2">
                       কোনো স্পেসিফিকেশন রো নেই। "+ রো যোগ করুন" বাটনে ক্লিক করুন।
                     </p>
                   )}
@@ -2133,7 +2137,7 @@ export default function AdminDashboard() {
                 </button>
                 <button
                   type="submit"
-                  className="bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black px-5 py-2.5 rounded-xl text-xs shadow"
+                  className="bg-gradient-to-r from-rose-600 to-rose-500 hover:from-rose-500 hover:to-rose-600 text-white font-black px-5 py-2.5 rounded-xl text-xs shadow-lg shadow-rose-950/50"
                 >
                   প্রোডাক্ট তৈরি করুন
                 </button>
@@ -2148,10 +2152,10 @@ export default function AdminDashboard() {
          ========================================================================= */}
       {editingProduct && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl sm:rounded-3xl max-w-xl w-full p-4 sm:p-6 text-slate-100 max-h-[90vh] overflow-y-auto shadow-2xl">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-800 mb-4">
+          <div className="bg-[#18070F] border border-rose-900/50 rounded-2xl sm:rounded-3xl max-w-xl w-full p-4 sm:p-6 text-slate-100 max-h-[90vh] overflow-y-auto shadow-2xl shadow-rose-950/80">
+            <div className="flex items-center justify-between pb-3 border-b border-rose-900/30 mb-4">
               <h3 className="font-black text-lg text-white flex items-center gap-2">
-                <Edit3 className="size-5 text-cyan-400" />
+                <Edit3 className="size-5 text-rose-400" />
                 <span>প্রোডাক্ট এডিট করুন</span>
               </h3>
               <button
@@ -2164,42 +2168,57 @@ export default function AdminDashboard() {
 
             <form onSubmit={handleUpdateProductSubmit} className="space-y-3.5">
               <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1">নাম</label>
+                <label className="block text-xs font-bold text-rose-200/90 mb-1">নাম</label>
                 <input
                   type="text"
                   required
                   value={editingProduct.name}
                   onChange={(e) => setEditingProduct({ ...editingProduct, name: e.target.value })}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white outline-none"
+                  className="w-full bg-[#10030A] border border-rose-900/40 rounded-xl p-2.5 text-xs text-white outline-none focus:border-rose-400"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1">বাংলা নাম</label>
+                <label className="block text-xs font-bold text-rose-200/90 mb-1">বাংলা নাম</label>
                 <input
                   type="text"
                   value={editingProduct.nameBn || ''}
                   onChange={(e) => setEditingProduct({ ...editingProduct, nameBn: e.target.value })}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white outline-none"
+                  className="w-full bg-[#10030A] border border-rose-900/40 rounded-xl p-2.5 text-xs text-white outline-none focus:border-rose-400"
                 />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-rose-200/90 mb-1">ক্যাটাগরি</label>
+                <select
+                  value={editingProduct.category || 'bedding'}
+                  onChange={(e) => setEditingProduct({ ...editingProduct, category: e.target.value })}
+                  className="w-full bg-[#10030A] border border-rose-900/40 rounded-xl p-2.5 text-xs text-white outline-none focus:border-rose-400"
+                >
+                  {CATEGORIES.filter(c => c.id !== 'all').map(cat => (
+                    <option key={cat.id} value={cat.id}>
+                      {cat.nameBn} ({cat.nameEn})
+                    </option>
+                  ))}
+                </select>
               </div>
 
               {/* Image upload & preview for Edit Product */}
               <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1.5 flex items-center justify-between">
+                <label className="block text-xs font-bold text-rose-200/90 mb-1.5 flex items-center justify-between">
                   <span>প্রোডাক্টের ছবি (PC বা মোবাইল গ্যালারি)</span>
-                  <span className="text-[11px] text-cyan-400 font-normal">ক্লিক করে ছবি পরিবর্তন করুন</span>
+                  <span className="text-[11px] text-amber-400 font-normal">ক্লিক করে ছবি পরিবর্তন করুন</span>
                 </label>
-                <div className="bg-slate-950 border border-slate-800 rounded-2xl p-3 flex flex-col sm:flex-row items-center sm:items-start gap-3.5">
+                <div className="bg-[#10030A] border border-rose-900/40 rounded-2xl p-3 flex flex-col sm:flex-row items-center sm:items-start gap-3.5">
                   <img
                     src={editingProduct.image || editingProduct.images?.[0] || '/assets/logo.webp'}
                     alt={editingProduct.name}
                     decoding="async"
-                    className="size-14 rounded-xl object-contain bg-black border border-slate-800 shrink-0 p-1"
+                    className="size-14 rounded-xl object-contain bg-black border border-rose-900/40 shrink-0 p-1"
                   />
                   <div className="flex-1 space-y-1.5">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <label className="cursor-pointer bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition inline-flex items-center gap-1.5 active:scale-95">
+                      <label className="cursor-pointer bg-[#1A0A12] hover:bg-[#250D1B] text-white text-xs font-bold px-3 py-1.5 rounded-lg border border-rose-900/40 transition inline-flex items-center gap-1.5 active:scale-95">
                         <Upload className="size-3.5" />
                         <span>{isEditImageUploading ? 'আপলোড হচ্ছে...' : 'ছবি পরিবর্তন (PC/গ্যালারি)'}</span>
                         <input
@@ -2220,7 +2239,7 @@ export default function AdminDashboard() {
                       placeholder="অথবা ছবির URL দিন"
                       value={editingProduct.image || ''}
                       onChange={(e) => setEditingProduct({ ...editingProduct, image: e.target.value })}
-                      className="w-full bg-slate-900 border border-slate-800 rounded-lg px-2.5 py-1 text-[11px] text-slate-400 outline-none"
+                      className="w-full bg-[#1A0A12] border border-rose-900/40 rounded-lg px-2.5 py-1 text-[11px] text-rose-200/70 outline-none focus:border-rose-400"
                     />
                   </div>
                 </div>
@@ -2228,93 +2247,93 @@ export default function AdminDashboard() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1">অফার মূল্য (৳)</label>
+                  <label className="block text-xs font-bold text-rose-200/90 mb-1">অফার মূল্য (৳)</label>
                   <input
                     type="number"
                     required
                     value={editingProduct.price}
                     onChange={(e) => setEditingProduct({ ...editingProduct, price: e.target.value })}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white font-mono outline-none"
+                    className="w-full bg-[#10030A] border border-rose-900/40 rounded-xl p-2.5 text-xs text-white font-mono outline-none focus:border-rose-400"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1">রেগুলার মূল্য (৳)</label>
+                  <label className="block text-xs font-bold text-rose-200/90 mb-1">রেগুলার মূল্য (৳)</label>
                   <input
                     type="number"
                     value={editingProduct.regularPrice || ''}
                     onChange={(e) => setEditingProduct({ ...editingProduct, regularPrice: e.target.value })}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white font-mono outline-none"
+                    className="w-full bg-[#10030A] border border-rose-900/40 rounded-xl p-2.5 text-xs text-white font-mono outline-none focus:border-rose-400"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1">স্টক কাউন্ট</label>
+                  <label className="block text-xs font-bold text-rose-200/90 mb-1">স্টক কাউন্ট</label>
                   <input
                     type="number"
                     value={editingProduct.stockCount || 0}
                     onChange={(e) => setEditingProduct({ ...editingProduct, stockCount: e.target.value })}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white outline-none"
+                    className="w-full bg-[#10030A] border border-rose-900/40 rounded-xl p-2.5 text-xs text-white outline-none focus:border-rose-400"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1">ডিসকাউন্ট %</label>
+                  <label className="block text-xs font-bold text-rose-200/90 mb-1">ডিসকাউন্ট %</label>
                   <input
                     type="number"
                     value={editingProduct.discountPercent || ''}
                     onChange={(e) => setEditingProduct({ ...editingProduct, discountPercent: e.target.value })}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white outline-none"
+                    className="w-full bg-[#10030A] border border-rose-900/40 rounded-xl p-2.5 text-xs text-white outline-none focus:border-rose-400"
                   />
                 </div>
               </div>
 
               {/* Short Description */}
               <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1">
+                <label className="block text-xs font-bold text-rose-200/90 mb-1">
                   সংক্ষিপ্ত বিবরণ (Short Description)
                 </label>
                 <textarea
                   rows={2}
-                  placeholder="যেমন: দুবাই ভ্যারিয়েন্ট গোল্ড সিল ANC ও টাইপ-সি স্পিকার কেস সহ প্রিমিয়াম অডিও এক্সপেরিয়েন্স..."
+                  placeholder="যেমন: প্রিমিয়াম কোয়ালিটি সফট ফেব্রিক..."
                   value={editingProduct.shortDescBn || ''}
                   onChange={(e) => setEditingProduct({ ...editingProduct, shortDescBn: e.target.value })}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white outline-none focus:border-cyan-400"
+                  className="w-full bg-[#10030A] border border-rose-900/40 rounded-xl p-2.5 text-xs text-white outline-none focus:border-rose-400"
                 />
               </div>
 
               {/* Key Features / Bullet Points */}
               <div>
                 <div className="flex items-center justify-between mb-1">
-                  <label className="text-xs font-bold text-slate-300 flex items-center gap-1.5">
+                  <label className="text-xs font-bold text-rose-200/90 flex items-center gap-1.5">
                     <CheckCircle2 className="size-3.5 text-emerald-400" />
                     <span>প্রধান বৈশিষ্ট্যসমূহ (Bullet Points)</span>
                   </label>
-                  <span className="text-[11px] text-slate-400 font-normal">প্রতি লাইনে ১টি করে পয়েন্ট</span>
+                  <span className="text-[11px] text-rose-200/50 font-normal">প্রতি লাইনে ১টি করে পয়েন্ট</span>
                 </div>
                 <textarea
                   rows={3}
-                  placeholder={"যেমন:\nঅরিজিনাল দুবাই সিরিয়াল বক্স ও গোল্ড সিল প্যাক।\nআইফোন ও অ্যান্ড্রয়েড উভয় ফোনেই ইনস্ট্যান্ট কানেক্ট।\nটাইপ-সি ফাস্ট চার্জিং সুবিধা ও সাউন্ড স্পিকার কেস।"}
+                  placeholder={"যেমন:\n১০০% পাকা রং ও প্রিমিয়াম কোয়ালিটি।\nনওগাঁ সদর সহ সারা দেশে হোম ডেলিভারি।\nপছন্দ না হলে সহজ রিপ্লেসমেন্ট সুবিধা।"}
                   value={editingProduct.bulletPointsText || ''}
                   onChange={(e) => setEditingProduct({ ...editingProduct, bulletPointsText: e.target.value })}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white outline-none focus:border-cyan-400 font-mono leading-relaxed"
+                  className="w-full bg-[#10030A] border border-rose-900/40 rounded-xl p-2.5 text-xs text-white outline-none focus:border-rose-400 font-mono leading-relaxed"
                 />
               </div>
 
               {/* Technical Specifications Table */}
-              <div className="bg-slate-950/70 border border-slate-800 rounded-2xl p-3 sm:p-4 space-y-2.5">
+              <div className="bg-[#10030A] border border-rose-900/40 rounded-2xl p-3 sm:p-4 space-y-2.5">
                 <div className="flex items-center justify-between">
                   <div>
                     <h4 className="text-xs font-bold text-white flex items-center gap-1.5">
-                      <Layers className="size-3.5 text-cyan-400" />
+                      <Layers className="size-3.5 text-rose-400" />
                       <span>টেকনিক্যাল স্পেসিফিকেশন (Specifications)</span>
                     </h4>
-                    <p className="text-[10px] text-slate-400">প্রোডাক্টের চিপসেট, ব্লুটুথ, ব্যাটারি ব্যাকআপ ইত্যাদি টেবিল আকারে দেখাবে</p>
+                    <p className="text-[10px] text-rose-200/60">প্রোডাক্টের ফেব্রিক, সাইজ ইত্যাদি টেবিল আকারে দেখাবে</p>
                   </div>
                   <button
                     type="button"
                     onClick={handleAddEditSpecRow}
-                    className="bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-[11px] font-bold px-2.5 py-1 rounded-lg flex items-center gap-1 transition active:scale-95 cursor-pointer"
+                    className="bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/30 text-[11px] font-bold px-2.5 py-1 rounded-lg flex items-center gap-1 transition active:scale-95 cursor-pointer"
                   >
                     <Plus className="size-3" />
                     <span>রো যোগ করুন</span>
@@ -2326,22 +2345,22 @@ export default function AdminDashboard() {
                     <div key={idx} className="flex items-center gap-2">
                       <input
                         type="text"
-                        placeholder="বিষয়/নাম (যেমন: চিপসেট)"
+                        placeholder="বিষয়/নাম (যেমন: ফেব্রিক)"
                         value={row.key}
                         onChange={(e) => handleUpdateEditSpecRow(idx, 'key', e.target.value)}
-                        className="w-2/5 bg-slate-900 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-white outline-none focus:border-cyan-400"
+                        className="w-2/5 bg-[#1A0A12] border border-rose-900/40 rounded-lg px-2.5 py-1.5 text-xs text-white outline-none focus:border-rose-400"
                       />
                       <input
                         type="text"
-                        placeholder="মান/বিবরণ (যেমন: Upgraded H2 Chip)"
+                        placeholder="মান/বিবরণ (যেমন: ১০০% সফট কটন)"
                         value={row.value}
                         onChange={(e) => handleUpdateEditSpecRow(idx, 'value', e.target.value)}
-                        className="flex-1 bg-slate-900 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-white outline-none focus:border-cyan-400"
+                        className="flex-1 bg-[#1A0A12] border border-rose-900/40 rounded-lg px-2.5 py-1.5 text-xs text-white outline-none focus:border-rose-400"
                       />
                       <button
                         type="button"
                         onClick={() => handleRemoveEditSpecRow(idx)}
-                        className="p-1.5 text-slate-500 hover:text-rose-400 hover:bg-rose-500/10 rounded-lg transition"
+                        className="p-1.5 text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 rounded-lg transition"
                         title="মুছে ফেলুন"
                       >
                         <Trash2 className="size-3.5" />
@@ -2349,7 +2368,7 @@ export default function AdminDashboard() {
                     </div>
                   ))}
                   {(editingProduct.specRows || []).length === 0 && (
-                    <p className="text-[11px] text-slate-500 text-center py-2">
+                    <p className="text-[11px] text-rose-200/50 text-center py-2">
                       কোনো স্পেসিফিকেশন রো নেই। "+ রো যোগ করুন" বাটনে ক্লিক করুন।
                     </p>
                   )}
@@ -2365,9 +2384,9 @@ export default function AdminDashboard() {
                     setEditingProduct(null);
                     setActiveTab('variants');
                   }}
-                  className="w-full bg-slate-950 hover:bg-slate-900 border border-pink-500/30 text-pink-300 text-xs font-bold py-2.5 px-3 rounded-xl flex items-center justify-center gap-2 transition"
+                  className="w-full bg-[#10030A] hover:bg-[#1A0A12] border border-rose-900/50 text-rose-300 text-xs font-bold py-2.5 px-3 rounded-xl flex items-center justify-center gap-2 transition"
                 >
-                  <Palette className="size-4 text-pink-400" />
+                  <Palette className="size-4 text-rose-400" />
                   <span>এই প্রোডাক্টের কালার ভ্যারিয়েন্ট পেজে যান ({editingProduct.colors?.length || 0} টি কালার) →</span>
                 </button>
               </div>
@@ -2382,7 +2401,7 @@ export default function AdminDashboard() {
                 </button>
                 <button
                   type="submit"
-                  className="bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black px-5 py-2.5 rounded-xl text-xs shadow"
+                  className="bg-gradient-to-r from-rose-600 to-rose-500 hover:from-rose-500 hover:to-rose-600 text-white font-black px-5 py-2.5 rounded-xl text-xs shadow-lg shadow-rose-950/50"
                 >
                   সেভ করুন
                 </button>

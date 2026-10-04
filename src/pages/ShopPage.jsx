@@ -56,26 +56,26 @@ export default function ShopPage() {
   }, [products, categoryParam, filterParam, wishlist, currentSearch, sortBy]);
 
   return (
-    <div className="min-h-screen pt-4 sm:pt-8 pb-24 md:pb-12">
+    <div className="min-h-screen pt-4 sm:pt-8 pb-24 md:pb-12 bg-[#FFFDFD]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         
         {/* Page Header */}
-        <div className="bg-slate-900 text-white rounded-3xl p-6 sm:p-8 mb-8 border border-slate-800 shadow-xl">
+        <div className="bg-gradient-to-r from-[#4C0519] via-[#881337] to-[#1C1917] text-white rounded-3xl p-6 sm:p-8 mb-8 border border-rose-900/60 shadow-xl">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div>
-              <div className="flex items-center gap-1.5 text-xs font-bold text-cyan-400 uppercase tracking-wider mb-1">
-                <Sparkles className="size-3.5" />
-                <span>{lang === 'en' ? 'Browse All Gadgets' : 'সকল গ্যাজেট ব্রাউজ করুন'}</span>
+              <div className="flex items-center gap-1.5 text-xs font-black text-amber-300 uppercase tracking-wider mb-1">
+                <Sparkles className="size-3.5 fill-amber-300" />
+                <span>{lang === 'en' ? 'Exclusive Collections' : 'এক্সক্লুসিভ লাইফস্টাইল ও ফ্যাশন কালেকশন'}</span>
               </div>
               <h1 className="text-2xl sm:text-3xl font-black font-sans">
                 {filterParam === 'wishlist' 
-                  ? (lang === 'en' ? 'Your Wishlist' : 'আপনার পছন্দের গ্যাজেট (উইশলিস্ট)') 
-                  : (lang === 'en' ? 'Gadget Collection' : 'গ্যাজেট কালেকশন')}
+                  ? (lang === 'en' ? 'Your Wishlist' : 'আপনার পছন্দের পণ্য (উইশলিস্ট)') 
+                  : (lang === 'en' ? 'Maya Lifestyle Collections' : 'মায়া শপিং মল কালেকশন')}
               </h1>
-              <p className="text-xs sm:text-sm text-slate-400 mt-1">
+              <p className="text-xs sm:text-sm text-rose-100/80 mt-1">
                 {lang === 'en' 
-                  ? '100% authentic gadgets with nationwide fast cash on delivery' 
-                  : '১০০% অথেনটিক গ্যাজেট, ইনস্ট্যান্ট ওয়ারেন্টি ও ক্যাশ অন ডেলিভারি'}
+                  ? 'Premium bedding, couple dress, luxury hampers, polo shirts & accessories' 
+                  : 'প্রিমিয়াম বেডিং, কাপল ড্রেস, লাক্সারি হ্যাম্পার, পোলো শার্ট ও ফ্যাশন পণ্য'}
               </p>
             </div>
 
@@ -83,29 +83,29 @@ export default function ShopPage() {
             <div className="w-full md:w-72 relative">
               <input
                 type="text"
-                placeholder={lang === 'en' ? 'Filter products...' : 'প্রডাক্ট ফিল্টার করুন...'}
+                placeholder={lang === 'en' ? 'Filter products...' : 'পণ্য ফিল্টার করুন...'}
                 value={currentSearch}
                 onChange={(e) => setUserSearchText(e.target.value)}
-                className="w-full bg-slate-800 text-white pl-9 pr-3 py-2 rounded-xl text-xs border border-slate-700 outline-none focus:border-cyan-400"
+                className="w-full bg-white/10 hover:bg-white/15 text-white pl-9 pr-3 py-2.5 rounded-xl text-xs border border-white/20 outline-none focus:border-amber-300 placeholder:text-rose-200/60 transition"
               />
-              <Search className="size-4 text-slate-400 absolute left-3 top-2.5" />
+              <Search className="size-4 text-amber-300 absolute left-3 top-3" />
             </div>
           </div>
         </div>
 
         {/* Filter Bar & Sorting */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6 bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6 bg-white p-4 rounded-2xl border border-rose-100 shadow-xs">
           
           {/* Category Tabs */}
-          <div className="flex items-center gap-2 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0 scrollbar-none">
+          <div className="-mx-4 px-4 sm:mx-0 sm:px-0 flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0 scrollbar-none touch-pan-x w-full sm:w-auto">
             {CATEGORIES.map((cat) => (
               <button
                 key={cat.id}
                 onClick={() => setSearchParams({ category: cat.id })}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition shrink-0 cursor-pointer ${
+                className={`px-3.5 py-2 rounded-xl text-xs font-bold transition shrink-0 cursor-pointer touch-manipulation whitespace-nowrap ${
                   categoryParam === cat.id
-                    ? 'bg-slate-950 text-white shadow'
-                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                    ? 'bg-rose-700 text-white shadow-md shadow-rose-700/20'
+                    : 'bg-rose-50/70 text-rose-900 hover:bg-rose-100'
                 }`}
               >
                 {lang === 'en' ? (cat.nameEn || cat.nameBn) : cat.nameBn}
@@ -121,7 +121,7 @@ export default function ShopPage() {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-1.5 font-semibold text-slate-800 outline-none"
+              className="bg-[#FFF5F6] border border-rose-200 rounded-xl px-2.5 py-1.5 font-bold text-slate-800 outline-none focus:border-rose-600"
             >
               <option value="popular">{lang === 'en' ? 'Most Popular' : 'জনপ্রিয়তা অনুযায়ী'}</option>
               <option value="price-low">{lang === 'en' ? 'Price: Low to High' : 'দাম: কম থেকে বেশি'}</option>
@@ -132,8 +132,8 @@ export default function ShopPage() {
 
         {/* Products Grid */}
         {filteredProducts.length === 0 ? (
-          <div className="bg-white rounded-3xl p-16 text-center border border-slate-200 shadow-xs">
-            <p className="text-base font-bold text-slate-800">{t('search_no_results')}</p>
+          <div className="bg-white rounded-3xl p-16 text-center border border-rose-100 shadow-xs">
+            <p className="text-base font-black text-slate-800">{t('search_no_results')}</p>
             <p className="text-xs text-slate-500 mt-1">
               {lang === 'en' 
                 ? 'Please select another category or reset filters.' 
@@ -144,9 +144,9 @@ export default function ShopPage() {
                 setSearchParams({});
                 setUserSearchText('');
               }}
-              className="mt-4 bg-slate-950 text-white text-xs font-bold px-4 py-2 rounded-xl shadow cursor-pointer"
+              className="mt-4 bg-rose-700 hover:bg-rose-800 text-white text-xs font-black px-5 py-2.5 rounded-xl shadow cursor-pointer transition"
             >
-              {lang === 'en' ? 'Reset All Filters' : 'সকল প্রডাক্ট রিসেট করুন'}
+              {lang === 'en' ? 'Reset All Filters' : 'সকল ফিল্টার রিসেট করুন'}
             </button>
           </div>
         ) : (

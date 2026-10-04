@@ -3,18 +3,20 @@ import { db } from '../services/firebase';
 import { doc, onSnapshot, setDoc } from 'firebase/firestore';
 
 export const DEFAULT_SETTINGS = {
-  storeName: 'Galaxy Gadgets',
-  tagline: 'প্রিমিয়াম গ্যাজেট ও ইলেকট্রনিক্স স্টোর',
-  address: 'অনলাইন স্টোর, বাংলাদেশ',
-  email: 'gadgetsgalaxy2026gg@gmail.com',
-  bkashNumber: '01749765271',
-  whatsappNumber: '+880 1322-302319',
-  hotline: '+880 1322-302319',
-  facebookPage: 'https://www.facebook.com/share/1FA8LYE5Y4/',
-  adminUsername: 'Gadgets Galaxy',
-  adminPassword: 'SameerXnjr10',
-  deliveryFeeInside: 80,
-  deliveryFeeOutside: 150,
+  storeName: 'Maya Shopping Mall',
+  storeNameBn: 'মায়া শপিং মল',
+  tagline: 'নওগাঁর বিশ্বস্ত লাইফস্টাইল ও এক্সক্লুসিভ ফ্যাশন শপ',
+  address: 'নওগাঁ সদর, নওগাঁ',
+  email: 'masud97186@gmail.com',
+  bkashNumber: '01821067277',
+  whatsappNumber: '01814741111',
+  hotline: '01814741111',
+  facebookPage: 'https://facebook.com',
+  adminUsername: 'admin',
+  adminPassword: 'MayaShopping2026@',
+  deliveryFeeInside: 60,
+  deliveryFeeOutside: 120,
+  freeDeliveryThreshold: 2500,
   lastOrderResetMonth: new Date().toISOString().slice(0, 7)
 };
 
@@ -23,7 +25,7 @@ const StoreSettingsContext = createContext();
 export const StoreSettingsProvider = ({ children }) => {
   const [settings, setSettings] = useState(() => {
     try {
-      const saved = localStorage.getItem('galaxy_gadgets_store_settings');
+      const saved = localStorage.getItem('maya_shopping_mall_store_settings');
       if (saved) {
         return { ...DEFAULT_SETTINGS, ...JSON.parse(saved) };
       }
@@ -33,7 +35,7 @@ export const StoreSettingsProvider = ({ children }) => {
 
   // Save to localStorage
   useEffect(() => {
-    localStorage.setItem('galaxy_gadgets_store_settings', JSON.stringify(settings));
+    localStorage.setItem('maya_shopping_mall_store_settings', JSON.stringify(settings));
   }, [settings]);
 
   // Sync with Firestore settings doc
@@ -43,6 +45,13 @@ export const StoreSettingsProvider = ({ children }) => {
       const unsubscribe = onSnapshot(settingsRef, (docSnap) => {
         if (docSnap.exists()) {
           const data = docSnap.data();
+          // If hotline was set to old placeholder, sanitize to official hotline
+          if (data.hotline && data.hotline.includes('1322')) {
+            data.hotline = '01814741111';
+          }
+          if (data.whatsappNumber && data.whatsappNumber.includes('1322')) {
+            data.whatsappNumber = '01814741111';
+          }
           setSettings(prev => ({ ...prev, ...data }));
         }
       }, (err) => {
@@ -54,11 +63,18 @@ export const StoreSettingsProvider = ({ children }) => {
     }
   }, []);
 
+  // Also ensure current state doesn't have stale 1322 hotline from old localStorage
+  useEffect(() => {
+    if (settings?.hotline && settings.hotline.includes('1322')) {
+      updateSettings({ hotline: '01814741111', whatsappNumber: '01814741111' });
+    }
+  }, [settings?.hotline]);
+
   // Update settings in state, localStorage, and Firestore
   const updateSettings = async (newValues) => {
     setSettings(prev => {
       const updated = { ...prev, ...newValues };
-      localStorage.setItem('galaxy_gadgets_store_settings', JSON.stringify(updated));
+      localStorage.setItem('maya_shopping_mall_store_settings', JSON.stringify(updated));
       return updated;
     });
 

@@ -3,35 +3,21 @@ import { useStoreSettings } from '../context/StoreSettingsContext';
 
 export default function FloatingWhatsApp() {
   const { settings } = useStoreSettings();
-  const rawNumber = settings?.whatsappNumber || '8801322302319';
+  const rawNumber = settings?.whatsappNumber || '01814741111';
   const cleanNumber = rawNumber.replace(/[^0-9]/g, '');
   const formattedWa = cleanNumber.startsWith('880') ? cleanNumber : cleanNumber.startsWith('0') ? `88${cleanNumber}` : `880${cleanNumber}`;
-  const defaultMessage = encodeURIComponent('আসসালামু আলাইকুম! Galaxy Gadgets থেকে গ্যাজেট অর্ডার বা যেকোনো তথ্য জানতে চাচ্ছি।');
+  const defaultMessage = encodeURIComponent('আসসালামু আলাইকুম! Maya Shopping Mall থেকে পণ্য অর্ডার বা যেকোনো তথ্য জানতে চাচ্ছি।');
   const whatsappUrl = `https://wa.me/${formattedWa}?text=${defaultMessage}`;
-  const fbUrl = settings?.facebookPage || 'https://www.facebook.com/share/1FA8LYE5Y4/';
 
   return (
     <aside aria-label="Social Support Chat" className="fixed bottom-20 md:bottom-7 right-3.5 md:right-7 z-40 select-none flex flex-col items-center gap-2.5">
-      {/* Floating Facebook Page Button */}
-      <a
-        href={fbUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="relative flex items-center justify-center size-11 sm:size-12 rounded-full bg-[#1877F2] text-white shadow-lg shadow-blue-500/30 hover:scale-110 active:scale-95 transition-all duration-300 border-2 border-white/30 group"
-        title="আমাদের ফেসবুক পেজ ভিজিট করুন"
-      >
-        <svg className="size-5 sm:size-6 fill-white group-hover:rotate-12 transition-transform duration-300" viewBox="0 0 24 24">
-          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-        </svg>
-      </a>
-
       {/* Main WhatsApp Floating Action Button */}
       <a
         href={whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
         className="relative flex items-center justify-center size-12 sm:size-14 rounded-full bg-gradient-to-tr from-[#128C7E] to-[#25D366] text-white shadow-xl shadow-emerald-500/30 hover:scale-110 active:scale-95 transition-all duration-300 border-2 border-white/30 group"
-        title="WhatsApp-এ মেসেজ দিন"
+        title="WhatsApp-এ মেসেজ দিন (01814741111)"
       >
         {/* Radar Ping Pulse Effect */}
         <span className="absolute inset-0 rounded-full bg-[#25D366] opacity-75 animate-ping pointer-events-none"></span>
@@ -45,7 +31,7 @@ export default function FloatingWhatsApp() {
         </svg>
 
         {/* Live Active Online Badge */}
-        <span className="absolute top-0 right-0 size-3 sm:size-3.5 bg-emerald-400 border-2 border-slate-900 rounded-full z-20"></span>
+        <span className="absolute top-0 right-0 size-3 sm:size-3.5 bg-emerald-400 border-2 border-white rounded-full z-20"></span>
       </a>
     </aside>
   );

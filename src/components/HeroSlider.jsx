@@ -1,229 +1,320 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, Zap, ShieldCheck, Truck, RotateCcw, ArrowRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Zap, ShieldCheck, Truck, RotateCcw, ArrowRight, Sparkles, Star, Eye } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { useStoreSettings } from '../context/StoreSettingsContext';
 
 const SLIDES = [
   {
-    id: 'airpods-pro-2',
-    tagBn: 'মেগা অফার — ৩৮% ছাড়',
-    tagEn: 'Mega Deal — 38% OFF',
-    title: 'Apple AirPods Pro 2nd Gen',
-    titleBn: '৩৬০° ইন্টারেক্টিভ অডিও এক্সপেরিয়েন্স',
-    titleEn: '360° Interactive Spatial Audio Experience',
-    subtitleBn: 'অরিজিনাল দুবাই সিরিয়াল বক্স, গোল্ড সিল ANC ও টাইপ-সি স্পিকার কেস।',
-    subtitleEn: 'Original Dubai serial box, gold seal ANC & Type-C speaker case.',
-    price: 899,
-    regularPrice: 1450,
-    image: '/assets/products/airpods_pro_2_open_case.webp',
-    badgeBn: '৩৬০° ভিউ সাপোর্টেড',
-    badgeEn: '360° View Supported',
-    bgGradient: 'from-slate-950 via-slate-900 to-indigo-950',
-    accentColor: 'text-cyan-400',
+    id: 'luxury-bedding-combo-maroon',
+    tagBn: 'স্পেশাল বেডিং অফার — ২৭% ছাড়',
+    tagEn: 'Special Bedding Offer — 27% OFF',
+    title: 'Luxury Cotton Bedding Combo',
+    titleBn: 'লাক্সারি কটন বেডিং কম্বো সেট',
+    titleEn: 'Luxury Cotton Bedding Combo Set',
+    subtitleBn: '১০০% পিওর সফট কটন, ১টি কিং সাইজ বেডশিট + ২টি বালিশের কাভার + ১টি কুশন কাভার। পাকা রং গ্যারান্টি।',
+    subtitleEn: '100% combed cotton, 1 King size sheet + 2 pillow covers + 1 cushion cover. Fast color guarantee.',
+    price: 1350,
+    regularPrice: 1850,
+    image: '/assets/products/bedding-1.webp',
+    badgeBn: 'কিং সাইজ (৭.৫x৮.৫ ফুট)',
+    badgeEn: 'King Size (7.5x8.5 ft)',
+    bgGradient: 'from-[#4C0519] via-[#881337] to-[#9F1239]',
+    accentColor: 'text-amber-300',
   },
   {
-    id: 'e88-pro-drone',
-    tagBn: 'টপ রেটেড ফ্ল্যাগশিপ',
-    tagEn: 'Top Rated Flagship',
-    title: 'E88 PRO Dual Camera Drone',
-    titleBn: 'ব্রাশলেস মোটর ও ২টি মডুলার ব্যাটারি ফ্রি',
-    titleEn: 'Brushless Motors & 2 Free Modular Batteries',
-    subtitleBn: 'ডুয়াল এইচডি ক্যামেরা ও অপটিক্যাল ফ্লো সেন্সর দিয়ে বাতাসে স্ট্যাবল ওড়ে।',
-    subtitleEn: 'Dual HD camera & optical flow sensor for ultra-stable aerial flight.',
-    price: 5299,
-    regularPrice: 6500,
-    image: '/assets/products/e88_pro_drone_unfolded_batteries.webp',
-    badgeBn: 'হার্ড কেস ফ্রি',
-    badgeEn: 'Free Hard Case',
-    bgGradient: 'from-slate-950 via-slate-900 to-emerald-950',
-    accentColor: 'text-emerald-400',
+    id: 'couple-combo-black-floral',
+    tagBn: 'ফেস্টিভ কাপল কালেকশন — ২৬% ছাড়',
+    tagEn: 'Festive Couple Collection — 26% OFF',
+    title: 'Royal Couple Matching Outfits',
+    titleBn: 'রয়্যাল ব্ল্যাক ও গোল্ডেন কাপল কম্বো',
+    titleEn: 'Royal Black & Gold Couple Matching Set',
+    subtitleBn: 'ডিজাইনার পাঞ্জাবি ও ম্যাচিং সালোয়ার কামিজ সেট। ঈদ, বিয়ে কিংবা যেকোনো অনুষ্ঠানের আভিজাত্য।',
+    subtitleEn: 'Designer Panjabi and matching Salwar Kameez set with dupatta for festive royal elegance.',
+    price: 1950,
+    regularPrice: 2650,
+    image: '/assets/products/couple-1.webp',
+    badgeBn: 'পাঞ্জাবি + কামিজ কম্বো',
+    badgeEn: 'Panjabi + Kameez Combo',
+    bgGradient: 'from-[#18181B] via-[#2E1065] to-[#881337]',
+    accentColor: 'text-rose-300',
   },
   {
-    id: 'zokd-45w-powerbank',
-    tagBn: 'সুপার ফাস্ট চার্জিং',
-    tagEn: 'Super Fast Charging',
-    title: 'ZOKD 45W Fast Power Bank',
-    titleBn: '৪৫ ওয়াট আল্ট্রা চার্জ ও ৩টি বিল্ট-ইন কেবল',
-    titleEn: '45W Ultra Charge & 3 Built-in Cables',
-    subtitleBn: '১০,০০০ এমএএইচ হাই-ডেনসিটি ব্যাটারি ও প্রিমিয়াম মিন্ট গ্রিন লাক্সারি ফিনিশ।',
-    subtitleEn: '10,000mAh high-density battery & premium mint green luxury finish.',
-    price: 3999,
-    regularPrice: 4800,
-    image: '/assets/products/zokd_45w_10000mah_powerbank.webp',
-    badgeBn: 'ইন-বিল্ট কেবলস',
-    badgeEn: 'Built-in Cables',
-    bgGradient: 'from-slate-950 via-slate-900 to-teal-950',
-    accentColor: 'text-teal-400',
+    id: 'mens-luxury-gift-hamper-7in1',
+    tagBn: '৭-ইন-১ লাক্সারি গিফট বক্স — ২৬% ছাড়',
+    tagEn: '7-in-1 Luxury Gift Box — 26% OFF',
+    title: '7-in-1 Men’s Luxury Gift Hamper',
+    titleBn: '৭-ইন-১ জেন্টস লাক্সারি গিফট হ্যাম্পার',
+    titleEn: '7-in-1 Men’s Complete Luxury Gift Hamper',
+    subtitleBn: 'কটন শার্ট, এনালগ ওয়াচ, সানগ্লাস, লেদার ওয়ালেট, বেল্ট ও ফগ বডি স্প্রে সহ এক্সক্লুসিভ প্যাকেজিং।',
+    subtitleEn: 'Premium shirt, quartz watch, sunglasses, leather wallet, belt & Fogg perfume in luxury gift box.',
+    price: 1850,
+    regularPrice: 2500,
+    image: '/assets/products/hamper-1.webp',
+    badgeBn: 'কমপ্লিট গিফট বক্স',
+    badgeEn: 'Complete Gift Box',
+    bgGradient: 'from-[#451A03] via-[#78350F] to-[#991B1B]',
+    accentColor: 'text-amber-300',
+  },
+  {
+    id: 'zena-luxury-kashmiri-three-piece',
+    tagBn: 'কাশ্মীরি সূচিকর্ম থ্রি-পিস — ২৯% ছাড়',
+    tagEn: 'Kashmiri Needlework — 29% OFF',
+    title: 'ZENA Luxury Kashmiri 3-Piece',
+    titleBn: 'জিনা লাক্সারি কাশ্মীরি থ্রি-পিস',
+    titleEn: 'ZENA Luxury Kashmiri Needlework 3-Piece',
+    subtitleBn: 'গলায় ও দামানে নিপুণ কাশ্মীরি সুতার কাজ, সফট বাটার সিল্ক ও ৫ হাত নজরকাড়া দোপাট্টা।',
+    subtitleEn: 'Finest Kashmiri embroidery neckline and daman with soft butter bottom and designer dupatta.',
+    price: 1750,
+    regularPrice: 2450,
+    image: '/assets/products/kashmiri-1.webp',
+    badgeBn: 'আসল কাশ্মীরি কারুকাজ',
+    badgeEn: 'Genuine Kashmiri Work',
+    bgGradient: 'from-[#042F2E] via-[#0F766E] to-[#881337]',
+    accentColor: 'text-emerald-300',
   },
 ];
 
 export default function HeroSlider() {
+  const [current, setCurrent] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
   const { lang, t } = useLanguage();
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const { settings } = useStoreSettings();
 
   useEffect(() => {
+    if (isPaused) return;
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % SLIDES.length);
-    }, 4500);
+      setCurrent((prev) => (prev + 1) % SLIDES.length);
+    }, 5500);
     return () => clearInterval(timer);
-  }, []);
+  }, [isPaused]);
 
-  const slide = SLIDES[currentSlide];
+  const slide = SLIDES[current];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-4 sm:pt-6">
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
-        
-        {/* Main Banner Slider (3 Cols) */}
-        <div className={`lg:col-span-3 rounded-3xl bg-gradient-to-r ${slide.bgGradient} text-white p-6 sm:p-10 relative overflow-hidden shadow-2xl border border-slate-800 min-h-[380px] sm:min-h-[420px] flex items-center`}>
-          
-          {/* Subtle Cyberpunk Grid Background */}
-          <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#38bdf8_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none"></div>
+    <section 
+      className="relative overflow-hidden bg-slate-950 text-white"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
+      {/* Background Gradient & Animated Glow */}
+      <div className={`absolute inset-0 bg-gradient-to-r ${slide.bgGradient} transition-all duration-1000 ease-in-out`}>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(244,63,94,0.18),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(217,119,6,0.15),transparent_50%)]" />
+      </div>
 
-          <div className="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-6 items-center w-full">
-            {/* Left Content */}
-            <div className="md:col-span-7 space-y-3">
-              <div className="flex items-center gap-2">
-                <span className="bg-white/10 text-cyan-300 text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider backdrop-blur-md border border-white/10">
-                  {lang === 'en' ? slide.tagEn : slide.tagBn}
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 md:py-14">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center min-h-[420px] sm:min-h-[480px] md:min-h-[520px]">
+          
+          {/* Left Text Content */}
+          <div className="lg:col-span-7 xl:col-span-6 flex flex-col justify-center z-10 text-center lg:text-left">
+            
+            {/* Tag Badge */}
+            <div className="flex items-center justify-center lg:justify-start gap-2 mb-3">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs sm:text-sm font-extrabold bg-white/10 backdrop-blur-md border border-white/20 text-white shadow-sm">
+                <Sparkles className="size-3.5 text-amber-300 fill-amber-300" />
+                <span>{lang === 'en' ? slide.tagEn : slide.tagBn}</span>
+              </span>
+              <span className="hidden sm:inline-block px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30">
+                {lang === 'en' ? slide.badgeEn : slide.badgeBn}
+              </span>
+            </div>
+
+            {/* Main Headline */}
+            <h1 className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight sm:leading-tight mb-3">
+              <span className="block text-white">
+                {lang === 'en' ? slide.titleEn : slide.titleBn}
+              </span>
+            </h1>
+
+            {/* Subtitle */}
+            <p className="text-sm sm:text-base md:text-lg text-rose-100/90 font-medium mb-6 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+              {lang === 'en' ? slide.subtitleEn : slide.subtitleBn}
+            </p>
+
+            {/* Price & Actions Row */}
+            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mb-4">
+              <div className="flex items-baseline gap-2.5 bg-black/30 backdrop-blur-md px-4 py-2 rounded-2xl border border-white/10">
+                <span className="text-xs text-rose-200/80 font-bold">{t('offer_price')}:</span>
+                <span className="text-2xl sm:text-3xl font-black text-amber-300 font-sans tracking-tight">
+                  ৳{slide.price.toLocaleString()}
                 </span>
-                <span className="bg-emerald-500/20 text-emerald-400 text-[11px] font-semibold px-2 py-0.5 rounded-full">
-                  {t('in_stock')}
+                <span className="text-sm text-rose-300/60 line-through font-sans">
+                  ৳{slide.regularPrice.toLocaleString()}
                 </span>
               </div>
 
-              <h1 className="text-2xl sm:text-4xl font-black font-sans tracking-tight text-white leading-tight">
-                {slide.title}
-              </h1>
-
-              <p className={`text-base sm:text-xl font-bold ${slide.accentColor}`}>
-                {lang === 'en' ? slide.titleEn : slide.titleBn}
-              </p>
-
-              <p className="text-xs sm:text-sm text-slate-300 line-clamp-2 max-w-md">
-                {lang === 'en' ? slide.subtitleEn : slide.subtitleBn}
-              </p>
-
-              {/* Price & CTA */}
-              <div className="pt-2 flex flex-wrap items-center gap-4">
-                <div className="bg-slate-900/80 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-slate-700/80">
-                  <span className="text-xs text-slate-400 block -mb-1">{t('offer_price')}</span>
-                  <span className="text-2xl sm:text-3xl font-black text-white font-sans">
-                    ৳{slide.price.toLocaleString()}
-                  </span>
-                  <span className="text-xs text-slate-500 line-through ml-2 font-sans">
-                    ৳{slide.regularPrice.toLocaleString()}
-                  </span>
-                </div>
-
+              <div className="flex items-center gap-3">
                 <Link
                   to={`/product/${slide.id}`}
-                  className="bg-white hover:bg-slate-100 text-slate-950 font-black px-6 py-3 rounded-xl text-sm flex items-center gap-2 shadow-xl hover:shadow-2xl transition active:scale-95 group cursor-pointer"
+                  className="bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-400 hover:to-amber-300 text-slate-950 font-black px-6 py-3 rounded-2xl text-sm sm:text-base flex items-center gap-2 shadow-xl shadow-amber-500/25 transition-all hover:scale-105 active:scale-95 cursor-pointer"
                 >
-                  <span>{lang === 'en' ? 'Order Now' : 'এখনই অর্ডার করুন'}</span>
-                  <ArrowRight className="size-4 group-hover:translate-x-1 transition-transform" />
+                  <Zap className="size-4 fill-slate-950" />
+                  <span>{t('buy_now')}</span>
+                  <ArrowRight className="size-4" />
+                </Link>
+
+                <Link
+                  to="/shop"
+                  className="bg-white/10 hover:bg-white/20 text-white font-bold px-4 py-3 rounded-2xl text-sm sm:text-base transition border border-white/15 backdrop-blur-md"
+                >
+                  {t('view_all')}
                 </Link>
               </div>
             </div>
 
-            {/* Right Product Image Showcase */}
-            <div className="md:col-span-5 flex items-center justify-center relative">
-              <div className="relative size-56 sm:size-72 flex items-center justify-center">
-                {/* Glow ring */}
-                <div className="absolute inset-0 bg-cyan-500/20 rounded-full blur-2xl animate-pulse"></div>
-                <img
-                  src={slide.image}
-                  alt={slide.title}
-                  decoding="async"
-                  className="max-h-full max-w-full object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
-                />
-              </div>
+          </div>
 
-              {/* Floating Pill Badge */}
-              <div className="absolute -bottom-2 right-4 bg-slate-950/90 backdrop-blur-md text-white text-xs font-bold px-3 py-1.5 rounded-xl border border-slate-700 shadow-xl flex items-center gap-1.5">
-                <Zap className="size-3.5 text-amber-400 fill-amber-400" />
-                <span>{lang === 'en' ? slide.badgeEn : slide.badgeBn}</span>
+          {/* Right Product Image Showcase Box */}
+          <div className="lg:col-span-5 xl:col-span-6 flex items-center justify-center lg:justify-end relative z-10 w-full">
+            <div className="relative w-full max-w-[420px] sm:max-w-[460px] md:max-w-[480px] lg:max-w-[500px] group">
+              
+              {/* Multi-layered Glowing Aura Background */}
+              <div className="absolute -inset-3 sm:-inset-5 rounded-[38px] bg-gradient-to-tr from-amber-500/30 via-rose-500/30 to-amber-300/20 blur-2xl sm:blur-3xl opacity-80 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+              
+              {/* Outer Decorative Glass Frame */}
+              <div className="relative rounded-[32px] sm:rounded-[36px] p-2.5 sm:p-3.5 bg-gradient-to-b from-white/30 via-white/10 to-amber-400/25 backdrop-blur-xl border border-white/35 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.65)] transition-all duration-500 group-hover:shadow-[0_30px_75px_-12px_rgba(244,63,94,0.4)] group-hover:border-amber-400/50">
+                
+                {/* Inner Main Showcase Stage Canvas */}
+                <div className="relative w-full h-[350px] sm:h-[410px] md:h-[450px] rounded-[24px] sm:rounded-[28px] bg-gradient-to-b from-white via-[#FFFBFB] to-rose-50/40 p-5 sm:p-7 flex items-center justify-center overflow-hidden border border-white/90 shadow-[inset_0_2px_16px_rgba(0,0,0,0.04)]">
+                  
+                  {/* Subtle Luxury Ambient Spotlight */}
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(255,255,255,1)_0%,rgba(255,241,242,0.65)_70%,rgba(254,226,226,0.35)_100%)] pointer-events-none" />
+                  <div className="absolute -top-20 -right-20 size-48 rounded-full bg-rose-200/40 blur-2xl pointer-events-none" />
+                  <div className="absolute -bottom-20 -left-20 size-48 rounded-full bg-amber-200/40 blur-2xl pointer-events-none" />
+
+                  {/* Gold Luxury Corner Brackets */}
+                  <div className="absolute top-3.5 left-3.5 size-4 sm:size-5 border-t-2 border-l-2 border-amber-500/70 rounded-tl-sm pointer-events-none" />
+                  <div className="absolute top-3.5 right-3.5 size-4 sm:size-5 border-t-2 border-r-2 border-amber-500/70 rounded-tr-sm pointer-events-none" />
+                  <div className="absolute bottom-3.5 left-3.5 size-4 sm:size-5 border-b-2 border-l-2 border-amber-500/70 rounded-bl-sm pointer-events-none" />
+                  <div className="absolute bottom-3.5 right-3.5 size-4 sm:size-5 border-b-2 border-r-2 border-amber-500/70 rounded-br-sm pointer-events-none" />
+
+                  {/* Floating Discount Pill Badge (Top-Left) */}
+                  <div className="absolute top-4 left-4 z-20 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-rose-600 to-rose-500 text-white text-xs sm:text-sm font-black shadow-lg shadow-rose-600/35 border border-rose-400/40">
+                    <Sparkles className="size-3 sm:size-3.5 fill-amber-300 text-amber-300 animate-pulse" />
+                    <span>{Math.round(((slide.regularPrice - slide.price) / slide.regularPrice) * 100)}% {lang === 'en' ? 'OFF' : 'ছাড়'}</span>
+                  </div>
+
+                  {/* Floating Rating Badge (Top-Right) */}
+                  <div className="absolute top-4 right-4 z-20 flex items-center gap-1 px-3 py-1.5 rounded-full bg-white/95 backdrop-blur-md text-slate-800 text-xs sm:text-sm font-extrabold shadow-md border border-slate-200/80">
+                    <Star className="size-3.5 fill-amber-400 text-amber-400" />
+                    <span>5.0</span>
+                    <span className="text-[11px] text-slate-500 hidden sm:inline">({lang === 'en' ? 'Top Rated' : 'টপ রেটেড'})</span>
+                  </div>
+
+                  {/* Hover Prompt (Center-Bottom) */}
+                  <div className="absolute bottom-16 inset-x-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 pointer-events-none z-20">
+                    <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-slate-950/90 text-white text-xs font-bold shadow-xl border border-white/20 backdrop-blur-md">
+                      <Eye className="size-3.5 text-amber-300" />
+                      <span>{lang === 'en' ? 'Click to View Details' : 'বিস্তারিত দেখতে ক্লিক করুন'}</span>
+                    </span>
+                  </div>
+
+                  {/* Main Product Image (Large & Prominent) */}
+                  <Link 
+                    to={`/product/${slide.id}`} 
+                    className="relative z-10 w-full h-full flex items-center justify-center cursor-pointer p-4 group/img"
+                  >
+                    <img
+                      key={slide.id}
+                      src={slide.image}
+                      alt={slide.title}
+                      className="w-full h-full max-h-[220px] sm:max-h-[300px] md:max-h-[360px] lg:max-h-[380px] object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.18)] transition-all duration-700 ease-out group-hover/img:scale-108 group-hover/img:drop-shadow-[0_22px_40px_rgba(0,0,0,0.28)]"
+                    />
+                  </Link>
+
+                  {/* Floating Trust Banner Pill (Bottom) */}
+                  <div className="absolute bottom-2.5 sm:bottom-3.5 inset-x-2.5 sm:inset-x-5 z-20 bg-slate-950/90 backdrop-blur-md border border-white/20 rounded-xl sm:rounded-2xl py-1.5 sm:py-2 px-2.5 sm:px-4 flex items-center justify-between text-white shadow-xl shadow-black/25">
+                    <div className="flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-xs font-bold text-amber-300 shrink-0">
+                      <ShieldCheck className="size-3.5 sm:size-4 text-emerald-400 shrink-0" />
+                      <span className="whitespace-nowrap">{lang === 'en' ? '100% Genuine' : '১০০% অরিজিনাল'}</span>
+                    </div>
+                    <div className="h-3 w-px bg-white/20 mx-1" />
+                    <div className="flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-xs font-medium text-rose-100 shrink-0">
+                      <Truck className="size-3.5 sm:size-4 text-amber-400 shrink-0" />
+                      <span className="whitespace-nowrap">{lang === 'en' ? 'Cash On Delivery' : 'ক্যাশ অন ডেলিভারি'}</span>
+                    </div>
+                  </div>
+
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Dots Indicator */}
-          <div className="absolute bottom-4 left-6 flex items-center gap-2 z-10">
+        </div>
+
+        {/* Carousel Slider Controls */}
+        <div className="flex items-center justify-between pt-4 border-t border-white/10 mt-4">
+          {/* Slide Dots */}
+          <div className="flex items-center gap-2">
             {SLIDES.map((_, idx) => (
               <button
                 key={idx}
-                onClick={() => setCurrentSlide(idx)}
-                className={`h-2 rounded-full transition-all cursor-pointer ${
-                  currentSlide === idx ? 'w-8 bg-cyan-400' : 'w-2 bg-slate-600 hover:bg-slate-400'
+                onClick={() => setCurrent(idx)}
+                className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
+                  current === idx ? 'w-8 bg-amber-400 shadow-md' : 'w-2.5 bg-white/30 hover:bg-white/60'
                 }`}
+                title={`Slide ${idx + 1}`}
               />
             ))}
           </div>
 
-          {/* Left/Right controls */}
-          <button
-            onClick={() => setCurrentSlide((prev) => (prev === 0 ? SLIDES.length - 1 : prev - 1))}
-            className="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-slate-950/40 hover:bg-slate-950/80 text-white transition backdrop-blur-xs hidden sm:block cursor-pointer"
-          >
-            <ChevronLeft className="size-5" />
-          </button>
-          <button
-            onClick={() => setCurrentSlide((prev) => (prev + 1) % SLIDES.length)}
-            className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-slate-950/40 hover:bg-slate-950/80 text-white transition backdrop-blur-xs hidden sm:block cursor-pointer"
-          >
-            <ChevronRight className="size-5" />
-          </button>
-        </div>
-
-        {/* Right Feature Highlights (Trust Cards): 1 Col Mobile, 3 Cols Tablet, 1 Col Desktop */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-2.5 sm:gap-3.5 justify-between">
-          {/* Card 1: Fast COD */}
-          <div className="bg-white rounded-xl sm:rounded-2xl p-3.5 sm:p-4 border border-slate-200 shadow-xs flex items-center gap-3 sm:gap-3.5 hover:shadow-md transition">
-            <div className="size-11 sm:size-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 border border-emerald-100">
-              <Truck className="size-5 sm:size-6" />
-            </div>
-            <div>
-              <h4 className="font-bold text-slate-900 text-xs sm:text-sm">
-                {t('trust_cod_title')}
-              </h4>
-              <p className="text-[11px] sm:text-xs text-slate-500">
-                {t('trust_cod_desc')}
-              </p>
-            </div>
-          </div>
-
-          {/* Card 2: 7 Days Warranty */}
-          <div className="bg-white rounded-xl sm:rounded-2xl p-3.5 sm:p-4 border border-slate-200 shadow-xs flex items-center gap-3 sm:gap-3.5 hover:shadow-md transition">
-            <div className="size-11 sm:size-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 border border-blue-100">
-              <RotateCcw className="size-5 sm:size-6" />
-            </div>
-            <div>
-              <h4 className="font-bold text-slate-900 text-xs sm:text-sm">
-                {t('trust_replacement_title')}
-              </h4>
-              <p className="text-[11px] sm:text-xs text-slate-500">
-                {t('trust_return_easy')}
-              </p>
-            </div>
-          </div>
-
-          {/* Card 3: 100% Genuine */}
-          <div className="bg-white rounded-xl sm:rounded-2xl p-3.5 sm:p-4 border border-slate-200 shadow-xs flex items-center gap-3 sm:gap-3.5 hover:shadow-md transition">
-            <div className="size-11 sm:size-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0 border border-amber-100">
-              <ShieldCheck className="size-5 sm:size-6" />
-            </div>
-            <div>
-              <h4 className="font-bold text-slate-900 text-xs sm:text-sm">
-                {t('trust_authentic_title')}
-              </h4>
-              <p className="text-[11px] sm:text-xs text-slate-500">
-                {t('trust_checked_delivery')}
-              </p>
-            </div>
+          {/* Left/Right Nav Arrows */}
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setCurrent((prev) => (prev - 1 + SLIDES.length) % SLIDES.length)}
+              className="p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/10 transition active:scale-90 cursor-pointer"
+              title="Previous"
+            >
+              <ChevronLeft className="size-4 sm:size-5" />
+            </button>
+            <button
+              onClick={() => setCurrent((prev) => (prev + 1) % SLIDES.length)}
+              className="p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/10 transition active:scale-90 cursor-pointer"
+              title="Next"
+            >
+              <ChevronRight className="size-4 sm:size-5" />
+            </button>
           </div>
         </div>
-
       </div>
-    </div>
+
+      {/* Trust Badges Ribbon */}
+      <div className="bg-[#1C1917] border-t border-rose-950/60 py-3.5 px-3 sm:px-4">
+        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-4 text-center">
+          <div className="flex items-center justify-center gap-2 text-rose-100">
+            <Truck className="size-4 sm:size-5 text-amber-400 shrink-0" />
+            <div className="text-left min-w-0">
+              <p className="text-xs sm:text-sm font-bold truncate">{t('trust_cod_title')}</p>
+              <p className="text-[10px] sm:text-xs text-rose-300/80 truncate">{t('trust_cod_desc')}</p>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-center gap-2 text-rose-100">
+            <ShieldCheck className="size-4 sm:size-5 text-emerald-400 shrink-0" />
+            <div className="text-left min-w-0">
+              <p className="text-xs sm:text-sm font-bold truncate">{t('trust_original_title')}</p>
+              <p className="text-[10px] sm:text-xs text-rose-300/80 truncate">{t('trust_original_desc')}</p>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-center gap-2 text-rose-100">
+            <RotateCcw className="size-4 sm:size-5 text-rose-400 shrink-0" />
+            <div className="text-left min-w-0">
+              <p className="text-xs sm:text-sm font-bold truncate">{t('trust_replacement_title')}</p>
+              <p className="text-[10px] sm:text-xs text-rose-300/80 truncate">{t('trust_replacement_desc')}</p>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-center gap-2 text-rose-100">
+            <Zap className="size-4 sm:size-5 text-amber-400 shrink-0" />
+            <div className="text-left min-w-0">
+              <p className="text-xs sm:text-sm font-bold truncate">{t('trust_support_title')}</p>
+              <p className="text-[10px] sm:text-xs text-rose-300/80 truncate">হোয়াটসঅ্যাপ: {settings?.hotline || '01814741111'}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }

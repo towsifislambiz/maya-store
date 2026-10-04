@@ -5,7 +5,7 @@ import confetti from 'canvas-confetti';
 import { useOrders } from '../context/OrderContext';
 import { useStoreSettings } from '../context/StoreSettingsContext';
 
-export default function OneClickOrderForm({ product, selectedColor, quantity }) {
+export default function OneClickOrderForm({ product, selectedColor, selectedSize, quantity }) {
   const { placeOrder, loading } = useOrders();
   const { settings } = useStoreSettings();
   const navigate = useNavigate();
@@ -13,16 +13,16 @@ export default function OneClickOrderForm({ product, selectedColor, quantity }) 
   const [customerName, setCustomerName] = useState('');
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
-  const [deliveryZone, setDeliveryZone] = useState('inside_dhaka'); // inside_dhaka or outside_dhaka
+  const [deliveryZone, setDeliveryZone] = useState('inside_dhaka'); // inside_dhaka (Naogaon) or outside_dhaka
   const [paymentMethod, setPaymentMethod] = useState('cod'); // 'cod' or 'bkash'
   const [bkashSender, setBkashSender] = useState('');
   const [bkashTrxId, setBkashTrxId] = useState('');
   const [copied, setCopied] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
-  const BKASH_NUMBER = settings?.bkashNumber || '01749765271';
-  const feeInside = Number(settings?.deliveryFeeInside) || 80;
-  const feeOutside = Number(settings?.deliveryFeeOutside) || 150;
+  const BKASH_NUMBER = settings?.bkashNumber || '01821067277';
+  const feeInside = Number(settings?.deliveryFeeInside) || 60;
+  const feeOutside = Number(settings?.deliveryFeeOutside) || 120;
 
   const deliveryFee = deliveryZone === 'inside_dhaka' ? feeInside : feeOutside;
   const itemTotal = product.price * quantity;
@@ -45,11 +45,11 @@ export default function OneClickOrderForm({ product, selectedColor, quantity }) 
     }
     const cleanPhone = phone.replace(/[^0-9]/g, '');
     if (cleanPhone.length < 11) {
-      setErrorMsg('সঠিক ১১ ডিজিটের মোবাইল নাম্বার দিন (যেমন: 017XXXXXXXX)।');
+      setErrorMsg('সঠিক ১১ ডিজিটের মোবাইল নাম্বার দিন (যেমন: 018XXXXXXXX)।');
       return;
     }
     if (!address.trim() || address.trim().length < 5) {
-      setErrorMsg('অনুগ্রহ করে বিস্তারিত ডেলিভারি ঠিকানা লিখুন (বাসা/রোড/এলাকা/জেলা)।');
+      setErrorMsg('অনুগ্রহ করে বিস্তারিত ডেলিভারি ঠিকানা লিখুন (গ্রাম/মহল্লা, থানা, জেলা)।');
       return;
     }
 
@@ -60,7 +60,7 @@ export default function OneClickOrderForm({ product, selectedColor, quantity }) 
         return;
       }
       if (!bkashTrxId.trim() || bkashTrxId.trim().length < 4) {
-        setErrorMsg('বিকাশ থেকে মেসেজে পাওয়া সঠিক ট্রানজেকশন আইডি (TrxID) লিখুন।');
+        setErrorMsg('বিকাশ থেকে মেসেজে পাওয়া ট্রানজেকশন আইডি (TrxID) লিখুন।');
         return;
       }
     }
@@ -80,11 +80,13 @@ export default function OneClickOrderForm({ product, selectedColor, quantity }) 
           product: {
             id: product.id,
             name: product.name,
+            nameBn: product.nameBn,
             price: product.price,
             images: [product.images[0]],
           },
           quantity,
           selectedColor: selectedColor || (product.colors && product.colors[0]?.name) || 'Standard',
+          selectedSize: selectedSize || (product.sizes && product.sizes[0]) || null,
         }
       ],
       totalAmount: grandTotal,
@@ -107,28 +109,28 @@ export default function OneClickOrderForm({ product, selectedColor, quantity }) 
   };
 
   return (
-    <div id="order-form" className="bg-gradient-to-b from-slate-900 to-slate-950 text-white rounded-3xl p-5 sm:p-7 border border-slate-800 shadow-2xl mt-6 relative overflow-hidden">
+    <div id="order-form" className="bg-gradient-to-b from-[#3B0716] via-[#2A0510] to-[#181114] text-white rounded-3xl p-5 sm:p-7 border border-rose-900/60 shadow-2xl mt-6 relative overflow-hidden">
       
       {/* Decorative Glow */}
-      <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
-      <div className="absolute bottom-0 left-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 w-64 h-64 bg-rose-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
       {/* Header */}
-      <div className="relative border-b border-slate-800 pb-4 mb-5">
-        <div className="flex items-center gap-2 text-emerald-400 font-bold text-xs uppercase tracking-wider mb-1">
+      <div className="relative border-b border-rose-900/40 pb-4 mb-5">
+        <div className="flex items-center gap-2 text-amber-300 font-extrabold text-xs uppercase tracking-wider mb-1">
           <Sparkles className="size-4" />
-          <span>১-ক্লিক সহজ অর্ডার ফর্ম</span>
+          <span>১-ক্লিক সহজ সরাসরি অর্ডার ফর্ম</span>
         </div>
         <h3 className="text-xl sm:text-2xl font-black text-white font-sans">
-          অর্ডার কনফার্ম করতে নিচের তথ্যগুলো পূরণ করুন
+          অর্ডার কনফার্ম করতে নিচের তথ্যগুলো দিন
         </h3>
-        <p className="text-xs text-slate-400 mt-1">
-          ক্যাশ অন ডেলিভারি অথবা বিকাশের মাধ্যমে দ্রুত পেমেন্ট করে অর্ডার কনফার্ম করুন।
+        <p className="text-xs text-rose-200/80 mt-1">
+          ক্যাশ অন ডেলিভারিতে পণ্য হাতে পেয়ে মূল্য পরিশোধ করার সুযোগ।
         </p>
       </div>
 
       {errorMsg && (
-        <div className="mb-4 p-3.5 bg-rose-500/20 border border-rose-500/50 rounded-xl text-rose-300 text-xs flex items-center gap-2">
+        <div className="mb-4 p-3.5 bg-rose-600/20 border border-rose-500/60 rounded-xl text-rose-200 text-xs flex items-center gap-2">
           <AlertCircle className="size-4 shrink-0 text-rose-400" />
           <span>{errorMsg}</span>
         </div>
@@ -137,101 +139,101 @@ export default function OneClickOrderForm({ product, selectedColor, quantity }) 
       <form onSubmit={handleSubmit} className="space-y-4 relative">
         {/* Customer Name */}
         <div>
-          <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+          <label className="block text-xs font-bold text-rose-100 mb-1.5">
             আপনার নাম *
           </label>
           <div className="relative">
             <input
               type="text"
               required
-              placeholder="যেমন: তানভীর আহমেদ"
+              placeholder="যেমন: মাসুম রানা"
               value={customerName}
               onChange={(e) => setCustomerName(e.target.value)}
-              className="w-full bg-slate-800/90 text-white pl-10 pr-4 py-3 rounded-xl border border-slate-700 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 outline-none text-sm placeholder:text-slate-500 transition"
+              className="w-full bg-[#1F0A11] text-white pl-10 pr-4 py-3 rounded-xl border border-rose-900/80 focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 outline-none text-sm placeholder:text-rose-300/40 transition"
             />
-            <User className="absolute left-3.5 top-3.5 size-4 text-slate-400" />
+            <User className="absolute left-3.5 top-3.5 size-4 text-rose-400" />
           </div>
         </div>
 
         {/* Customer Phone */}
         <div>
-          <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+          <label className="block text-xs font-bold text-rose-100 mb-1.5">
             মোবাইল নাম্বার *
           </label>
           <div className="relative">
             <input
               type="tel"
               required
-              placeholder="যেমন: 017XXXXXXXX"
+              placeholder="যেমন: 018XXXXXXXX"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              className="w-full bg-slate-800/90 text-white pl-10 pr-4 py-3 rounded-xl border border-slate-700 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 outline-none text-sm placeholder:text-slate-500 transition"
+              className="w-full bg-[#1F0A11] text-white pl-10 pr-4 py-3 rounded-xl border border-rose-900/80 focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 outline-none text-sm placeholder:text-rose-300/40 transition"
             />
-            <Phone className="absolute left-3.5 top-3.5 size-4 text-slate-400" />
+            <Phone className="absolute left-3.5 top-3.5 size-4 text-rose-400" />
           </div>
         </div>
 
         {/* Full Delivery Address */}
         <div>
-          <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+          <label className="block text-xs font-bold text-rose-100 mb-1.5">
             সম্পূর্ণ ঠিকানা (বাসা/রোড/এলাকা/জেলা) *
           </label>
           <div className="relative">
             <textarea
               required
               rows={2}
-              placeholder="যেমন: বাসা নং ১২, রোড নং ৪, সেক্টর ৭, উত্তরা, ঢাকা"
+              placeholder="যেমন: বাড়ি নং ১২, রোড নং ৩, নওগাঁ সদর, নওগাঁ"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
-              className="w-full bg-slate-800/90 text-white pl-10 pr-4 py-3 rounded-xl border border-slate-700 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 outline-none text-sm placeholder:text-slate-500 transition resize-none"
+              className="w-full bg-[#1F0A11] text-white pl-10 pr-4 py-3 rounded-xl border border-rose-900/80 focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 outline-none text-sm placeholder:text-rose-300/40 transition resize-none"
             />
-            <MapPin className="absolute left-3.5 top-3.5 size-4 text-slate-400" />
+            <MapPin className="absolute left-3.5 top-3.5 size-4 text-rose-400" />
           </div>
         </div>
 
         {/* Delivery Zone Selector */}
         <div>
-          <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+          <label className="block text-xs font-bold text-rose-100 mb-1.5">
             ডেলিভারি এরিয়া সিলেক্ট করুন *
           </label>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
             <button
               type="button"
               onClick={() => setDeliveryZone('inside_dhaka')}
-              className={`p-3 rounded-xl border text-left transition flex items-center justify-between ${
+              className={`p-3 rounded-xl border text-left transition flex items-center justify-between cursor-pointer touch-manipulation ${
                 deliveryZone === 'inside_dhaka'
-                  ? 'bg-slate-800 border-cyan-400 shadow-md ring-2 ring-cyan-400/20 text-white'
-                  : 'bg-slate-800/50 border-slate-700 text-slate-400 hover:border-slate-600'
+                  ? 'bg-rose-950 border-amber-400 shadow-md ring-2 ring-amber-400/20 text-white'
+                  : 'bg-[#1F0A11]/60 border-rose-900/60 text-rose-200/70 hover:border-rose-700'
               }`}
             >
               <div>
-                <p className="text-xs font-bold">ঢাকা সিটির ভিতরে</p>
-                <p className="text-[11px] text-slate-400">২৪-৪৮ ঘণ্টার মধ্যে</p>
+                <p className="text-xs font-bold">নওগাঁ সদর (ভিতরে)</p>
+                <p className="text-[11px] text-rose-300/60">২৪ ঘণ্টার মধ্যে</p>
               </div>
-              <span className="text-cyan-400 font-extrabold text-sm">৳{feeInside}</span>
+              <span className="text-amber-400 font-black text-sm">৳{feeInside}</span>
             </button>
 
             <button
               type="button"
               onClick={() => setDeliveryZone('outside_dhaka')}
-              className={`p-3 rounded-xl border text-left transition flex items-center justify-between ${
+              className={`p-3 rounded-xl border text-left transition flex items-center justify-between cursor-pointer touch-manipulation ${
                 deliveryZone === 'outside_dhaka'
-                  ? 'bg-slate-800 border-cyan-400 shadow-md ring-2 ring-cyan-400/20 text-white'
-                  : 'bg-slate-800/50 border-slate-700 text-slate-400 hover:border-slate-600'
+                  ? 'bg-rose-950 border-amber-400 shadow-md ring-2 ring-amber-400/20 text-white'
+                  : 'bg-[#1F0A11]/60 border-rose-900/60 text-rose-200/70 hover:border-rose-700'
               }`}
             >
               <div>
-                <p className="text-xs font-bold">ঢাকার বাইরে (সারা দেশ)</p>
-                <p className="text-[11px] text-slate-400">২-৩ দিনের মধ্যে</p>
+                <p className="text-xs font-bold">নওগাঁর বাইরে (সমগ্র বাংলাদেশ)</p>
+                <p className="text-[11px] text-rose-300/60">২-৩ দিনের মধ্যে</p>
               </div>
-              <span className="text-cyan-400 font-extrabold text-sm">৳{feeOutside}</span>
+              <span className="text-amber-400 font-black text-sm">৳{feeOutside}</span>
             </button>
           </div>
         </div>
 
-        {/* Payment Method Selector (COD vs bKash Manual) */}
+        {/* Payment Method Selector */}
         <div>
-          <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+          <label className="block text-xs font-bold text-rose-100 mb-1.5">
             পেমেন্ট মাধ্যম বেছে নিন *
           </label>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -239,20 +241,20 @@ export default function OneClickOrderForm({ product, selectedColor, quantity }) 
             <button
               type="button"
               onClick={() => setPaymentMethod('cod')}
-              className={`p-3.5 rounded-xl border text-left transition flex items-start gap-3 ${
+              className={`p-3.5 rounded-xl border text-left transition flex items-start gap-3 cursor-pointer ${
                 paymentMethod === 'cod'
-                  ? 'bg-slate-800 border-emerald-400 ring-2 ring-emerald-400/20 text-white shadow-md'
-                  : 'bg-slate-800/40 border-slate-700 text-slate-400 hover:border-slate-600'
+                  ? 'bg-rose-950 border-emerald-400 ring-2 ring-emerald-400/20 text-white shadow-md'
+                  : 'bg-[#1F0A11]/60 border-rose-900/60 text-rose-200/70 hover:border-rose-700'
               }`}
             >
               <div className={`size-4 rounded-full border mt-0.5 flex items-center justify-center shrink-0 ${
-                paymentMethod === 'cod' ? 'border-emerald-400 bg-emerald-500' : 'border-slate-500'
+                paymentMethod === 'cod' ? 'border-emerald-400 bg-emerald-500' : 'border-rose-700'
               }`}>
                 {paymentMethod === 'cod' && <Check className="size-3 text-slate-950 stroke-[3]" />}
               </div>
               <div>
                 <p className="text-xs font-bold text-white">ক্যাশ অন ডেলিভারি (COD)</p>
-                <p className="text-[11px] text-slate-400 mt-0.5">পণ্য হাতে পেয়ে দেখে টাকা দিন</p>
+                <p className="text-[11px] text-rose-300/70 mt-0.5">পণ্য হাতে পেয়ে দেখে টাকা দিন</p>
               </div>
             </button>
 
@@ -260,30 +262,30 @@ export default function OneClickOrderForm({ product, selectedColor, quantity }) 
             <button
               type="button"
               onClick={() => setPaymentMethod('bkash')}
-              className={`p-3.5 rounded-xl border text-left transition flex items-start gap-3 ${
+              className={`p-3.5 rounded-xl border text-left transition flex items-start gap-3 cursor-pointer ${
                 paymentMethod === 'bkash'
-                  ? 'bg-[#E2136E]/15 border-[#E2136E] ring-2 ring-[#E2136E]/30 text-white shadow-md'
-                  : 'bg-slate-800/40 border-slate-700 text-slate-400 hover:border-slate-600'
+                  ? 'bg-[#E2136E]/20 border-[#E2136E] ring-2 ring-[#E2136E]/30 text-white shadow-md'
+                  : 'bg-[#1F0A11]/60 border-rose-900/60 text-rose-200/70 hover:border-rose-700'
               }`}
             >
               <div className={`size-4 rounded-full border mt-0.5 flex items-center justify-center shrink-0 ${
-                paymentMethod === 'bkash' ? 'border-[#E2136E] bg-[#E2136E]' : 'border-slate-500'
+                paymentMethod === 'bkash' ? 'border-[#E2136E] bg-[#E2136E]' : 'border-rose-700'
               }`}>
                 {paymentMethod === 'bkash' && <Check className="size-3 text-white stroke-[3]" />}
               </div>
               <div>
-                <p className="text-xs font-bold text-[#FF5B99]">বিকাশ ম্যানুয়াল (Send Money)</p>
-                <p className="text-[11px] text-slate-400 mt-0.5">দ্রুত বিকাশ পেমেন্ট সুবিধা</p>
+                <p className="text-xs font-bold text-[#FF65A3]">বিকাশ (Personal Send Money)</p>
+                <p className="text-[11px] text-rose-300/70 mt-0.5">01821067277 নম্বরে সেন্ড মানি</p>
               </div>
             </button>
           </div>
 
-          {/* bKash Payment Box Details (when bKash is active) */}
+          {/* bKash Payment Box Details */}
           {paymentMethod === 'bkash' && (
-            <div className="mt-3.5 p-4 rounded-2xl bg-[#E2136E]/10 border border-[#E2136E]/40 space-y-3 animate-fadeIn">
+            <div className="mt-3.5 p-4 rounded-2xl bg-[#E2136E]/10 border border-[#E2136E]/40 space-y-3">
               <div className="flex items-center justify-between pb-2 border-b border-[#E2136E]/20">
                 <span className="text-xs font-bold text-[#FF80B2] uppercase tracking-wide">
-                  বিকাশ সেন্ড মানি (Personal Number):
+                  বিকাশ সেন্ড মানি (Personal):
                 </span>
                 <span className="text-[10px] bg-[#E2136E] text-white px-2 py-0.5 rounded font-black">
                   bKash Personal
@@ -291,9 +293,9 @@ export default function OneClickOrderForm({ product, selectedColor, quantity }) 
               </div>
 
               {/* bKash Number & Copy Action */}
-              <div className="bg-slate-950/80 p-3 rounded-xl border border-slate-700 flex items-center justify-between">
+              <div className="bg-[#181114] p-3 rounded-xl border border-rose-900 flex items-center justify-between">
                 <div>
-                  <span className="text-[10px] text-slate-400 block -mb-0.5">আমাদের বিকাশ নম্বর:</span>
+                  <span className="text-[10px] text-rose-300 block -mb-0.5">আমাদের বিকাশ নম্বর:</span>
                   <span className="text-lg font-black font-sans text-white tracking-wider">
                     {BKASH_NUMBER}
                   </span>
@@ -301,7 +303,7 @@ export default function OneClickOrderForm({ product, selectedColor, quantity }) 
                 <button
                   type="button"
                   onClick={handleCopyNumber}
-                  className="bg-[#E2136E] hover:bg-[#c90f5f] text-white px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition active:scale-95 shadow"
+                  className="bg-[#E2136E] hover:bg-[#c90f5f] text-white px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition active:scale-95 shadow cursor-pointer"
                 >
                   {copied ? (
                     <>
@@ -318,7 +320,7 @@ export default function OneClickOrderForm({ product, selectedColor, quantity }) 
               </div>
 
               {/* Instruction Steps */}
-              <div className="text-[11px] text-slate-300 space-y-1 pl-1">
+              <div className="text-[11px] text-rose-200/90 space-y-1 pl-1">
                 <p>১. আপনার বিকাশ অ্যাপ অথবা *২৪৭# ডায়াল করে <strong>Send Money</strong> অপশনে যান।</p>
                 <p>২. প্রাপক নম্বরে <strong>{BKASH_NUMBER}</strong> দিন।</p>
                 <p>৩. মোট টাকার পরিমাণ <strong>৳{grandTotal.toLocaleString()}</strong> টাকা পাঠান।</p>
@@ -328,20 +330,20 @@ export default function OneClickOrderForm({ product, selectedColor, quantity }) 
               {/* Sender & TrxID Inputs */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
                 <div>
-                  <label className="block text-[11px] font-semibold text-slate-300 mb-1">
+                  <label className="block text-[11px] font-semibold text-rose-200 mb-1">
                     যে বিকাশ নাম্বার থেকে পাঠিয়েছেন *
                   </label>
                   <input
                     type="tel"
                     required={paymentMethod === 'bkash'}
-                    placeholder="যেমন: 017XXXXXXXX"
+                    placeholder="যেমন: 018XXXXXXXX"
                     value={bkashSender}
                     onChange={(e) => setBkashSender(e.target.value)}
-                    className="w-full bg-slate-900 text-white px-3 py-2 rounded-xl text-xs border border-slate-700 outline-none focus:border-[#E2136E]"
+                    className="w-full bg-[#1F0A11] text-white px-3 py-2 rounded-xl text-xs border border-rose-900 outline-none focus:border-[#E2136E]"
                   />
                 </div>
                 <div>
-                  <label className="block text-[11px] font-semibold text-slate-300 mb-1">
+                  <label className="block text-[11px] font-semibold text-rose-200 mb-1">
                     বিকাশ ট্রানজেকশন আইডি (TrxID) *
                   </label>
                   <input
@@ -350,7 +352,7 @@ export default function OneClickOrderForm({ product, selectedColor, quantity }) 
                     placeholder="যেমন: 9J8K2L4P"
                     value={bkashTrxId}
                     onChange={(e) => setBkashTrxId(e.target.value)}
-                    className="w-full bg-slate-900 text-white px-3 py-2 rounded-xl text-xs border border-slate-700 outline-none focus:border-[#E2136E] uppercase font-mono"
+                    className="w-full bg-[#1F0A11] text-white px-3 py-2 rounded-xl text-xs border border-rose-900 outline-none focus:border-[#E2136E] uppercase font-mono"
                   />
                 </div>
               </div>
@@ -359,24 +361,30 @@ export default function OneClickOrderForm({ product, selectedColor, quantity }) 
         </div>
 
         {/* Live Bill Summary */}
-        <div className="p-4 bg-slate-800/80 rounded-2xl border border-slate-700/80 space-y-2 text-xs">
-          <div className="flex justify-between text-slate-300">
-            <span>প্রডাক্ট মূল্য ({quantity}টি):</span>
-            <span className="font-semibold text-white">৳{itemTotal.toLocaleString()}</span>
+        <div className="p-4 bg-rose-950/40 rounded-2xl border border-rose-900/50 space-y-2 text-xs">
+          <div className="flex justify-between text-rose-200">
+            <span>প্রোডাক্ট মূল্য ({quantity}টি):</span>
+            <span className="font-bold text-white">৳{itemTotal.toLocaleString()}</span>
           </div>
           {selectedColor && (
-            <div className="flex justify-between text-slate-400">
-              <span>সিলেক্টেড কালার:</span>
-              <span className="font-medium text-cyan-300">{selectedColor}</span>
+            <div className="flex justify-between text-rose-300/80">
+              <span>নির্বাচিত কালার:</span>
+              <span className="font-bold text-amber-300">{selectedColor}</span>
             </div>
           )}
-          <div className="flex justify-between text-slate-300">
+          {selectedSize && (
+            <div className="flex justify-between text-rose-300/80">
+              <span>নির্বাচিত সাইজ:</span>
+              <span className="font-bold text-amber-300">{selectedSize}</span>
+            </div>
+          )}
+          <div className="flex justify-between text-rose-200">
             <span>ডেলিভারি চার্জ:</span>
-            <span className="font-semibold text-white">৳{deliveryFee}</span>
+            <span className="font-bold text-white">৳{deliveryFee}</span>
           </div>
-          <div className="pt-2 border-t border-slate-700 flex justify-between text-sm sm:text-base font-black text-white">
+          <div className="pt-2 border-t border-rose-900/50 flex justify-between text-sm sm:text-base font-black text-white">
             <span>সর্বমোট পরিশোধযোগ্য:</span>
-            <span className="text-emerald-400 font-sans text-lg">৳{grandTotal.toLocaleString()}</span>
+            <span className="text-amber-300 font-sans text-xl">৳{grandTotal.toLocaleString()}</span>
           </div>
         </div>
 
@@ -384,18 +392,18 @@ export default function OneClickOrderForm({ product, selectedColor, quantity }) 
         <button
           type="submit"
           disabled={loading}
-          className={`w-full font-black py-4 px-6 rounded-2xl text-base sm:text-lg flex items-center justify-center gap-2 shadow-xl active:scale-98 transition-all disabled:opacity-50 ${
+          className={`w-full font-black py-3.5 sm:py-4 px-4 sm:px-6 rounded-2xl text-xs sm:text-base md:text-lg flex items-center justify-center gap-2 shadow-xl active:scale-98 transition-all disabled:opacity-50 cursor-pointer touch-manipulation ${
             paymentMethod === 'bkash'
               ? 'bg-gradient-to-r from-[#E2136E] to-[#c90f5f] text-white shadow-[#E2136E]/30'
-              : 'bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 text-slate-950 shadow-emerald-500/25'
+              : 'bg-gradient-to-r from-rose-700 via-rose-600 to-rose-700 hover:from-rose-800 hover:to-rose-800 text-white shadow-rose-600/30'
           }`}
         >
           {loading ? (
             <span>অর্ডার প্রসেস হচ্ছে...</span>
           ) : (
             <>
-              <CheckCircle2 className={`size-6 ${paymentMethod === 'bkash' ? 'text-white' : 'text-slate-950'}`} />
-              <span>
+              <CheckCircle2 className="size-5 sm:size-6 text-amber-300 shrink-0" />
+              <span className="text-center leading-tight">
                 {paymentMethod === 'bkash' ? 'বিকাশ পেমেন্ট সহ অর্ডার কনফার্ম করুন' : 'ক্যাশ অন ডেলিভারিতে অর্ডার কনফার্ম করুন'} — ৳{grandTotal.toLocaleString()}
               </span>
             </>
@@ -403,18 +411,18 @@ export default function OneClickOrderForm({ product, selectedColor, quantity }) 
         </button>
 
         {/* Trust Badges footer */}
-        <div className="pt-2 flex items-center justify-around text-center text-[10px] text-slate-400">
+        <div className="pt-2 flex items-center justify-around text-center text-[10px] text-rose-200/80">
           <div className="flex items-center gap-1">
-            <Truck className="size-3.5 text-emerald-400" />
+            <Truck className="size-3.5 text-amber-400" />
             <span>দ্রুত ডেলিভারি</span>
           </div>
           <div className="flex items-center gap-1">
-            <ShieldCheck className="size-3.5 text-cyan-400" />
+            <ShieldCheck className="size-3.5 text-emerald-400" />
             <span>১০০% নিরাপদ</span>
           </div>
           <div className="flex items-center gap-1">
-            <Clock className="size-3.5 text-amber-400" />
-            <span>৭ দিনের ওয়ারেন্টি</span>
+            <Clock className="size-3.5 text-rose-400" />
+            <span>সহজ রিটার্ন</span>
           </div>
         </div>
       </form>

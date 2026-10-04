@@ -10,9 +10,9 @@ import {
 
 /**
  * WebCraft Guard - Client Anti-Theft & Remote License Kill-Switch
- * Embedded Component for Galaxy Gadgets (WebCraft Guard Connected)
+ * Embedded Component for Maya Shopping Mall (WebCraft Guard Connected)
  */
-export default function WebcraftGuard({ projectId = 'wg_galaxygadgets' }) {
+export default function WebcraftGuard({ projectId = 'wg_mayashoppingmall' }) {
   const [project, setProject] = useState(null);
   const [enteredKey, setEnteredKey] = useState('');
   const [keyError, setKeyError] = useState('');
@@ -39,8 +39,8 @@ export default function WebcraftGuard({ projectId = 'wg_galaxygadgets' }) {
           const remote = {
             id: projectId,
             status: f.status?.stringValue || 'ACTIVE',
-            clientName: f.clientName?.stringValue || 'Galaxy Gadgets BD',
-            domain: f.domain?.stringValue || 'galaxygadgetsbd.com',
+            clientName: f.clientName?.stringValue || 'Maya Shopping Mall',
+            domain: f.domain?.stringValue || 'mayashoppingmall.com',
             dueAmount: Number(f.dueAmount?.integerValue || f.dueAmount?.stringValue || 0),
             passkey: f.passkey?.stringValue || 'WG-GG26-PASS',
             whatsappNumber: f.whatsappNumber?.stringValue || '01629559653',
@@ -173,7 +173,7 @@ export default function WebcraftGuard({ projectId = 'wg_galaxygadgets' }) {
 
   const waNumber = (project.whatsappNumber || '01629559653').replace(/[^0-9]/g, '');
   const waUrl = `https://wa.me/88${waNumber}?text=` + encodeURIComponent(
-    `হ্যালো WebCraft BD, আমি ${project.clientName || 'Galaxy Gadgets'} ওয়েবসাইটের বকেয়া বিল ৳${project.dueAmount || 0} টাকা পরিশোধ করে সাইটটি চালু করতে চাই। পেমেন্ট নাম্বার দিন।`
+    `হ্যালো WebCraft BD, আমি ${project.clientName || 'Maya Shopping Mall'} ওয়েবসাইটের বকেয়া বিল ৳${project.dueAmount || 0} টাকা পরিশোধ করে সাইটটি চালু করতে চাই। পেমেন্ট নাম্বার দিন।`
   );
 
   return (
@@ -220,8 +220,8 @@ export default function WebcraftGuard({ projectId = 'wg_galaxygadgets' }) {
         <div className="bg-[#050813] border border-rose-500/30 rounded-2xl p-4 sm:p-5 mb-6 text-left relative overflow-hidden shadow-inner">
           <div className="flex items-center justify-between border-b border-slate-800/80 pb-3 mb-3">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center text-cyan-400 font-bold text-xs uppercase">
-                {(project.clientName || 'GG').slice(0, 2)}
+              <div className="w-8 h-8 rounded-lg bg-rose-950/60 border border-rose-800/50 flex items-center justify-center text-amber-400 font-bold text-xs uppercase">
+                {(project.clientName || 'MSM').slice(0, 3)}
               </div>
               <div>
                 <h4 className="text-xs font-bold text-white leading-none">{project.clientName}</h4>
@@ -317,7 +317,7 @@ export default function WebcraftGuard({ projectId = 'wg_galaxygadgets' }) {
             href={`tel:${project.contactNumber || '01629559653'}`}
             className="py-3.5 px-5 rounded-2xl bg-slate-800/90 hover:bg-slate-700 text-white font-bold text-xs sm:text-sm border border-slate-700/80 flex items-center justify-center gap-2 transition-all active:scale-95"
           >
-            <Phone className="w-4 h-4 text-cyan-400" />
+            <Phone className="w-4 h-4 text-amber-400" />
             <span>সরাসরি কল: {project.contactNumber || '01629559653'}</span>
           </a>
         </div>

@@ -1,38 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://galaxygadgetsbd.com/</loc>
-    <lastmod>2026-10-02</lastmod>
+    <loc>/</loc>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://galaxygadgetsbd.com/shop</loc>
-    <lastmod>2026-10-02</lastmod>
+    <loc>/shop</loc>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://galaxygadgetsbd.com/shop?category=audio</loc>
-    <lastmod>2026-10-02</lastmod>
+    <loc>/shop?category=bedding</loc>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://galaxygadgetsbd.com/shop?category=powerbank</loc>
-    <lastmod>2026-10-02</lastmod>
+    <loc>/shop?category=couple</loc>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://galaxygadgetsbd.com/shop?category=drones</loc>
-    <lastmod>2026-10-02</lastmod>
+    <loc>/shop?category=hamper</loc>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://galaxygadgetsbd.com/shop?category=camera</loc>
-    <lastmod>2026-10-02</lastmod>
+    <loc>/shop?category=polo</loc>
+    <lastmod>2026-10-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>/shop?category=kurti</loc>
+    <lastmod>2026-10-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>/shop?category=kashmiri</loc>
+    <lastmod>2026-10-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>/shop?category=lifestyle</loc>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

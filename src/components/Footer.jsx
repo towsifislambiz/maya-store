@@ -10,50 +10,38 @@ export default function Footer() {
   const { settings } = useStoreSettings();
   const { lang, t } = useLanguage();
 
-  const rawWa = settings?.whatsappNumber || '8801322302319';
+  const rawWa = settings?.whatsappNumber || '01814741111';
   const cleanDigits = rawWa.replace(/[^0-9]/g, '');
   const cleanWa = cleanDigits.startsWith('880') ? cleanDigits : cleanDigits.startsWith('0') ? `88${cleanDigits}` : `880${cleanDigits}`;
 
   return (
-    <footer className="bg-[#070A11] text-slate-400 text-xs border-t border-slate-800/80 pt-12 pb-24 md:pb-12 mt-16">
+    <footer className="bg-[#181114] text-slate-400 text-xs border-t border-rose-950/60 pt-12 pb-24 md:pb-12 mt-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         
         {/* Top 4 Columns */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-10 border-b border-slate-800/80">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-10 border-b border-rose-950/60">
           
           {/* Col 1: About */}
           <div className="space-y-3">
             <Link to="/" className="flex items-center gap-2.5">
               <img
-                src="/assets/logo.webp"
-                alt="Galaxy Gadgets Logo"
+                src="/assets/logo.svg"
+                alt="Maya Shopping Mall Logo"
                 loading="lazy"
                 decoding="async"
-                className="size-9 object-contain rounded-xl bg-black border border-slate-800 shadow"
+                className="h-10 w-auto object-contain"
               />
-              <span className="text-xl font-black text-white font-sans tracking-tight">
-                GALAXY<span className="text-cyan-400">GADGETS</span>
-              </span>
             </Link>
-            <p className="text-xs text-slate-400 leading-relaxed">
+            <p className="text-xs text-rose-100/70 leading-relaxed">
               {t('footer_about')}
             </p>
             <div className="pt-1 flex items-center gap-2.5 text-slate-300 flex-wrap">
-              <span className="bg-slate-900 border border-slate-700 px-2.5 py-1 rounded-md text-[11px] font-bold text-emerald-400">
+              <span className="bg-rose-950/80 border border-rose-800 px-2.5 py-1 rounded-md text-[11px] font-bold text-amber-300">
                 {t('verified_shop')}
               </span>
-              <a
-                href={settings?.facebookPage || 'https://www.facebook.com/share/1FA8LYE5Y4/'}
-                target="_blank"
-                rel="noopener noreferrer"
-                title="Galaxy Gadgets Official Facebook Page"
-                className="bg-[#1877F2]/20 hover:bg-[#1877F2]/30 border border-[#1877F2]/50 text-blue-300 px-2.5 py-1 rounded-md text-[11px] font-bold flex items-center gap-1.5 transition cursor-pointer"
-              >
-                <svg className="size-3.5 fill-[#1877F2]" viewBox="0 0 24 24">
-                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                </svg>
-                <span>Facebook</span>
-              </a>
+              <span className="bg-rose-950/80 border border-rose-800 px-2.5 py-1 rounded-md text-[11px] font-bold text-emerald-400">
+                ক্যাশ অন ডেলিভারি
+              </span>
             </div>
           </div>
 
@@ -64,28 +52,38 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2">
               <li>
-                <Link to="/shop" className="hover:text-white transition">
-                  {lang === 'en' ? 'View All Products' : 'সকল প্রডাক্ট দেখুন'}
+                <Link to="/shop" className="hover:text-amber-300 transition">
+                  {lang === 'en' ? 'All Collections' : 'সকল কালেকশন দেখুন'}
                 </Link>
               </li>
               <li>
-                <Link to="/shop?category=audio" className="hover:text-white transition">
-                  {lang === 'en' ? 'AirPods & Earbuds' : 'এয়ারপডস ও হেডফোন'}
+                <Link to="/shop?category=bedding" className="hover:text-amber-300 transition">
+                  {lang === 'en' ? 'Bedding Combo Sets' : 'বেডিং কম্বো সেট'}
                 </Link>
               </li>
               <li>
-                <Link to="/shop?category=powerbank" className="hover:text-white transition">
-                  {lang === 'en' ? 'Fast Power Banks' : 'ফাস্ট পাওয়ার ব্যাংক'}
+                <Link to="/shop?category=couple" className="hover:text-amber-300 transition">
+                  {lang === 'en' ? 'Couple Matching Sets' : 'কাপল ড্রেস কালেকশন'}
                 </Link>
               </li>
               <li>
-                <Link to="/shop?category=drones" className="hover:text-white transition">
-                  {lang === 'en' ? 'Camera Drones' : 'ক্যামেরা ড্রোন'}
+                <Link to="/shop?category=hamper" className="hover:text-amber-300 transition">
+                  {lang === 'en' ? 'Men’s Luxury Hampers' : '৭-ইন-১ লাক্সারি গিফট হ্যাম্পার'}
                 </Link>
               </li>
               <li>
-                <Link to="/shop?category=camera" className="hover:text-white transition">
-                  {lang === 'en' ? 'Mini Digital Cameras' : 'মিনি ডিজিটাল ক্যামেরা'}
+                <Link to="/shop?category=polo" className="hover:text-amber-300 transition">
+                  {lang === 'en' ? 'Polo Shirts' : 'প্রিমিয়াম পোলো শার্ট'}
+                </Link>
+              </li>
+              <li>
+                <Link to="/shop?category=kashmiri" className="hover:text-amber-300 transition">
+                  {lang === 'en' ? 'Kashmiri 3-Piece' : 'কাশ্মীরি থ্রি-পিস ও কুর্তি'}
+                </Link>
+              </li>
+              <li>
+                <Link to="/shop?category=lifestyle" className="hover:text-amber-300 transition">
+                  {lang === 'en' ? 'Bags & Lifestyle' : 'ব্যাগ ও লাইফস্টাইল'}
                 </Link>
               </li>
             </ul>
@@ -96,22 +94,22 @@ export default function Footer() {
             <h4 className="font-bold text-white text-sm mb-3 uppercase tracking-wider">
               {t('customer_care')}
             </h4>
-            <ul className="space-y-2">
-              <li className="flex items-center gap-1.5 text-slate-300">
-                <Truck className="size-3.5 text-emerald-400" />
-                <span>{lang === 'en' ? 'Dhaka City: 24-48 hrs' : 'ঢাকা সিটি: ২৪-৪৮ ঘণ্টা'}</span>
+            <ul className="space-y-2.5">
+              <li className="flex items-center gap-2 text-rose-100/90">
+                <Truck className="size-4 text-amber-400 shrink-0" />
+                <span>{lang === 'en' ? 'Naogaon Sadar: 24 hrs' : 'নওগাঁ সদর: ২৪ ঘণ্টা (৬০৳)'}</span>
               </li>
-              <li className="flex items-center gap-1.5 text-slate-300">
-                <Truck className="size-3.5 text-cyan-400" />
-                <span>{lang === 'en' ? 'Outside Dhaka: 2-3 days' : 'ঢাকার বাইরে: ২-৩ দিন'}</span>
+              <li className="flex items-center gap-2 text-rose-100/90">
+                <Truck className="size-4 text-rose-400 shrink-0" />
+                <span>{lang === 'en' ? 'Outside Naogaon: 2-3 days' : 'নওগাঁর বাইরে: ২-৩ দিন (১২০৳)'}</span>
               </li>
-              <li className="flex items-center gap-1.5 text-slate-300">
-                <RotateCcw className="size-3.5 text-amber-400" />
-                <span>{lang === 'en' ? '7-Day Replacement Policy' : '৭ দিনের রিপ্লেসমেন্ট সুবিধা'}</span>
+              <li className="flex items-center gap-2 text-rose-100/90">
+                <RotateCcw className="size-4 text-emerald-400 shrink-0" />
+                <span>{lang === 'en' ? 'Easy Exchange & Return Policy' : '১০০% কোয়ালিটি গ্যারান্টি ও সহজ রিটার্ন'}</span>
               </li>
-              <li className="flex items-center gap-1.5 text-slate-300">
-                <ShieldCheck className="size-3.5 text-blue-400" />
-                <span>{lang === 'en' ? 'Cash on Delivery (Pay upon arrival)' : 'ক্যাশ অন ডেলিভারি (পণ্য দেখে পেমেন্ট)'}</span>
+              <li className="flex items-center gap-2 text-rose-100/90">
+                <ShieldCheck className="size-4 text-amber-400 shrink-0" />
+                <span>{lang === 'en' ? 'Cash on Delivery (Pay after check)' : 'ক্যাশ অন ডেলিভারি (পণ্য দেখে পেমেন্ট)'}</span>
               </li>
             </ul>
           </div>
@@ -123,72 +121,57 @@ export default function Footer() {
             </h4>
             <div className="space-y-2.5">
               <a
-                href={`tel:${settings?.hotline || '+8801322302319'}`}
-                className="p-3 bg-slate-900 border border-slate-800 rounded-xl flex items-center gap-3 hover:border-emerald-500 transition group block"
+                href={`tel:${settings?.hotline || '01814741111'}`}
+                className="p-3 bg-rose-950/40 border border-rose-900/60 rounded-xl flex items-center gap-3 hover:border-amber-400 transition group block"
               >
-                <div className="size-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+                <div className="size-8 rounded-lg bg-amber-400/20 text-amber-400 flex items-center justify-center shrink-0">
                   <Phone className="size-4" />
                 </div>
                 <div>
-                  <span className="text-[10px] text-slate-400 block -mb-0.5">{t('emergency_hotline')}</span>
-                  <span className="font-sans font-bold text-white group-hover:text-emerald-400 transition text-sm">
-                    {settings?.hotline || '+880 1322-302319'}
+                  <span className="text-[10px] text-rose-300 block -mb-0.5">{t('emergency_hotline')}</span>
+                  <span className="font-sans font-bold text-white group-hover:text-amber-300 transition text-sm">
+                    {settings?.hotline || '01814741111'}
                   </span>
                 </div>
               </a>
 
               <a
-                href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(settings?.email || 'gadgetsgalaxy2026gg@gmail.com')}`}
+                href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(settings?.email || 'masud97186@gmail.com')}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                title="Gmail এ সরাসরি ইমেইল পাঠান (ক্লিক করুন)"
-                className="p-2.5 bg-slate-900 border border-slate-800 rounded-xl flex items-center justify-between gap-2.5 hover:border-cyan-400 hover:bg-slate-800/80 transition-all group cursor-pointer shadow-xs"
+                title="Gmail এ সরাসরি ইমেইল পাঠান"
+                className="p-2.5 bg-rose-950/40 border border-rose-900/60 rounded-xl flex items-center justify-between gap-2.5 hover:border-rose-400 hover:bg-rose-950/80 transition-all group cursor-pointer shadow-xs"
               >
                 <div className="flex items-center gap-2.5 min-w-0">
-                  <div className="size-7 rounded-lg bg-cyan-500/10 text-cyan-400 flex items-center justify-center shrink-0 group-hover:bg-cyan-500/20 group-hover:scale-105 transition">
+                  <div className="size-7 rounded-lg bg-rose-500/10 text-rose-400 flex items-center justify-center shrink-0 group-hover:bg-rose-500/20 group-hover:scale-105 transition">
                     <Mail className="size-4" />
                   </div>
                   <div className="min-w-0">
-                    <span className="text-[10px] text-slate-400 block -mb-0.5">
-                      {lang === 'en' ? 'Official Email (Gmail)' : 'অফিসিয়াল ইমেইল (Gmail)'}
+                    <span className="text-[10px] text-rose-300 block -mb-0.5">
+                      {lang === 'en' ? 'Official Email' : 'অফিসিয়াল ইমেইল'}
                     </span>
-                    <span className="text-slate-300 group-hover:text-cyan-400 font-mono transition truncate text-xs block">
-                      {settings?.email || 'gadgetsgalaxy2026gg@gmail.com'}
+                    <span className="text-rose-100 group-hover:text-amber-300 font-mono transition truncate text-xs block">
+                      {settings?.email || 'masud97186@gmail.com'}
                     </span>
                   </div>
                 </div>
-                <span className="text-[10px] text-cyan-400/80 group-hover:text-cyan-300 bg-cyan-500/10 border border-cyan-500/20 px-2 py-0.5 rounded-md shrink-0 hidden sm:inline-block">
-                  {lang === 'en' ? 'Email ↗' : 'ইমেইল করুন ↗'}
+                <span className="text-[10px] text-amber-400 group-hover:text-amber-300 bg-amber-400/10 border border-amber-400/20 px-2 py-0.5 rounded-md shrink-0 hidden sm:inline-block">
+                  ইমেইল ↗
                 </span>
               </a>
 
-              <div className="p-2.5 bg-slate-900 border border-slate-800 rounded-xl flex items-center gap-2.5 text-[11px] text-slate-400">
+              <div className="p-2.5 bg-rose-950/40 border border-rose-900/60 rounded-xl flex items-center gap-2.5 text-[11px] text-rose-200">
                 <MapPin className="size-4 text-amber-400 shrink-0" />
-                <span className="truncate">{settings?.address || (lang === 'en' ? 'Online Store, Bangladesh' : 'অনলাইন স্টোর, বাংলাদেশ')}</span>
+                <span className="truncate">{settings?.address || 'নওগাঁ সদর, নওগাঁ'}</span>
               </div>
 
               <a
-                href={`https://wa.me/${cleanWa}?text=আসসালামু%20আলাইকুম!%20Galaxy%20Gadgets%20থেকে%20তথ্য%20জানতে%20চাচ্ছি।`}
+                href={`https://wa.me/${cleanWa}?text=${encodeURIComponent('আসসালামু আলাইকুম! Maya Shopping Mall থেকে পণ্য সম্পর্কে জানতে চাচ্ছি।')}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2.5 bg-emerald-600/20 border border-emerald-500/40 rounded-xl text-emerald-300 flex items-center justify-center gap-2 hover:bg-emerald-600/30 transition font-bold"
               >
-                <span>{lang === 'en' ? 'Chat on WhatsApp' : 'হোয়াটসঅ্যাপে চ্যাট করুন'}</span>
-              </a>
-
-              {/* Facebook Page Button */}
-              <a
-                href={settings?.facebookPage || 'https://www.facebook.com/share/1FA8LYE5Y4/'}
-                target="_blank"
-                rel="noopener noreferrer"
-                title="আমাদের ফেসবুক পেইজ ভিজিট করুন"
-                className="p-2.5 bg-[#1877F2]/20 hover:bg-[#1877F2]/30 border border-[#1877F2]/50 hover:border-[#1877F2] rounded-xl text-blue-300 flex items-center justify-center gap-2 transition font-bold cursor-pointer group shadow-xs"
-              >
-                <svg className="size-4 fill-[#1877F2] group-hover:scale-110 transition-transform shrink-0" viewBox="0 0 24 24">
-                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                </svg>
-                <span>{lang === 'en' ? 'Follow on Facebook' : 'আমাদের ফেসবুক পেইজ'}</span>
-                <span className="text-[10px] text-blue-400 group-hover:translate-x-0.5 transition-transform">↗</span>
+                <span>{lang === 'en' ? 'Chat on WhatsApp' : 'হোয়াটসঅ্যাপে চ্যাট করুন'} (01814741111)</span>
               </a>
             </div>
           </div>
@@ -199,28 +182,25 @@ export default function Footer() {
         <div className="pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
           {/* Payment Badges */}
           <div className="flex flex-wrap items-center justify-center gap-2">
-            <span className="text-[11px] text-slate-500 mr-1">
+            <span className="text-[11px] text-rose-300/80 mr-1">
               {lang === 'en' ? 'Payment Methods:' : 'পেমেন্ট মাধ্যম:'}
             </span>
-            <span className="bg-slate-900 border border-slate-800 px-2.5 py-1 rounded text-slate-300 font-bold text-[10px]">
+            <span className="bg-rose-950/90 border border-rose-900 px-2.5 py-1 rounded text-rose-200 font-bold text-[10px]">
               {lang === 'en' ? 'Cash on Delivery (COD)' : 'ক্যাশ অন ডেলিভারি (COD)'}
             </span>
             <span className="bg-[#DF146E]/20 text-[#DF146E] border border-[#DF146E]/40 px-2.5 py-1 rounded font-bold text-[10px]">
-              bKash: {settings?.bkashNumber || '01749-765271'}
+              bKash (Personal): {settings?.bkashNumber || '01821067277'}
             </span>
             <span className="bg-[#F7941D]/20 text-[#F7941D] border border-[#F7941D]/40 px-2.5 py-1 rounded font-bold text-[10px]">
               Nagad
             </span>
-            <span className="bg-slate-900 border border-slate-800 px-2.5 py-1 rounded text-slate-300 font-bold text-[10px]">
-              Rocket / Bank Cards
-            </span>
           </div>
 
           {/* Copyright & Agency Watermark */}
-          <div className="text-slate-500 text-[11px]">
-            <p>© {CURRENT_YEAR} Galaxy Gadgets. {t('all_rights_reserved')}</p>
-            <p className="mt-0.5 text-slate-400">
-              Tech Partner: <span className="text-cyan-400 font-semibold">Webcraft BD</span>
+          <div className="text-rose-300/60 text-[11px]">
+            <p>© {CURRENT_YEAR} Maya Shopping Mall. {t('all_rights_reserved')}</p>
+            <p className="mt-0.5 text-rose-300/80">
+              নওগাঁ সদর, নওগাঁ | Tech Partner: <span className="text-amber-400 font-semibold">Webcraft BD</span>
             </p>
           </div>
         </div>

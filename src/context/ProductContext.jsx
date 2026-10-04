@@ -8,22 +8,10 @@ const ProductContext = createContext();
 export const ProductProvider = ({ children }) => {
   const [products, setProducts] = useState(() => {
     try {
-      const saved = localStorage.getItem('galaxy_gadgets_products');
+      const saved = localStorage.getItem('maya_shopping_mall_products');
       if (saved) {
         let parsed = JSON.parse(saved);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          // Auto-migrate legacy .png asset paths to ultra-fast .webp and guarantee valid images array
-          parsed = parsed.map(p => {
-            const cleanImg = typeof p.image === 'string' ? p.image.replace(/\.png$/i, '.webp') : (p.images?.[0] || '/assets/logo.webp');
-            const cleanImgs = Array.isArray(p.images) && p.images.length > 0
-              ? p.images.map(img => typeof img === 'string' ? img.replace(/\.png$/i, '.webp') : img)
-              : [cleanImg];
-            return {
-              ...p,
-              image: cleanImg,
-              images: cleanImgs
-            };
-          });
           return parsed;
         }
       }
@@ -34,7 +22,7 @@ export const ProductProvider = ({ children }) => {
 
   // Sync to localStorage
   useEffect(() => {
-    localStorage.setItem('galaxy_gadgets_products', JSON.stringify(products));
+    localStorage.setItem('maya_shopping_mall_products', JSON.stringify(products));
   }, [products]);
 
   // Optional Firestore real-time sync with fallback
@@ -66,8 +54,8 @@ export const ProductProvider = ({ children }) => {
 
   // Add new product
   const addProduct = async (productData) => {
-    const id = productData.id || `gadget-${Date.now()}`;
-    const cleanImg = productData.image || productData.images?.[0] || '/assets/logo.webp';
+    const id = productData.id || `product-${Date.now()}`;
+    const cleanImg = productData.image || productData.images?.[0] || '/assets/logo.svg';
     const cleanImgs = Array.isArray(productData.images) && productData.images.length > 0
       ? productData.images
       : [cleanImg];
@@ -93,7 +81,7 @@ export const ProductProvider = ({ children }) => {
     setProducts(prev => prev.map(p => {
       if (p.id !== id) return p;
       const updated = { ...p, ...fields };
-      const cleanImg = updated.image || updated.images?.[0] || '/assets/logo.webp';
+      const cleanImg = updated.image || updated.images?.[0] || '/assets/logo.svg';
       const cleanImgs = Array.isArray(updated.images) && updated.images.length > 0
         ? updated.images
         : [cleanImg];
@@ -106,12 +94,11 @@ export const ProductProvider = ({ children }) => {
     }
   };
 
-  // Dynamic Color Variant Management for Admin
+  // Dynamic Color Variant Management
   const addColorVariant = async (productId, colorObj) => {
     const prod = getProductById(productId);
     if (!prod) return;
     const existing = prod.colors || [];
-    // Replace if exists, else append
     const exists = existing.some(c => c.name.toLowerCase() === colorObj.name.toLowerCase());
     const updatedColors = exists
       ? existing.map(c => c.name.toLowerCase() === colorObj.name.toLowerCase() ? { ...c, ...colorObj } : c)

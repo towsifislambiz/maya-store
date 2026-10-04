@@ -39,8 +39,8 @@ function PageLoader() {
   return (
     <div className="flex items-center justify-center min-h-[50vh] py-16">
       <div className="flex flex-col items-center gap-3">
-        <div className="size-9 border-3 border-cyan-500/20 border-t-cyan-500 rounded-full animate-spin" />
-        <span className="text-xs font-semibold text-slate-400">লোড হচ্ছে...</span>
+        <div className="size-9 border-3 border-rose-600/20 border-t-rose-600 rounded-full animate-spin" />
+        <span className="text-xs font-semibold text-rose-800">লোড হচ্ছে...</span>
       </div>
     </div>
   );
@@ -56,7 +56,7 @@ export default function App() {
               <AdminAuthProvider>
                 <BrowserRouter>
                   <ScrollToTop />
-                  <div className="flex flex-col min-h-screen bg-[#F8FAFC]">
+                  <div className="flex flex-col min-h-screen bg-[#FFFDFD]">
                     <Header />
                     <CartDrawer />
                     
@@ -84,8 +84,8 @@ export default function App() {
                     <Footer />
                     <FloatingWhatsApp />
                     <MobileDock />
-                    {/* WebCraft Guard Remote Anti-Theft & Kill-Switch */}
-                    <WebcraftGuard projectId="wg_galaxygadgets" />
+                    {/* WebCraft Guard Remote Protection */}
+                    <WebcraftGuard projectId="wg_mayashoppingmall" />
                   </div>
                 </BrowserRouter>
               </AdminAuthProvider>

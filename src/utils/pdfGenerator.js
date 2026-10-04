@@ -19,22 +19,23 @@ export function generateMonthlyReportPDF(orders = [], settings = {}, monthName =
   doc.setFillColor(11, 15, 25); // #0B0F19
   doc.rect(0, 0, 210, 42, 'F');
 
-  // Accent Line
-  doc.setFillColor(6, 182, 212); // #06B6D4 Cyan
+  // Accent Line (Royal Rose)
+  doc.setFillColor(190, 18, 60); // #BE123C Rose
   doc.rect(0, 41, 210, 1.5, 'F');
 
   // Brand Name
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(22);
   doc.setTextColor(255, 255, 255);
-  doc.text('GALAXY GADGETS', 14, 18);
+  doc.text('MAYA SHOPPING MALL', 14, 18);
 
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(9);
+  doc.setTextColor(244, 114, 182); // Rose 300
+  doc.text('EXCLUSIVE FASHION & LUXURY LIFESTYLE STORE', 14, 24);
   doc.setTextColor(148, 163, 184); // Slate 400
-  doc.text('PREMIUM GADGETS & ELECTRONICS STORE', 14, 24);
-  doc.text(`Email: ${settings.email || 'gadgetsgalaxy2026gg@gmail.com'} | Hotline: ${settings.hotline || '+880 1322-302319'}`, 14, 30);
-  doc.text(`Location: ${settings.address || 'Bangladesh'} | bKash Personal: ${settings.bkashNumber || '01749765271'}`, 14, 35);
+  doc.text(`Email: ${settings.email || 'masud97186@gmail.com'} | Hotline: ${settings.hotline || '01814741111'}`, 14, 30);
+  doc.text(`Location: ${settings.address || 'Naogaon Sadar, Naogaon'} | bKash Personal: ${settings.bkashNumber || '01821067277'}`, 14, 35);
 
   // Document Title Box (Right Top)
   doc.setFont('helvetica', 'bold');
@@ -111,7 +112,7 @@ export function generateMonthlyReportPDF(orders = [], settings = {}, monthName =
       idx + 1,
       o.orderTrackingId || o.id || 'N/A',
       `${o.customerName || 'N/A'}\n${o.phone || ''}`,
-      `${o.address || 'N/A'}\nZone: ${o.deliveryZone === 'outside_dhaka' ? 'Outside Dhaka' : 'Inside Dhaka'}`,
+      `${o.address || 'N/A'}\nZone: ${o.deliveryZone === 'outside_dhaka' || o.deliveryZone === 'outside_naogaon' ? 'Outside Naogaon' : 'Naogaon Sadar'}`,
       itemsSummary || 'N/A',
       paymentInfo,
       o.status || 'Pending',
@@ -159,7 +160,7 @@ export function generateMonthlyReportPDF(orders = [], settings = {}, monthName =
     doc.setFontSize(7.5);
     doc.setTextColor(148, 163, 184);
     doc.text(
-      `Galaxy Gadgets Confidential Financial Statement | Page ${i} of ${pageCount} | Agency: Webcraft BD`,
+      `Maya Shopping Mall Official Financial Statement | Page ${i} of ${pageCount}`,
       105,
       290,
       { align: 'center' }
@@ -167,6 +168,6 @@ export function generateMonthlyReportPDF(orders = [], settings = {}, monthName =
   }
 
   // Trigger download
-  const cleanFilename = `Galaxy_Gadgets_Sales_Report_${currentMonthStr.replace(/\s+/g, '_')}.pdf`;
+  const cleanFilename = `Maya_Shopping_Mall_Sales_Report_${currentMonthStr.replace(/\s+/g, '_')}.pdf`;
   doc.save(cleanFilename);
 }

@@ -7,29 +7,31 @@ const OrderContext = createContext();
 export const OrderProvider = ({ children }) => {
   const [orders, setOrders] = useState(() => {
     try {
-      const saved = localStorage.getItem('galaxy_gadgets_orders');
+      const saved = localStorage.getItem('maya_shopping_mall_orders');
       return saved ? JSON.parse(saved) : [
         {
-          id: 'GG-84920',
-          customerName: 'তানভীর আহমেদ',
-          phone: '01712345678',
-          address: 'বাড়ি ১২, রোড ৪, সেক্টর ৭, উত্তরা, ঢাকা',
+          id: 'MSM-84920',
+          orderTrackingId: 'MSM-84920',
+          customerName: 'মাসুম রানা',
+          phone: '01814741111',
+          address: 'নওগাঁ সদর, নওগাঁ',
           deliveryZone: 'inside_dhaka',
-          deliveryFee: 80,
+          deliveryFee: 60,
           paymentMethod: 'cod',
           items: [
             {
               product: {
-                id: 'airpods-pro-2',
-                name: 'Apple AirPods Pro (2nd Generation)',
-                price: 899,
-                images: ['/assets/products/airpods_pro_2_open_case.webp']
+                id: 'luxury-bedding-combo-maroon',
+                name: 'Luxury Floral Cotton Bedding Combo Set',
+                nameBn: 'লাক্সারি ফ্লোরাল বেডিং কম্বো সেট',
+                price: 1350,
+                images: ['/assets/products/bedding-1.webp']
               },
               quantity: 1,
-              selectedColor: 'Pure White'
+              selectedColor: 'Maroon Floral'
             }
           ],
-          totalAmount: 979,
+          totalAmount: 1410,
           status: 'Confirmed',
           createdAt: new Date().toISOString()
         }
@@ -42,7 +44,7 @@ export const OrderProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem('galaxy_gadgets_orders', JSON.stringify(orders));
+    localStorage.setItem('maya_shopping_mall_orders', JSON.stringify(orders));
   }, [orders]);
 
   // Firestore sync for admin
@@ -72,10 +74,10 @@ export const OrderProvider = ({ children }) => {
     }
   }, []);
 
-  // Place a new order
+  // Place a new order with MSM- prefix
   const placeOrder = async (orderData) => {
     setLoading(true);
-    const orderId = `GG-${Math.floor(100000 + Math.random() * 900000)}`;
+    const orderId = `MSM-${Math.floor(100000 + Math.random() * 900000)}`;
     const newOrder = {
       ...orderData,
       orderTrackingId: orderId,
@@ -121,19 +123,16 @@ export const OrderProvider = ({ children }) => {
     }
   };
 
-  // Monthly Reset logic: clear state, archive to localStorage, wipe Firestore orders
+  // Monthly Reset logic
   const resetMonthlyOrders = async () => {
     const currentMonth = new Date().toISOString().slice(0, 7);
     try {
-      // Archive current orders before wiping
-      const archiveKey = `galaxy_gadgets_archive_${currentMonth}`;
+      const archiveKey = `maya_shopping_mall_archive_${currentMonth}`;
       localStorage.setItem(archiveKey, JSON.stringify(orders));
       
-      // Clear state and active storage
       setOrders([]);
-      localStorage.removeItem('galaxy_gadgets_orders');
+      localStorage.removeItem('maya_shopping_mall_orders');
 
-      // Delete from Firestore
       const ordersRef = collection(db, 'orders');
       const snap = await getDocs(ordersRef);
       const deletePromises = [];
@@ -142,13 +141,12 @@ export const OrderProvider = ({ children }) => {
       });
       await Promise.all(deletePromises);
       
-      localStorage.setItem('galaxy_gadgets_last_reset_month', currentMonth);
+      localStorage.setItem('maya_shopping_mall_last_reset_month', currentMonth);
     } catch (e) {
       console.warn('Monthly reset error:', e);
     }
   };
 
-  // Calculate days remaining in current month
   const { daysLeftInMonth, isMonthEndingSoon } = React.useMemo(() => {
     const today = new Date();
     const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
@@ -159,17 +157,15 @@ export const OrderProvider = ({ children }) => {
     };
   }, []);
 
-  // Auto-reset check when month transitions
   useEffect(() => {
     const currentMonth = new Date().toISOString().slice(0, 7);
-    const lastReset = localStorage.getItem('galaxy_gadgets_last_reset_month');
+    const lastReset = localStorage.getItem('maya_shopping_mall_last_reset_month');
     if (lastReset && lastReset !== currentMonth) {
       console.log('New month detected. Auto resetting orders...');
       resetMonthlyOrders();
     } else if (!lastReset) {
-      localStorage.setItem('galaxy_gadgets_last_reset_month', currentMonth);
+      localStorage.setItem('maya_shopping_mall_last_reset_month', currentMonth);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
